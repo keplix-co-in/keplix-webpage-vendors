@@ -1,6 +1,8 @@
 'use client';
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { rules, validate } from '@/shared/utils/validation';
+import { toMinutes } from './TimeSelect';
 
 const STORAGE_KEY = 'onboarding_progress';
 
@@ -119,29 +121,69 @@ export const useDraft = () => {
  *
  * A stored flag would keep claiming "Completed" after a reload dropped the
  * file behind it, and the vendor would only find out when the submit failed.
+ *
+ * Presence alone is not enough either: each step applies the same rules its own
+ * screen does, so a malformed GSTIN or a closing time before opening leaves the
+ * step incomplete rather than unlocking a submit the backend would reject.
  */
 export const stepCompletion = (draft, files, shopPhotos) => {
-  const bankComplete = Boolean(
-    draft.bankDetails.accountNumber && draft.bankDetails.ifsc && draft.bankDetails.accountHolderName
-  );
+  const passes = (values, schema) => validate(values, schema).isValid;
+
+  const bankComplete =
+    Boolean(
+      draft.bankDetails.accountNumber &&
+        draft.bankDetails.ifsc &&
+        draft.bankDetails.accountHolderName
+    ) &&
+    passes(draft.bankDetails, {
+      accountNumber: [rules.accountNumber],
+      ifsc: [rules.ifsc],
+    });
+
+  const upiComplete = Boolean(draft.bankDetails.upi) && passes(draft.bankDetails, { upi: [rules.upi] });
+
+  const open = toMinutes(draft.timings.openTime);
+  const close = toMinutes(draft.timings.closeTime);
+  const hoursValid = open !== null && close !== null && close > open;
 
   return {
-    workshop: Boolean(
-      draft.workshopInfo.workshopName &&
-        shopPhotos.length > 0 &&
-        draft.ownerDetails.fullName &&
-        draft.ownerDetails.phone
-    ),
+    workshop:
+      shopPhotos.length > 0 &&
+      passes(draft.workshopInfo, { workshopName: [rules.required('Workshop name')] }) &&
+      passes(draft.address, {
+        street: [rules.required('Road')],
+        area: [rules.required('Area')],
+        city: [rules.required('City')],
+        pincode: [rules.required('Pincode'), rules.pincode],
+      }) &&
+      passes(draft.ownerDetails, {
+        fullName: [rules.required('Owner name')],
+        phone: [rules.required('Owner phone'), rules.mobile],
+      }),
+
     // GSTIN plus either bank details or UPI is the minimum, and both PAN and
     // trade licence must be uploaded before the step will save.
-    documents: Boolean(
-      draft.gstInfo.gstNumber &&
-        files.panCard &&
-        files.tradeLicense &&
-        (bankComplete || draft.bankDetails.upi)
-    ),
-    timings: Boolean(draft.timings.openTime && draft.timings.closeTime),
-    services: draft.serviceDetails.length > 0,
+    documents:
+      Boolean(files.panCard && files.tradeLicense) &&
+      passes(draft.gstInfo, { gstNumber: [rules.required('GSTIN'), rules.gstin] }) &&
+      (bankComplete || upiComplete),
+
+    timings:
+      hoursValid &&
+      draft.breaks.every((item) => {
+        const start = toMinutes(item.start);
+        const end = toMinutes(item.end);
+        return start !== null && end !== null && end > start && start >= open && end <= close;
+      }),
+
+    services:
+      draft.serviceDetails.length > 0 &&
+      draft.serviceDetails.every((service) =>
+        passes(service, {
+          name: [rules.required('Service name')],
+          price: [rules.required('Price'), rules.positiveNumber('Price')],
+        })
+      ),
   };
 };
 

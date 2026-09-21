@@ -1,10 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import AuthShell from '@/components/auth/AuthShell';
 import OtpInput from '@/components/ui/OtpInput';
 import Button from '@/components/ui/Button';
 import { useResendCountdown } from '../_lib/stepStore';
+
+/** Every OTP the backend issues is six digits. */
+const OTP_PATTERN = /^\d{6}$/;
 
 /**
  * The five OTP screens differ only in their copy and what they do with a valid
@@ -14,6 +18,7 @@ export default function OtpStep({
   title,
   subtitle,
   backHref,
+  backLabel = 'Entered the wrong address? Change it',
   verifyLabel = 'Verify OTP',
   onVerify,
   onResend,
@@ -26,7 +31,7 @@ export default function OtpStep({
 
   const submit = async (event) => {
     event.preventDefault();
-    if (otp.length < 6) {
+    if (!OTP_PATTERN.test(otp)) {
       setError('Enter the 6-digit code');
       return;
     }
@@ -50,10 +55,17 @@ export default function OtpStep({
   };
 
   return (
-    <AuthShell title={title} subtitle={subtitle} backHref={backHref}>
+    <AuthShell title={title} subtitle={subtitle}>
       <form onSubmit={submit} noValidate>
         <div className="mb-3.5">
-          <OtpInput value={otp} onChange={setOtp} error={Boolean(error)} />
+          <OtpInput
+            value={otp}
+            onChange={(value) => {
+              setOtp(value);
+              if (error) setError(null);
+            }}
+            error={Boolean(error)}
+          />
         </div>
 
         <div className="text-[12.5px] text-[var(--color-muted)] mb-6">
@@ -76,6 +88,16 @@ export default function OtpStep({
           {verifyLabel}
         </Button>
       </form>
+
+      {/* Replaces the back arrow: a code sent to a mistyped address is a dead
+          end without a way back to the step that set it. */}
+      {backHref && (
+        <p className="text-center text-[12.5px] text-[var(--color-muted)] mt-[18px]">
+          <Link href={backHref} className="font-bold text-[var(--color-primary)]">
+            {backLabel}
+          </Link>
+        </p>
+      )}
 
       {children}
     </AuthShell>

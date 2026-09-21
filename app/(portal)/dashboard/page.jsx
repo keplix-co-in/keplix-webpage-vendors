@@ -10,7 +10,20 @@ import Button from '@/components/ui/Button';
 import { useAuth } from '@/context/AuthContext';
 import { useBookings, useWalkIns, useEarnings } from '@/lib/queries';
 import { bucketJobs } from '@/shared/utils/jobBuckets';
-import { formatMoney, formatTime } from '@/lib/format';
+import { formatMoney } from '@/lib/format';
+import {
+  DASHBOARD_BOOKINGS,
+  bookingBadge,
+  dateKey,
+  formatSlotTime,
+  readBooking,
+  readWalkIn,
+  timeToMinutes,
+  todayKey,
+} from '@/components/bookings/bookingFields';
+
+// Only the live walk-ins matter here; the app asks for the same slice.
+const LIVE_WALK_INS = { status: 'open,in_progress', limit: 100 };
 
 const greeting = () => {
   const hour = new Date().getHours();
@@ -21,8 +34,8 @@ const greeting = () => {
 
 export default function DashboardPage() {
   const { user, vendorProfile } = useAuth();
-  const { data: bookings = [], isLoading } = useBookings();
-  const { data: walkIns = [] } = useWalkIns();
+  const { data: bookings = [], isLoading } = useBookings(DASHBOARD_BOOKINGS);
+  const { data: walkIns = [] } = useWalkIns(LIVE_WALK_INS);
   const { data: earnings } = useEarnings();
 
   const businessName = vendorProfile?.business_name ?? user?.business_name ?? 'your workshop';
@@ -35,20 +48,15 @@ export default function DashboardPage() {
   const buckets = useMemo(() => bucketJobs(bookings, walkIns), [bookings, walkIns]);
 
   const todaysJobs = useMemo(() => {
-    const today = new Date().toDateString();
+    const today = todayKey();
     return bookings
-      .filter((b) => {
-        const slot = b?.scheduled_at ?? b?.booking_date ?? b?.slot_time;
-        return slot && new Date(slot).toDateString() === today;
-      })
-      .sort(
-        (a, b) =>
-          new Date(a.scheduled_at ?? a.booking_date) - new Date(b.scheduled_at ?? b.booking_date)
-      );
+      .filter((b) => dateKey(b.booking_date) === today)
+      .map(readBooking)
+      .sort((a, b) => (timeToMinutes(a.time) ?? 0) - (timeToMinutes(b.time) ?? 0));
   }, [bookings]);
 
   const liveWalkIns = useMemo(
-    () => walkIns.filter((w) => ['open', 'in_progress'].includes(w?.status)),
+    () => walkIns.map(readWalkIn).filter((w) => ['open', 'in_progress'].includes(w.status)),
     [walkIns]
   );
 
@@ -142,31 +150,30 @@ export default function DashboardPage() {
                 body="New requests appear here the moment a customer books you."
               />
             ) : (
-              todaysJobs.map((job) => (
-                <Link
-                  key={job.id}
-                  href={`/bookings/${job.id}`}
-                  className="px-[22px] py-4 flex items-center gap-4 flex-wrap"
-                  style={{ borderBottom: '1px solid var(--color-canvas)' }}
-                >
-                  <div className="w-[52px] text-center shrink-0">
-                    <div className="text-[13.5px] font-bold">
-                      {formatTime(job.scheduled_at ?? job.booking_date)}
+              todaysJobs.map((job) => {
+                const badge = bookingBadge(job);
+                return (
+                  <Link
+                    key={job.id}
+                    href={`/bookings/${job.id}`}
+                    className="px-[22px] py-4 flex items-center gap-4 flex-wrap"
+                    style={{ borderBottom: '1px solid var(--color-canvas)' }}
+                  >
+                    <div className="w-[72px] text-center shrink-0">
+                      <div className="text-[13.5px] font-bold">{formatSlotTime(job.time)}</div>
                     </div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-[13.5px] font-bold truncate">
-                      {job.service?.name ?? job.service_name ?? 'Service'}
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[13.5px] font-bold truncate">{job.serviceName}</div>
+                      <div className="text-[12px] text-[var(--color-muted)] truncate">
+                        {job.customerName}
+                        {job.customerPhone ? ` · ${job.customerPhone}` : ''}
+                      </div>
                     </div>
-                    <div className="text-[12px] text-[var(--color-muted)] truncate">
-                      {job.customer?.name ?? job.customer_name ?? 'Customer'}
-                      {job.vehicle_number ? ` · ${job.vehicle_number}` : ''}
-                    </div>
-                  </div>
-                  <div className="text-[13.5px] font-bold">{formatMoney(job.total_amount ?? job.amount)}</div>
-                  <Badge tone={statusTone(job.status)}>{job.status ?? 'pending'}</Badge>
-                </Link>
-              ))
+                    <div className="text-[13.5px] font-bold">{formatMoney(job.price)}</div>
+                    <Badge tone={badge.tone}>{badge.label}</Badge>
+                  </Link>
+                );
+              })
             )}
           </Card>
         </div>
@@ -200,15 +207,15 @@ export default function DashboardPage() {
                 >
                   <div className="flex justify-between items-center gap-2 mb-1.5">
                     <div className="text-[13px] font-bold truncate">
-                      {walkIn.car_number ?? walkIn.vehicle_number ?? 'Walk-in'}
+                      {walkIn.registration ?? 'Walk-in'}
                     </div>
                     <Badge tone={statusTone(walkIn.status)}>
                       {walkIn.status === 'in_progress' ? 'In progress' : 'Open'}
                     </Badge>
                   </div>
                   <div className="text-[12px] text-[var(--color-muted)] mb-3 truncate">
-                    {walkIn.customer_name}
-                    {walkIn.car_model ? ` · ${walkIn.car_model}` : ''}
+                    {walkIn.customerName}
+                    {walkIn.vehicleLabel ? ` · ${walkIn.vehicleLabel}` : ''}
                   </div>
                   <Link href={`/walk-in/${walkIn.id}`}>
                     <Button variant="tint" size="sm" fullWidth>

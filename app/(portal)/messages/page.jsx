@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Send } from 'lucide-react';
 import { usePortalHeader } from '../layout';
@@ -8,14 +9,33 @@ import { Card, EmptyState } from '@/components/ui/Card';
 import { useToast } from '@/components/ui/Toast';
 import { chatAPI } from '@/api/customers';
 import { unwrap } from '@/lib/queries';
+import { toConversation, toMessage } from '@/lib/entities';
 import { acquireSocket, releaseSocket } from '@/lib/socket';
 import { useAuth } from '@/context/AuthContext';
 import { formatTime, initialsOf } from '@/lib/format';
+import { rules, validate } from '@/shared/utils/validation';
+
+// sendMessageSchema caps message_text at 4000 on the backend; past that the
+// send is a 400, not a slow send.
+const MESSAGE_LIMIT = 4000;
+const SCHEMA = {
+  message: [rules.required('Message'), rules.maxLength(MESSAGE_LIMIT, 'Message')],
+};
 
 export default function MessagesPage() {
+  return (
+    <Suspense fallback={null}>
+      <Messages />
+    </Suspense>
+  );
+}
+
+function Messages() {
   const toast = useToast();
   const queryClient = useQueryClient();
   const { user } = useAuth();
+  // "Message customer" on a booking links here with ?booking=<id>.
+  const bookingParam = useSearchParams().get('booking');
   const [activeId, setActiveId] = useState(null);
   const [draft, setDraft] = useState('');
   const [sending, setSending] = useState(false);
@@ -23,20 +43,58 @@ export default function MessagesPage() {
 
   usePortalHeader('Messages', 'Booking-linked chats with your customers');
 
-  const { data: conversations = [], isLoading } = useQuery({
+  const { data: allConversations = [], isLoading } = useQuery({
     queryKey: ['conversations'],
-    queryFn: async () => unwrap(await chatAPI.getConversations(), 'conversations'),
+    queryFn: async () => unwrap(await chatAPI.getConversations()).map(toConversation),
   });
 
-  const active = useMemo(
-    () => conversations.find((c) => String(c.id) === String(activeId)) ?? conversations[0] ?? null,
-    [conversations, activeId]
+  // A chat only belongs in the list once someone has actually written in it.
+  // The exception is the one the vendor just asked for by clicking "Message" on
+  // a booking: it has to be openable even while it is still empty, or that
+  // button would land on a list that does not contain what it promised.
+  const conversations = useMemo(
+    () =>
+      allConversations.filter(
+        (c) => c.hasMessages || (bookingParam && String(c.bookingId) === String(bookingParam))
+      ),
+    [allConversations, bookingParam]
   );
+
+  const requested = bookingParam
+    ? allConversations.find((c) => String(c.bookingId) === String(bookingParam))
+    : null;
+
+  const active = useMemo(
+    () =>
+      conversations.find((c) => String(c.id) === String(activeId)) ??
+      (requested && conversations.find((c) => c.id === requested.id)) ??
+      conversations[0] ??
+      null,
+    [conversations, activeId, requested]
+  );
+
+  // No conversation exists for that booking yet, so open one. Guarded by
+  // `bookingParam` and by the list having loaded, so it cannot fire while the
+  // existing chat is simply still on its way.
+  const needsCreate = Boolean(bookingParam) && !isLoading && !requested;
+  useEffect(() => {
+    if (!needsCreate) return;
+    let cancelled = false;
+    (async () => {
+      const result = await chatAPI.createConversation(Number(bookingParam));
+      if (!cancelled && result?.success) {
+        queryClient.invalidateQueries({ queryKey: ['conversations'] });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [needsCreate, bookingParam, queryClient]);
 
   const { data: messages = [] } = useQuery({
     queryKey: ['messages', active?.id],
     enabled: Boolean(active?.id),
-    queryFn: async () => unwrap(await chatAPI.getMessages(active.id), 'messages'),
+    queryFn: async () => unwrap(await chatAPI.getMessages(active.id)).map(toMessage),
   });
 
   // Join this conversation's room so the other side's messages arrive without
@@ -73,7 +131,15 @@ export default function MessagesPage() {
   const send = async (event) => {
     event.preventDefault();
     const text = draft.trim();
-    if (!text || !active) return;
+    if (!active) return;
+
+    const { errors, isValid } = validate({ message: text }, SCHEMA);
+    if (!isValid) {
+      // A chat box has nowhere sensible to put a field error, so the one case
+      // that can actually happen — an over-long paste — is surfaced as a toast.
+      if (text) toast.error(errors.message);
+      return;
+    }
 
     setSending(true);
     const result = await chatAPI.sendMessage({ conversationId: active.id, message_text: text });
@@ -87,15 +153,14 @@ export default function MessagesPage() {
     }
   };
 
-  const isMine = (message) =>
-    String(message.sender_id ?? message.senderId ?? message.sender?.id) === String(user?.id);
+  const isMine = (message) => String(message.senderId) === String(user?.id);
 
   if (!isLoading && conversations.length === 0) {
     return (
       <Card>
         <EmptyState
-          title="No conversations yet"
-          body="Chats open from a booking — when a customer messages you about a job, it appears here."
+          title="No messages yet"
+          body="A chat shows up here once a customer sends you a message about a booking."
         />
       </Card>
     );
@@ -109,7 +174,7 @@ export default function MessagesPage() {
       <Card padded={false} className="min-w-0 overflow-hidden">
         {conversations.map((conversation) => {
           const selected = String(conversation.id) === String(active?.id);
-          const name = conversation.customer?.name ?? conversation.customer_name ?? 'Customer';
+          const name = conversation.customer ?? 'Customer';
 
           return (
             <button
@@ -132,7 +197,7 @@ export default function MessagesPage() {
               <span className="min-w-0 flex-1">
                 <span className="block text-[13.5px] font-bold truncate">{name}</span>
                 <span className="block text-[12px] text-[var(--color-muted)] truncate">
-                  {conversation.booking?.service?.name ?? conversation.last_message ?? 'Booking chat'}
+                  {conversation.lastMessage ?? 'No messages yet — say hello'}
                 </span>
               </span>
             </button>
@@ -149,14 +214,14 @@ export default function MessagesPage() {
             className="w-9 h-9 rounded-full text-white text-[13px] font-bold flex items-center justify-center"
             style={{ background: 'var(--color-primary)' }}
           >
-            {initialsOf(active?.customer?.name ?? active?.customer_name)}
+            {initialsOf(active?.customer)}
           </span>
           <div className="min-w-0">
             <div className="text-[14px] font-bold truncate">
-              {active?.customer?.name ?? active?.customer_name ?? 'Customer'}
+              {active?.customer ?? 'Customer'}
             </div>
             <div className="text-[11.5px] text-[var(--color-muted)] truncate">
-              {active?.booking?.service?.name ?? 'Booking chat'}
+              {active?.service ?? 'Booking chat'}
             </div>
           </div>
         </div>
@@ -177,13 +242,13 @@ export default function MessagesPage() {
                 }}
               >
                 <div className="text-[13px] leading-[1.55]">
-                  {message.message_text ?? message.text}
+                  {message.text}
                 </div>
                 <div
                   className="text-[10.5px] mt-1"
                   style={{ color: mine ? 'rgba(255,255,255,.7)' : 'var(--color-disabled)' }}
                 >
-                  {formatTime(message.createdAt ?? message.created_at)}
+                  {formatTime(message.at)}
                 </div>
               </div>
             );
@@ -199,7 +264,7 @@ export default function MessagesPage() {
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
             placeholder="Write a message…"
-            maxLength={4000}
+            maxLength={MESSAGE_LIMIT}
             className="flex-1 rounded-[var(--radius-pill)] px-4 py-3 text-[13.5px] outline-none"
             style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-line)' }}
           />

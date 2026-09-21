@@ -1,32 +1,29 @@
 'use client';
 
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
 import BrandLockup from '@/components/shell/BrandLockup';
 
 /**
- * Pre-portal chrome for the auth screens: centred single column, max-width
- * 468px, brand lockup top-left. The prototype's "Workflow map" pill is a
- * navigation aid for reviewers, so it is not carried over.
+ * Pre-portal chrome for the auth screens: a single centred column, max-width
+ * 468px.
+ *
+ * No corner header and no back button — the column is centred vertically rather
+ * than pinned under a header. Screens that relied on the back arrow carry a text
+ * link instead, so every step still has a way out.
+ *
+ * A small "Keplix Partner" wordmark sits above the title. Without any name on
+ * the page, the first screen a vendor sees looks like an anonymous form, which
+ * is also what a phishing page looks like.
  */
-export default function AuthShell({ title, subtitle, backHref, children, footer }) {
+export default function AuthShell({ title, subtitle, children, footer }) {
   return (
-    <div className="min-h-screen flex flex-col items-center" style={{ background: 'var(--color-canvas)' }}>
-      <div className="w-full max-w-[1180px] px-7 py-6 flex items-center justify-between gap-4 flex-wrap">
-        <BrandLockup width={118} height={42} label={null} />
-      </div>
-
-      <div className="w-full max-w-[468px] px-6 pt-[34px] pb-[60px]">
-        {backHref && (
-          <Link
-            href={backHref}
-            aria-label="Go back"
-            className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white mb-[22px] text-[var(--color-ink-secondary)]"
-            style={{ border: '1px solid var(--color-line)' }}
-          >
-            <ArrowLeft size={16} />
-          </Link>
-        )}
+    <div
+      className="min-h-screen flex flex-col items-center justify-center"
+      style={{ background: 'var(--color-canvas)' }}
+    >
+      <div className="w-full max-w-[468px] px-6 py-[60px]">
+        <div className="mb-8">
+          <BrandLockup width={84} height={30} label="Partner" />
+        </div>
 
         <h1 className="text-[28px] font-bold tracking-[-0.6px]">{title}</h1>
         {subtitle && (

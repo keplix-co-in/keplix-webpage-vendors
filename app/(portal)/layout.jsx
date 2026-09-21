@@ -11,6 +11,10 @@ import { vendorAPI } from '@/api/vendor';
 import { bookingsAPI } from '@/api/bookings';
 import { notificationsAPI } from '@/api/customers';
 import { useVendorSocket } from '@/lib/useVendorSocket';
+import { DASHBOARD_BOOKINGS } from '@/components/bookings/bookingFields';
+import { unwrap } from '@/lib/queries';
+import { rememberNext } from '@/lib/nextTarget';
+import { toNotification } from '@/lib/entities';
 
 const HeaderContext = createContext(() => {});
 
@@ -26,13 +30,18 @@ export default function PortalLayout({ children }) {
   const router = useRouter();
   const queryClient = useQueryClient();
   const toast = useToast();
-  const { user, loading, vendorId, setVendorProfile } = useAuth();
+  const { user, loading, vendorId, setVendorProfile, isPreview, signOut, sessionEnded } = useAuth();
   const [header, setHeader] = useState({ title: '', subtitle: '' });
   const [onlineBusy, setOnlineBusy] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user) router.replace('/sign-in');
-  }, [loading, user, router]);
+    if (loading || user) return;
+    // Remember what they asked for, so signing in returns them there instead of
+    // to the dashboard. A vendor following a link from an email lands on the
+    // page it pointed at, not on a generic start.
+    rememberNext(window.location.pathname + window.location.search);
+    router.replace(sessionEnded ? '/sign-in?expired=1' : '/sign-in');
+  }, [loading, user, sessionEnded, router]);
 
   const { data: profile } = useQuery({
     queryKey: ['vendor-profile'],
@@ -49,12 +58,10 @@ export default function PortalLayout({ children }) {
   }, [profile, setVendorProfile]);
 
   const { data: bookings } = useQuery({
-    queryKey: ['bookings', vendorId],
+    queryKey: ['bookings', vendorId, DASHBOARD_BOOKINGS],
     enabled: Boolean(vendorId),
     queryFn: async () => {
-      const result = await bookingsAPI.getVendorBookings(vendorId);
-      if (!result?.success) return [];
-      return result.data?.bookings ?? result.data?.results ?? result.data ?? [];
+      return unwrap(await bookingsAPI.getVendorBookings(vendorId, DASHBOARD_BOOKINGS), 'bookings');
     },
   });
 
@@ -62,9 +69,7 @@ export default function PortalLayout({ children }) {
     queryKey: ['notifications'],
     enabled: Boolean(user),
     queryFn: async () => {
-      const result = await notificationsAPI.getNotifications();
-      if (!result?.success) return [];
-      return result.data?.notifications ?? result.data?.results ?? result.data ?? [];
+      return unwrap(await notificationsAPI.getNotifications(), 'notifications').map(toNotification);
     },
   });
 
@@ -75,9 +80,9 @@ export default function PortalLayout({ children }) {
     const notifs = Array.isArray(notifications) ? notifications : [];
     return {
       pendingBookings: list.filter(
-        (b) => String(b?.vendor_status ?? b?.status ?? '').toLowerCase() === 'pending'
+        (b) => b?.vendor_status === 'pending'
       ).length,
-      unreadNotifications: notifs.filter((n) => !(n?.is_read ?? n?.read)).length,
+      unreadNotifications: notifs.filter((n) => !n.read).length,
     };
   }, [bookings, notifications]);
 
@@ -110,6 +115,25 @@ export default function PortalLayout({ children }) {
         <PortalNav badges={badges} />
 
         <div className="flex flex-col min-w-0">
+          {isPreview && (
+            <div
+              className="px-7 py-2 flex items-center justify-between gap-4 flex-wrap text-[12px] font-bold"
+              style={{ background: 'var(--color-warning-tint-strong)', color: 'var(--color-warning-text)' }}
+            >
+              <span>
+                Dev preview — not a real session. Data is empty because every API call is
+                unauthenticated.
+              </span>
+              <button
+                type="button"
+                onClick={signOut}
+                className="underline cursor-pointer whitespace-nowrap"
+              >
+                Exit preview
+              </button>
+            </div>
+          )}
+
           <PortalHeader
             title={header.title}
             subtitle={header.subtitle}

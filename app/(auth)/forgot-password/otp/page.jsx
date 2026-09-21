@@ -1,17 +1,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import AuthShell from '@/components/auth/AuthShell';
 import OtpInput from '@/components/ui/OtpInput';
 import Button from '@/components/ui/Button';
 import { authAPI } from '@/api/auth';
-import { maskPhone, stepStore, useResendCountdown, useStepValue } from '../../_lib/stepStore';
+import { stepStore, useResendCountdown, useStepValue } from '../../_lib/stepStore';
+
+/** Every OTP the backend issues is six digits. */
+const OTP_PATTERN = /^\d{6}$/;
 
 export default function ForgotPasswordOtpPage() {
   const router = useRouter();
   const email = useStepValue('reset_email');
-  const phone = useStepValue('phone');
   const [otp, setOtp] = useState('');
   const [error, setError] = useState(null);
   const { remaining, canResend, restart } = useResendCountdown();
@@ -30,12 +33,12 @@ export default function ForgotPasswordOtpPage() {
   }, []);
 
   useEffect(() => {
-    if (email === null && phone === null) router.replace('/forgot-password');
-  }, [email, phone, router]);
+    if (email === null) router.replace('/forgot-password');
+  }, [email, router]);
 
   const submit = (event) => {
     event.preventDefault();
-    if (otp.length < 6) {
+    if (!OTP_PATTERN.test(otp)) {
       setError('Enter the 6-digit code');
       return;
     }
@@ -47,23 +50,25 @@ export default function ForgotPasswordOtpPage() {
     if (!canResend) return;
     setError(null);
     restart();
-    const result = email
-      ? await authAPI.sendPasswordResetOTP(email)
-      : await authAPI.sendPhoneOTP(phone);
+    const result = await authAPI.sendPasswordResetOTP(email);
     if (!result?.success) setError(result?.error || 'Could not resend the code.');
   };
-
-  const destination = email ? `your email address ${email}` : `phone number ${maskPhone(phone ?? '')}`;
 
   return (
     <AuthShell
       title="Forgot Password"
-      subtitle={`An OTP code has been sent to ${destination}`}
-      backHref="/forgot-password"
+      subtitle={`An OTP code has been sent to your email address ${email ?? ''}`}
     >
       <form onSubmit={submit} noValidate>
         <div className="mb-3.5">
-          <OtpInput value={otp} onChange={setOtp} error={Boolean(error)} />
+          <OtpInput
+            value={otp}
+            onChange={(value) => {
+              setOtp(value);
+              if (error) setError(null);
+            }}
+            error={Boolean(error)}
+          />
         </div>
 
         <div className="text-[12.5px] text-[var(--color-muted)] mb-6">
@@ -88,6 +93,12 @@ export default function ForgotPasswordOtpPage() {
           Verify OTP
         </Button>
       </form>
+
+      <p className="text-center text-[12.5px] text-[var(--color-muted)] mt-[18px]">
+        <Link href="/forgot-password" className="font-bold text-[var(--color-primary)]">
+          Entered the wrong address? Change it
+        </Link>
+      </p>
     </AuthShell>
   );
 }

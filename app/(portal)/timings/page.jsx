@@ -6,53 +6,126 @@ import { Plus, X } from 'lucide-react';
 import { usePortalHeader } from '../layout';
 import { Card, CardHeader, Kicker } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
-import { Chip, Toggle } from '@/components/ui/Field';
+import { Chip } from '@/components/ui/Field';
 import { useToast } from '@/components/ui/Toast';
 import { useAuth } from '@/context/AuthContext';
 import { vendorAPI } from '@/api/vendor';
+import TimeSelect, { toMinutes } from '@/components/onboarding/TimeSelect';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-const DEFAULT_HOURS = { open: '09:00', close: '21:00', closed: false };
+/**
+ * The backend keeps ONE opening window for the whole week, not a schedule per
+ * day: `operating_hours` is a single string ("9:00 AM - 9:00 PM"), `breaks` is
+ * a JSON list of strings ("1:00 PM - 1:30 PM") and `holidays` a JSON list of
+ * day names. This page used to save a per-day object into a `timings` field the
+ * backend has no column for, and read a `working_hours` field it never returns,
+ * so nothing a vendor entered here was stored or shown back.
+ */
+const parseJsonList = (value) => {
+  if (Array.isArray(value)) return value;
+  if (typeof value !== 'string' || !value.trim()) return [];
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
+
+const splitRange = (value) => {
+  const [start = '', end = ''] = String(value ?? '')
+    .split(/\s+-\s+/)
+    .map((part) => part.trim());
+  return { start, end };
+};
+
+// Breaks written by older web builds were {start, end} objects; the app writes
+// strings. Accept both so nothing already saved disappears.
+const toBreak = (item) =>
+  typeof item === 'string' ? splitRange(item) : { start: item?.start ?? '', end: item?.end ?? '' };
+
+const validateTimings = ({ open, close }, breaks) => {
+  const errors = {};
+
+  const openAt = toMinutes(open);
+  const closeAt = toMinutes(close);
+
+  if (openAt === null || closeAt === null) {
+    errors.hours = 'Choose both an opening and a closing time.';
+  } else if (closeAt <= openAt) {
+    errors.hours = 'Closing time must be after opening time.';
+  }
+
+  breaks.forEach((item, index) => {
+    const start = toMinutes(item.start);
+    const end = toMinutes(item.end);
+
+    if (start === null || end === null) {
+      errors[`break-${index}`] = 'Choose both a start and an end time.';
+    } else if (end <= start) {
+      errors[`break-${index}`] = 'A break must end after it starts.';
+    } else if (openAt !== null && closeAt !== null && (start < openAt || end > closeAt)) {
+      errors[`break-${index}`] = 'This break falls outside your opening hours.';
+    }
+  });
+
+  return errors;
+};
 
 export default function TimingsPage() {
   const toast = useToast();
   const queryClient = useQueryClient();
   const { vendorProfile } = useAuth();
 
-  const [hours, setHours] = useState(() =>
-    Object.fromEntries(DAYS.map((day) => [day, { ...DEFAULT_HOURS }]))
-  );
+  const [hours, setHours] = useState({ open: '', close: '' });
   const [breaks, setBreaks] = useState([]);
+  const [holidays, setHolidays] = useState([]);
   const [seeded, setSeeded] = useState(null);
+  const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
 
   usePortalHeader('Timings & holidays', 'Business hours, mid-day breaks and weekly closures');
 
-  // Timings and breaks live on the vendor profile — there is no separate
-  // endpoint — so they are seeded from it during render rather than in an
-  // effect, which would cascade an extra render on every profile refetch.
+  // Seeded during render rather than in an effect, so a profile refetch does not
+  // cascade an extra render. The vendor's edits win until the profile changes.
   if (vendorProfile && seeded !== vendorProfile) {
     setSeeded(vendorProfile);
-
-    const saved = vendorProfile.timings ?? vendorProfile.working_hours;
-    const parsed = typeof saved === 'string' ? safeParse(saved) : saved;
-    if (parsed) setHours((current) => ({ ...current, ...parsed }));
-
-    const savedBreaks = vendorProfile.breaks;
-    const parsedBreaks = typeof savedBreaks === 'string' ? safeParse(savedBreaks) : savedBreaks;
-    if (Array.isArray(parsedBreaks)) setBreaks(parsedBreaks);
+    const { start, end } = splitRange(vendorProfile.operating_hours);
+    setHours({ open: start, close: end });
+    setBreaks(parseJsonList(vendorProfile.breaks).map(toBreak));
+    setHolidays(parseJsonList(vendorProfile.holidays));
   }
 
-  const setDay = (day, patch) => setHours((current) => ({ ...current, [day]: { ...current[day], ...patch } }));
+  const openTime = hours.open;
+  const closeTime = hours.close;
+
+  const setHour = (key) => (value) => {
+    setHours((current) => ({ ...current, [key]: value }));
+    setErrors((current) => ({ ...current, hours: null }));
+  };
+
+  const setBreak = (index, key, value) => {
+    setBreaks((current) => current.map((item, i) => (i === index ? { ...item, [key]: value } : item)));
+    setErrors((current) => ({ ...current, [`break-${index}`]: null }));
+  };
+
+  const toggleHoliday = (day) =>
+    setHolidays((current) =>
+      current.includes(day) ? current.filter((d) => d !== day) : [...current, day]
+    );
 
   const save = async () => {
+    const found = validateTimings({ open: openTime, close: closeTime }, breaks);
+    setErrors(found);
+    if (Object.values(found).some(Boolean)) return;
+
     setBusy(true);
-    // The profile route is multipart-aware but accepts JSON too; breaks are sent
-    // as a JSON string because that is how the mobile client writes them.
     const result = await vendorAPI.updateProfile({
-      timings: hours,
-      breaks: JSON.stringify(breaks),
+      operating_hours: `${openTime} - ${closeTime}`,
+      // JSON strings, as the profile route reads them from multipart or JSON.
+      breaks: JSON.stringify(breaks.map((b) => `${b.start} - ${b.end}`)),
+      holidays: JSON.stringify(holidays),
     });
     setBusy(false);
 
@@ -67,52 +140,17 @@ export default function TimingsPage() {
   return (
     <div className="max-w-[760px]">
       <Card className="mb-5">
-        <CardHeader title="Business hours" />
-        {DAYS.map((day) => {
-          const value = hours[day] ?? DEFAULT_HOURS;
-          return (
-            <div
-              key={day}
-              className="flex items-center gap-4 py-3 flex-wrap"
-              style={{ borderBottom: '1px solid var(--color-divider)' }}
-            >
-              <span className="text-[13.5px] font-bold w-[110px] shrink-0">{day}</span>
+        <CardHeader title="Business hours" subtitle="Your opening window, every working day" />
 
-              {value.closed ? (
-                <span className="flex-1 text-[13px] font-bold text-[var(--color-danger)]">Closed</span>
-              ) : (
-                <span className="flex-1 flex items-center gap-2.5 flex-wrap">
-                  <input
-                    type="time"
-                    value={value.open}
-                    onChange={(e) => setDay(day, { open: e.target.value })}
-                    aria-label={`${day} opening time`}
-                    className="rounded-[var(--radius-well)] px-3 py-2 text-[13px] outline-none"
-                    style={{ border: '1px solid var(--color-line-strong)' }}
-                  />
-                  <span className="text-[var(--color-disabled)]">–</span>
-                  <input
-                    type="time"
-                    value={value.close}
-                    onChange={(e) => setDay(day, { close: e.target.value })}
-                    aria-label={`${day} closing time`}
-                    className="rounded-[var(--radius-well)] px-3 py-2 text-[13px] outline-none"
-                    style={{ border: '1px solid var(--color-line-strong)' }}
-                  />
-                </span>
-              )}
+        <div className="flex items-center gap-3 flex-wrap">
+          <TimeSelect ariaLabel="Opening time" value={openTime} onChange={setHour('open')} />
+          <span className="text-[var(--color-disabled)]">to</span>
+          <TimeSelect ariaLabel="Closing time" value={closeTime} onChange={setHour('close')} />
+        </div>
 
-              <span className="flex items-center gap-2.5 shrink-0">
-                <span className="text-[11.5px] font-bold text-[var(--color-muted)]">Open</span>
-                <Toggle
-                  checked={!value.closed}
-                  onChange={(next) => setDay(day, { closed: !next })}
-                  label={`${day} open`}
-                />
-              </span>
-            </div>
-          );
-        })}
+        {errors.hours && (
+          <p className="mt-3 text-[11.5px] font-bold text-[var(--color-danger)]">{errors.hours}</p>
+        )}
       </Card>
 
       <Card className="mb-5">
@@ -123,7 +161,7 @@ export default function TimingsPage() {
               type="button"
               variant="tint"
               size="sm"
-              onClick={() => setBreaks([...breaks, { start: '13:00', end: '13:30' }])}
+              onClick={() => setBreaks([...breaks, { start: '', end: '' }])}
             >
               <Plus size={14} /> Add break
             </Button>
@@ -136,51 +174,44 @@ export default function TimingsPage() {
           </p>
         ) : (
           breaks.map((item, index) => (
-            <div key={index} className="flex items-center gap-2.5 py-2 flex-wrap">
-              <input
-                type="time"
-                value={item.start}
-                onChange={(e) =>
-                  setBreaks(breaks.map((b, i) => (i === index ? { ...b, start: e.target.value } : b)))
-                }
-                aria-label={`Break ${index + 1} start`}
-                className="rounded-[var(--radius-well)] px-3 py-2 text-[13px] outline-none"
-                style={{ border: '1px solid var(--color-line-strong)' }}
-              />
-              <span className="text-[var(--color-disabled)]">–</span>
-              <input
-                type="time"
-                value={item.end}
-                onChange={(e) =>
-                  setBreaks(breaks.map((b, i) => (i === index ? { ...b, end: e.target.value } : b)))
-                }
-                aria-label={`Break ${index + 1} end`}
-                className="rounded-[var(--radius-well)] px-3 py-2 text-[13px] outline-none"
-                style={{ border: '1px solid var(--color-line-strong)' }}
-              />
-              <button
-                type="button"
-                onClick={() => setBreaks(breaks.filter((_, i) => i !== index))}
-                aria-label={`Remove break ${index + 1}`}
-                className="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer"
-                style={{ border: '1px solid var(--color-line)' }}
-              >
-                <X size={13} color="var(--color-danger)" />
-              </button>
+            <div key={index} className="py-2">
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <TimeSelect
+                  ariaLabel={`Break ${index + 1} start`}
+                  value={item.start}
+                  onChange={(value) => setBreak(index, 'start', value)}
+                />
+                <span className="text-[var(--color-disabled)]">to</span>
+                <TimeSelect
+                  ariaLabel={`Break ${index + 1} end`}
+                  value={item.end}
+                  onChange={(value) => setBreak(index, 'end', value)}
+                />
+                <button
+                  type="button"
+                  onClick={() => setBreaks(breaks.filter((_, i) => i !== index))}
+                  aria-label={`Remove break ${index + 1}`}
+                  className="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer"
+                  style={{ border: '1px solid var(--color-line)' }}
+                >
+                  <X size={13} color="var(--color-danger)" />
+                </button>
+              </div>
+              {errors[`break-${index}`] && (
+                <p className="mt-2 text-[11.5px] font-bold text-[var(--color-danger)]">
+                  {errors[`break-${index}`]}
+                </p>
+              )}
             </div>
           ))
         )}
       </Card>
 
       <Card className="mb-6">
-        <Kicker className="mb-3">Weekly closures</Kicker>
+        <Kicker className="mb-3">Weekly holidays</Kicker>
         <div className="flex gap-2.5 flex-wrap">
           {DAYS.map((day) => (
-            <Chip
-              key={day}
-              active={hours[day]?.closed}
-              onClick={() => setDay(day, { closed: !hours[day]?.closed })}
-            >
+            <Chip key={day} active={holidays.includes(day)} onClick={() => toggleHoliday(day)}>
               {day}
             </Chip>
           ))}
@@ -193,11 +224,3 @@ export default function TimingsPage() {
     </div>
   );
 }
-
-const safeParse = (value) => {
-  try {
-    return JSON.parse(value);
-  } catch {
-    return null;
-  }
-};

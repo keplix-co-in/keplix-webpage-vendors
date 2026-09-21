@@ -12,6 +12,23 @@ export const TIME_OPTIONS = Array.from({ length: 48 }).map((_, index) => {
   return `${hour12}:${minutes} ${suffix}`;
 });
 
+/**
+ * "1:30 PM" to minutes past midnight, so two of these can be compared.
+ *
+ * The values come from the closed list above, so there is no format to
+ * validate — only the ordering between two of them is worth checking.
+ * Returns null for an unset or unrecognised value.
+ */
+export const toMinutes = (time) => {
+  const match = /^(\d{1,2}):(\d{2})\s*(AM|PM)$/i.exec(String(time ?? '').trim());
+  if (!match) return null;
+
+  const [, rawHour, minutes, suffix] = match;
+  const hour = Number(rawHour) % 12;
+  const offset = suffix.toUpperCase() === 'PM' ? 12 : 0;
+  return (hour + offset) * 60 + Number(minutes);
+};
+
 export default function TimeSelect({ value, onChange, highlighted = false, ariaLabel }) {
   return (
     <select

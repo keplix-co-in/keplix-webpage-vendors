@@ -7,7 +7,12 @@ import AuthShell from '@/components/auth/AuthShell';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import { authAPI } from '@/api/auth';
+import { rules, validate } from '@/shared/utils/validation';
 import { stepStore } from '../_lib/stepStore';
+
+const SCHEMA = {
+  email: [rules.required('Email address'), rules.email],
+};
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
@@ -15,11 +20,17 @@ export default function ForgotPasswordPage() {
   const [error, setError] = useState(null);
   const [busy, setBusy] = useState(false);
 
+  const update = (event) => {
+    setEmail(event.target.value);
+    if (error) setError(null);
+  };
+
   const submit = async (event) => {
     event.preventDefault();
 
-    if (!email) {
-      setError('Enter the email address on your account.');
+    const { errors, isValid } = validate({ email }, SCHEMA);
+    if (!isValid) {
+      setError(errors.email);
       return;
     }
 
@@ -42,17 +53,17 @@ export default function ForgotPasswordPage() {
     <AuthShell
       title="Forgot Password"
       subtitle="Enter your email address and we will send a reset code"
-      backHref="/sign-in"
     >
       <form onSubmit={submit} noValidate>
         <Input
           label="Enter your email address"
           name="email"
+          autoFocus
           type="email"
           autoComplete="email"
           placeholder="Eg: xyz@gmail.com"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={update}
           error={error}
           className="mb-[18px]"
         />
@@ -62,13 +73,12 @@ export default function ForgotPasswordPage() {
         </Button>
       </form>
 
-      <div className="mt-3">
-        <Link href="/forgot-password/phone">
-          <Button variant="outline" fullWidth size="md">
-            Reset the password via phone number
-          </Button>
+      <p className="text-center text-[12.5px] text-[var(--color-muted)] mt-[18px]">
+        Remembered it?{' '}
+        <Link href="/sign-in" className="font-bold text-[var(--color-primary)]">
+          Sign in
         </Link>
-      </div>
+      </p>
     </AuthShell>
   );
 }

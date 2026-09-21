@@ -17,6 +17,7 @@ import {
   MAX_PHOTOS_PER_ITEM,
 } from '@/shared/constants/inspection';
 import { formatMoney } from '@/lib/format';
+import { rules, validate } from '@/shared/utils/validation';
 
 /**
  * The digital vehicle health sheet, shared by bookings and walk-ins.
@@ -43,6 +44,7 @@ export default function InspectionSheet({ bookingId, walkInJobId, onSaved }) {
   const [photos, setPhotos] = useState({});
   const [odometer, setOdometer] = useState('');
   const [overallNotes, setOverallNotes] = useState('');
+  const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -98,6 +100,9 @@ export default function InspectionSheet({ bookingId, walkInJobId, onSaved }) {
     [cards, prices]
   );
 
+  const clearError = (key) =>
+    setErrors((prev) => (prev[key] ? { ...prev, [key]: undefined } : prev));
+
   const addPhoto = (key, file) => {
     if (!file) return;
     const current = photos[key] ?? [];
@@ -128,6 +133,29 @@ export default function InspectionSheet({ bookingId, walkInJobId, onSaved }) {
     if (!cards.length) {
       toast.error('The inspection checklist failed to load. Please try again.');
       return;
+    }
+
+    // Skipping writes an empty sheet, so there are no prices or notes to check.
+    if (!skip) {
+      const values = { odometer, overallNotes };
+      const schema = {
+        odometer: [rules.nonNegativeNumber('Odometer reading')],
+        overallNotes: [rules.maxLength(2000, 'Notes')],
+      };
+
+      cards.forEach((card) => {
+        values[`price-${card.key}`] = prices[card.key] ?? '';
+        values[`notes-${card.key}`] = notes[card.key] ?? '';
+        schema[`price-${card.key}`] = [rules.nonNegativeNumber('Price')];
+        schema[`notes-${card.key}`] = [rules.maxLength(2000, 'Notes')];
+      });
+
+      const { errors: nextErrors, isValid } = validate(values, schema);
+      setErrors(nextErrors);
+      if (!isValid) {
+        toast.error('Check the highlighted items before saving.');
+        return;
+      }
     }
 
     setSubmitting(true);
@@ -245,13 +273,21 @@ export default function InspectionSheet({ bookingId, walkInJobId, onSaved }) {
                 min="0"
                 placeholder="₹ 0"
                 value={prices[card.key] ?? ''}
-                onChange={(e) => setPrices((prev) => ({ ...prev, [card.key]: e.target.value }))}
+                onChange={(e) => {
+                  setPrices((prev) => ({ ...prev, [card.key]: e.target.value }));
+                  clearError(`price-${card.key}`);
+                }}
+                error={errors[`price-${card.key}`]}
               />
               <Input
                 label="Notes"
                 placeholder="What did you find?"
                 value={notes[card.key] ?? ''}
-                onChange={(e) => setNotes((prev) => ({ ...prev, [card.key]: e.target.value }))}
+                onChange={(e) => {
+                  setNotes((prev) => ({ ...prev, [card.key]: e.target.value }));
+                  clearError(`notes-${card.key}`);
+                }}
+                error={errors[`notes-${card.key}`]}
               />
             </div>
 
@@ -319,14 +355,22 @@ export default function InspectionSheet({ bookingId, walkInJobId, onSaved }) {
             min="0"
             placeholder="e.g. 42180"
             value={odometer}
-            onChange={(e) => setOdometer(e.target.value)}
+            onChange={(e) => {
+              setOdometer(e.target.value);
+              clearError('odometer');
+            }}
+            error={errors.odometer}
             className="mb-4"
           />
           <Textarea
             label="Notes for the customer"
             placeholder="Anything the customer should know"
             value={overallNotes}
-            onChange={(e) => setOverallNotes(e.target.value)}
+            onChange={(e) => {
+              setOverallNotes(e.target.value);
+              clearError('overallNotes');
+            }}
+            error={errors.overallNotes}
           />
         </Card>
       </div>

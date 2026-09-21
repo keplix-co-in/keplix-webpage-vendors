@@ -8,9 +8,16 @@ export const reviewsAPI = {
     api.post(`/interactions/api/vendor/reviews/${reviewId}/reply`, { reply }),
 };
 
+/**
+ * Vendor-to-Keplix feedback. The route's own swagger block documents
+ * `{ comment, rating }`, but the controller destructures
+ * `{ title, message, category }` and 500s on anything else — verified against
+ * the live backend, where the documented shape fails and this one returns 201.
+ */
 export const feedbackAPI = {
   getFeedback: (params = {}) => api.get('/interactions/api/vendor/', { params }),
-  createFeedback: (payload) => api.post('/interactions/api/vendor/create', payload),
+  createFeedback: ({ title, message, category }) =>
+    api.post('/interactions/api/vendor/create', { title, message, category }),
 };
 
 /**

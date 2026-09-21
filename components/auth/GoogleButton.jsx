@@ -15,6 +15,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
  */
 const CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 
+/** Lets a screen hide its "OR" divider when there is no Google button to divide. */
+export const isGoogleConfigured = Boolean(CLIENT_ID);
+
 export default function GoogleButton({ label = 'Continue with Google', onCredential, disabled }) {
   const hiddenRef = useRef(null);
   const [ready, setReady] = useState(false);

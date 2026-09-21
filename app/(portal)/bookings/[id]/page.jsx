@@ -3,17 +3,22 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { usePortalHeader } from '../../layout';
 import { Card, CardHeader, EmptyState } from '@/components/ui/Card';
-import Badge, { statusTone } from '@/components/ui/Badge';
+import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
 import { useToast } from '@/components/ui/Toast';
 import { useAuth } from '@/context/AuthContext';
 import { useBookings } from '@/lib/queries';
-import { bookingsAPI } from '@/api/bookings';
+import { bookingsAPI, inspectionAPI } from '@/api/bookings';
 import JobTimeline from '@/components/bookings/JobTimeline';
-import { readBooking } from '@/components/bookings/bookingFields';
+import {
+  ANY_BOOKING,
+  bookingBadge,
+  formatSlotTime,
+  readBooking,
+} from '@/components/bookings/bookingFields';
 import { formatMoney, formatRelativeDay } from '@/lib/format';
 import { formatDuration } from '@/shared/utils/duration';
 
@@ -34,8 +39,14 @@ export default function BookingDetailPage() {
   const toast = useToast();
   const { vendorId } = useAuth();
   const [busy, setBusy] = useState(false);
+  // The list never reports early-start requests, so this only remembers the one
+  // made in this visit; the backend rejects a duplicate on its own.
+  const [earlyRequested, setEarlyRequested] = useState(false);
 
-  const { data: rawBookings = [], isLoading } = useBookings();
+  // ANY_BOOKING, not the default: with no status filter the backend hides every
+  // booking dated before today, so a running or finished job would read as
+  // "not found" here.
+  const { data: rawBookings = [], isLoading } = useBookings(ANY_BOOKING);
 
   // The vendor bookings endpoint returns the whole list; there is no
   // single-booking route for vendors, so the row is picked out of it.
@@ -48,6 +59,14 @@ export default function BookingDetailPage() {
     booking ? `Booking ${booking.token}` : 'Booking',
     booking ? `${booking.serviceName} · ${booking.customerName}` : ''
   );
+
+  // The list does not include the health sheet, so ask for it directly. A 404
+  // just means none has been submitted yet.
+  const { data: hasHealthSheet = false } = useQuery({
+    queryKey: ['booking-health-sheet', id],
+    enabled: Boolean(booking),
+    queryFn: async () => Boolean((await inspectionAPI.getBookingHealthSheet(id))?.success),
+  });
 
   if (isLoading) {
     return <div className="text-[13px] text-[var(--color-muted)]">Loading booking…</div>;
@@ -88,6 +107,7 @@ export default function BookingDetailPage() {
     const result = await bookingsAPI.requestEarlyStart(vendorId, booking.id);
     setBusy(false);
     if (result?.success) {
+      setEarlyRequested(true);
       refresh();
       toast.success('Early start requested — the job stays booked until the customer agrees.');
     } else {
@@ -95,6 +115,7 @@ export default function BookingDetailPage() {
     }
   };
 
+  const badge = bookingBadge(booking);
   const isPending = booking.vendorStatus === 'pending';
   const isAccepted = booking.vendorStatus === 'accepted';
   const isOngoing = booking.status === 'in_progress';
@@ -108,7 +129,7 @@ export default function BookingDetailPage() {
         <Card className="mb-5">
           <CardHeader
             title="Booking details"
-            action={<Badge tone={statusTone(booking.status)}>{booking.status || '—'}</Badge>}
+            action={<Badge tone={badge.tone}>{badge.label}</Badge>}
           />
           <Row label="Token" value={booking.token} />
           <Row label="Service" value={booking.serviceName} />
@@ -117,8 +138,8 @@ export default function BookingDetailPage() {
             label="Slot"
             value={
               booking.date
-                ? `${formatRelativeDay(booking.date)}${booking.time ? ` · ${booking.time}` : ''}`
-                : booking.time
+                ? `${formatRelativeDay(booking.date)}${booking.time ? ` · ${formatSlotTime(booking.time)}` : ''}`
+                : formatSlotTime(booking.time)
             }
           />
           <Row label="Duration" value={formatDuration(booking.durationMinutes) ?? '—'} />
@@ -128,22 +149,19 @@ export default function BookingDetailPage() {
         </Card>
 
         <Card>
-          <CardHeader title="Customer & vehicle" />
+          {/* The vendor bookings endpoint carries no vehicle, so there are no
+              vehicle rows: they could only ever read as blank. */}
+          <CardHeader title="Customer" />
           <Row label="Customer" value={booking.customerName} />
           <Row label="Mobile" value={booking.customerPhone} />
-          <Row
-            label="Vehicle"
-            value={[booking.vehicleMake, booking.vehicleModel].filter(Boolean).join(' ') || '—'}
-          />
-          <Row label="Registration" value={booking.registration} />
-          <Row label="Odometer" value={booking.odometer ? `${booking.odometer} km` : '—'} />
+          <Row label="Email" value={booking.customerEmail} />
         </Card>
       </div>
 
       <div className="min-w-0">
         <Card className="mb-5">
           <CardHeader title="Job timeline" />
-          <JobTimeline booking={booking} />
+          <JobTimeline booking={{ ...booking, hasHealthSheet }} />
         </Card>
 
         <Card>
@@ -172,10 +190,10 @@ export default function BookingDetailPage() {
                 variant="outline"
                 fullWidth
                 loading={busy}
-                disabled={booking.earlyStartRequested}
+                disabled={earlyRequested}
                 onClick={requestEarlyStart}
               >
-                {booking.earlyStartRequested ? 'Early start requested' : 'Request early start'}
+                {earlyRequested ? 'Early start requested' : 'Request early start'}
               </Button>
             )}
 

@@ -12,28 +12,40 @@ import { reviewsAPI } from '@/api/customers';
 import { unwrap } from '@/lib/queries';
 import { formatDate, initialsOf } from '@/lib/format';
 import { formatRating, hasRating, NO_RATING_LABEL } from '@/shared/utils/rating';
+import { rules, validate } from '@/shared/utils/validation';
+
+const SCHEMA = {
+  reply: [rules.required('Reply'), rules.maxLength(2000, 'Reply')],
+};
 
 export default function ReviewsPage() {
   const toast = useToast();
   const queryClient = useQueryClient();
   const [replyingTo, setReplyingTo] = useState(null);
   const [draft, setDraft] = useState('');
+  const [replyError, setReplyError] = useState(null);
   const [busy, setBusy] = useState(false);
 
-  const { data: reviews = [], isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['reviews'],
-    queryFn: async () => unwrap(await reviewsAPI.getVendorReviews(), 'reviews'),
+    queryFn: async () => {
+      // Pages of 20 by default; ask for the maximum so the distribution bars
+      // reflect more than the newest handful.
+      const result = await reviewsAPI.getVendorReviews({ limit: 100 });
+      return { list: unwrap(result), summary: result?.data?.summary ?? null };
+    },
   });
+  // Memoised so the distribution memo below is not recomputed every render.
+  const reviews = useMemo(() => data?.list ?? [], [data]);
 
-  const average = useMemo(() => {
-    const rated = reviews.filter((r) => hasRating(r.rating));
-    if (rated.length === 0) return null;
-    return rated.reduce((sum, r) => sum + Number(r.rating), 0) / rated.length;
-  }, [reviews]);
+  // The server's summary covers every review the vendor has, not just the page
+  // loaded here, and is only sent for page 1.
+  const totalReviews = data?.summary?.totalReviews ?? reviews.length;
+  const average = totalReviews > 0 && hasRating(data?.summary?.rating) ? Number(data.summary.rating) : null;
 
   usePortalHeader(
     'Customer reviews',
-    `${reviews.length} review${reviews.length === 1 ? '' : 's'} · reply to keep your rating healthy`
+    `${totalReviews} review${totalReviews === 1 ? '' : 's'} · reply to keep your rating healthy`
   );
 
   const distribution = useMemo(() => {
@@ -46,7 +58,10 @@ export default function ReviewsPage() {
   }, [reviews]);
 
   const publishReply = async (reviewId) => {
-    if (!draft.trim()) return;
+    const { errors, isValid } = validate({ reply: draft }, SCHEMA);
+    setReplyError(errors.reply ?? null);
+    if (!isValid) return;
+
     setBusy(true);
     const result = await reviewsAPI.replyToReview(reviewId, draft.trim());
     setBusy(false);
@@ -55,6 +70,7 @@ export default function ReviewsPage() {
       queryClient.invalidateQueries({ queryKey: ['reviews'] });
       setReplyingTo(null);
       setDraft('');
+      setReplyError(null);
       toast.success('Reply published');
     } else {
       toast.error(result?.error || 'Could not publish that reply');
@@ -86,15 +102,14 @@ export default function ReviewsPage() {
                   className="w-10 h-10 rounded-full text-white text-[14px] font-bold flex items-center justify-center shrink-0"
                   style={{ background: 'var(--color-primary)' }}
                 >
-                  {initialsOf(review.customer?.name ?? review.customer_name)}
+                  {initialsOf(review.customer?.name)}
                 </span>
                 <div className="flex-1 min-w-0">
                   <div className="text-[14px] font-bold truncate">
-                    {review.customer?.name ?? review.customer_name ?? 'Customer'}
+                    {review.customer?.name ?? 'Customer'}
                   </div>
                   <div className="text-[12px] text-[var(--color-muted)] truncate">
-                    {review.service?.name ?? review.service_name ?? 'Service'} ·{' '}
-                    {formatDate(review.createdAt ?? review.created_at)}
+                    {review.service?.name ?? 'Service'} · {formatDate(review.createdAt)}
                   </div>
                 </div>
                 <StarRating value={Number(review.rating) || 0} showValue />
@@ -122,12 +137,21 @@ export default function ReviewsPage() {
                 <div className="mt-4">
                   <Textarea
                     value={draft}
-                    onChange={(e) => setDraft(e.target.value)}
+                    onChange={(e) => {
+                      setDraft(e.target.value);
+                      if (replyError) setReplyError(null);
+                    }}
+                    error={replyError}
                     placeholder="Thank the customer, or explain what happened."
                     rows={3}
                   />
                   <div className="flex gap-2.5 mt-3">
-                    <Button size="sm" loading={busy} onClick={() => publishReply(review.id)}>
+                    <Button
+                      size="sm"
+                      loading={busy}
+                      disabled={!draft.trim()}
+                      onClick={() => publishReply(review.id)}
+                    >
                       Publish Reply
                     </Button>
                     <Button
@@ -136,6 +160,7 @@ export default function ReviewsPage() {
                       onClick={() => {
                         setReplyingTo(null);
                         setDraft('');
+                        setReplyError(null);
                       }}
                     >
                       Cancel
@@ -150,6 +175,7 @@ export default function ReviewsPage() {
                     onClick={() => {
                       setReplyingTo(review.id);
                       setDraft('');
+                      setReplyError(null);
                     }}
                   >
                     Reply

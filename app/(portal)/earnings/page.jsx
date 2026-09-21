@@ -4,31 +4,39 @@ import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { usePortalHeader } from '../layout';
 import { Card, CardHeader, Kicker, EmptyState } from '@/components/ui/Card';
-import Badge, { statusTone } from '@/components/ui/Badge';
+import Badge from '@/components/ui/Badge';
 import { Chip } from '@/components/ui/Field';
 import { useAuth } from '@/context/AuthContext';
-import { useEarnings, usePayments } from '@/lib/queries';
+import { useBookings, useEarnings } from '@/lib/queries';
+import { isEarningBooking, toEarningRow } from '@/lib/entities';
+import { ANY_BOOKING } from '@/components/bookings/bookingFields';
 import { formatMoney, formatDate } from '@/lib/format';
 
 const TABS = ['All', 'Paid out', 'Pending'];
 
-const isPaid = (payment) =>
-  ['paid', 'captured', 'settled', 'success', 'completed'].includes(
-    String(payment?.status ?? '').toLowerCase()
-  );
-
 export default function EarningsPage() {
   const { vendorProfile } = useAuth();
   const { data: earnings } = useEarnings();
-  const { data: payments = [], isLoading } = usePayments();
+  const { data: bookings = [], isLoading } = useBookings(ANY_BOOKING);
   const [tab, setTab] = useState('All');
 
   usePortalHeader('Earnings & payouts', 'Transaction history and your settlement account');
 
+  // Built from bookings, as the mobile screen does — /payments holds the
+  // vendor's own payments to Keplix, not what customers paid for jobs.
+  const rows = useMemo(
+    () =>
+      bookings
+        .filter(isEarningBooking)
+        .map(toEarningRow)
+        .sort((a, b) => new Date(b.at) - new Date(a.at)),
+    [bookings]
+  );
+
   const visible = useMemo(() => {
-    if (tab === 'All') return payments;
-    return payments.filter((p) => (tab === 'Paid out' ? isPaid(p) : !isPaid(p)));
-  }, [payments, tab]);
+    if (tab === 'All') return rows;
+    return rows.filter((row) => (tab === 'Paid out' ? row.paid : !row.paid));
+  }, [rows, tab]);
 
   const stats = [
     { label: 'LIFETIME', value: earnings?.total_earnings, note: 'Net of platform fees', feature: true },
@@ -115,24 +123,28 @@ export default function EarningsPage() {
               body="Completed jobs and their payouts appear here."
             />
           ) : (
-            visible.map((payment) => (
+            visible.map((row) => (
               <Link
-                key={payment.id}
-                href={`/earnings/${payment.id}`}
+                key={row.id}
+                href={`/earnings/${row.id}`}
                 className="px-[22px] py-4 flex items-center gap-4 flex-wrap"
                 style={{ borderTop: '1px solid var(--color-divider)' }}
               >
                 <div className="flex-1 min-w-0">
-                  <div className="text-[13.5px] font-bold truncate">
-                    {payment.customer?.name ?? payment.customer_name ?? 'Customer'}
-                  </div>
+                  <div className="text-[13.5px] font-bold truncate">{row.customer ?? 'Customer'}</div>
                   <div className="text-[12px] text-[var(--color-muted)] truncate">
-                    {payment.booking?.service?.name ?? payment.service_name ?? 'Service'} ·{' '}
-                    {formatDate(payment.createdAt ?? payment.created_at)}
+                    {row.service ?? 'Service'} · {formatDate(row.at)}
                   </div>
                 </div>
-                <div className="text-[13.5px] font-bold">{formatMoney(payment.amount)}</div>
-                <Badge tone={statusTone(payment.status)}>{payment.status ?? '—'}</Badge>
+                <div className="text-right">
+                  <div className="text-[13.5px] font-bold">{formatMoney(row.amount)}</div>
+                  {row.net != null && (
+                    <div className="text-[11px] text-[var(--color-muted)]">
+                      Net {formatMoney(row.net)}
+                    </div>
+                  )}
+                </div>
+                <Badge tone={row.paid ? 'success' : 'warning'}>{row.paid ? 'Paid' : 'Pending'}</Badge>
               </Link>
             ))
           )}

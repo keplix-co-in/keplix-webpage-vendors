@@ -4,13 +4,18 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { authAPI } from '@/api/auth';
+import { consumeNext } from '@/lib/nextTarget';
 
 /**
  * Shared tail of every sign-in path (email, phone OTP, Google).
  *
  * The landing rule lives in shared/utils/vendorLanding.js and is applied by
- * AuthContext, so all three paths branch identically: a customer account is
+ * AuthContext, so every path branches identically: a customer account is
  * refused and signed out, an unfinished registration lands on onboarding.
+ *
+ * A vendor who was sent here from a deep link (or an expired session) goes back
+ * to that page afterwards — but only when their account is ready for the portal.
+ * Someone with unfinished registration always goes to onboarding, never past it.
  */
 export function useSignInFlow() {
   const router = useRouter();
@@ -27,7 +32,10 @@ export function useSignInFlow() {
       return false;
     }
 
-    router.replace(landing.route);
+    // Consumed either way so a stale destination cannot linger into a later
+    // sign-in, but honoured only when the vendor is headed for the dashboard.
+    const next = consumeNext();
+    router.replace(landing.route === '/dashboard' && next ? next : landing.route);
     return true;
   };
 

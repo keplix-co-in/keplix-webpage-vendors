@@ -12,12 +12,27 @@ import { useToast } from '@/components/ui/Toast';
 import { walkInsAPI } from '@/api/bookings';
 import { readWalkIn } from '@/components/bookings/bookingFields';
 import { formatMoney } from '@/lib/format';
+import { rules, validate } from '@/shared/utils/validation';
 
 const PAYMENT_MODES = [
   { value: 'upi', label: 'UPI' },
   { value: 'cash', label: 'Cash' },
   { value: 'card', label: 'Card' },
 ];
+
+// The backend stores payment_mode as an enum; anything else is a 400.
+const PAYMENT_MODE_VALUES = PAYMENT_MODES.map((m) => m.value);
+
+const SCHEMA = {
+  amount: [
+    rules.required('Amount collected'),
+    rules.nonNegativeNumber('Amount collected'),
+    rules.maxAmount(500000, 'Amount collected'),
+  ],
+  mode: [
+    (value) => (PAYMENT_MODE_VALUES.includes(value) ? null : 'Choose how the customer paid.'),
+  ],
+};
 
 // The close payload survives the trip through the health-sheet gate, so the
 // vendor never re-types the amount after filling the checklist.
@@ -43,7 +58,7 @@ function CloseWalkInForm() {
   const [amountInput, setAmountInput] = useState(null);
   const [modeInput, setModeInput] = useState(null);
   const [draft, setDraft] = useState(null);
-  const [error, setError] = useState(null);
+  const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
   const retried = useRef(false);
 
@@ -144,14 +159,11 @@ function CloseWalkInForm() {
   const submit = (event) => {
     event.preventDefault();
 
-    const parsed = Number(amount.trim());
-    if (!amount.trim() || Number.isNaN(parsed) || parsed < 0) {
-      setError('Enter the amount you collected.');
-      return;
-    }
+    const { errors: nextErrors, isValid } = validate({ amount, mode }, SCHEMA);
+    setErrors(nextErrors);
+    if (!isValid) return;
 
-    setError(null);
-    close({ amount_collected: parsed, payment_mode: mode });
+    close({ amount_collected: Number(amount.trim()), payment_mode: mode });
   };
 
   return (
@@ -167,8 +179,11 @@ function CloseWalkInForm() {
           min="0"
           placeholder="₹ 0"
           value={amount}
-          onChange={(e) => setAmountInput(e.target.value)}
-          error={error}
+          onChange={(e) => {
+            setAmountInput(e.target.value);
+            setErrors((prev) => (prev.amount ? { ...prev, amount: undefined } : prev));
+          }}
+          error={errors.amount}
         />
 
         <div className="mt-5">
@@ -180,12 +195,18 @@ function CloseWalkInForm() {
               <Chip
                 key={option.value}
                 active={mode === option.value}
-                onClick={() => setModeInput(option.value)}
+                onClick={() => {
+                  setModeInput(option.value);
+                  setErrors((prev) => (prev.mode ? { ...prev, mode: undefined } : prev));
+                }}
               >
                 {option.label}
               </Chip>
             ))}
           </div>
+          {errors.mode && (
+            <p className="mt-2 text-[11.5px] font-bold text-[var(--color-danger)]">{errors.mode}</p>
+          )}
         </div>
 
         {job?.services?.length > 0 && (

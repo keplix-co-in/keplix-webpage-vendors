@@ -1,44 +1,68 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import OnboardingShell, { StepActions } from '@/components/onboarding/OnboardingShell';
+import OnboardingShell, { FieldError, StepActions } from '@/components/onboarding/OnboardingShell';
 import UploadField from '@/components/ui/Upload';
 import { useDraft } from '@/components/onboarding/DraftProvider';
 import { useToast } from '@/components/ui/Toast';
 import Input from '@/components/ui/Input';
+import { rules, validate } from '@/shared/utils/validation';
+
+// Format rules only. Whether *enough* was filled in is the bank-or-UPI check
+// below, which spans several fields and cannot be expressed per-field.
+const SCHEMA = {
+  gstNumber: [rules.required('GSTIN number'), rules.gstin],
+  accountNumber: [rules.accountNumber],
+  ifsc: [rules.ifsc],
+  accountHolderName: [rules.maxLength(120, 'Account holder name')],
+  upi: [rules.upi],
+};
 
 export default function DocumentsUploadPage() {
   const router = useRouter();
   const toast = useToast();
   const { draft, files, patch, setFile } = useDraft();
   const { gstInfo, bankDetails } = draft;
+  const [errors, setErrors] = useState({});
 
   const bankComplete = Boolean(
     bankDetails.accountNumber && bankDetails.ifsc && bankDetails.accountHolderName
   );
 
+  const clearError = (key) =>
+    setErrors((current) => (current[key] ? { ...current, [key]: null } : current));
+
   const next = () => {
-    if (!gstInfo.gstNumber) {
-      toast.error('Your GSTIN number is required.');
-      return;
-    }
+    const { errors: found } = validate(
+      { ...bankDetails, gstNumber: gstInfo.gstNumber },
+      SCHEMA
+    );
+
     if (!files.panCard || !files.tradeLicense) {
-      toast.error('Both the PAN card and the trade licence have to be uploaded.');
-      return;
+      found.documents = 'Both the PAN card and the trade licence have to be uploaded.';
     }
     // Either a full bank account or a UPI ID — one payout destination is enough,
     // but a half-filled bank block is not.
     if (!bankComplete && !bankDetails.upi) {
-      toast.error('Add your bank details or a UPI ID so payouts can reach you.');
-      return;
+      found.payout = 'Add your bank details or a UPI ID so payouts can reach you.';
     }
+
+    setErrors(found);
+    if (Object.values(found).some(Boolean)) return;
+
     router.push('/onboarding');
   };
 
   const bankField = (key) => ({
     name: key,
     value: bankDetails[key],
-    onChange: (e) => patch({ bankDetails: { [key]: e.target.value } }),
+    error: errors[key],
+    onChange: (e) => {
+      patch({ bankDetails: { [key]: e.target.value } });
+      clearError(key);
+      clearError('payout');
+    },
   });
 
   return (
@@ -52,7 +76,11 @@ export default function DocumentsUploadPage() {
         required
         name="gstNumber"
         value={gstInfo.gstNumber}
-        onChange={(e) => patch({ gstInfo: { gstNumber: e.target.value.toUpperCase() } })}
+        onChange={(e) => {
+          patch({ gstInfo: { gstNumber: e.target.value.toUpperCase() } });
+          clearError('gstNumber');
+        }}
+        error={errors.gstNumber}
         placeholder="07ABCDE1234F1Z5"
         className="mb-[18px]"
       />
@@ -62,7 +90,10 @@ export default function DocumentsUploadPage() {
           label="Trade license"
           required
           value={files.tradeLicense}
-          onChange={(file) => setFile('tradeLicense', file)}
+          onChange={(file) => {
+            setFile('tradeLicense', file);
+            clearError('documents');
+          }}
           onError={toast.error}
           placeholder="Tap to upload trade licence"
         />
@@ -73,10 +104,14 @@ export default function DocumentsUploadPage() {
           label="PAN card"
           required
           value={files.panCard}
-          onChange={(file) => setFile('panCard', file)}
+          onChange={(file) => {
+            setFile('panCard', file);
+            clearError('documents');
+          }}
           onError={toast.error}
           placeholder="Tap to upload PAN card"
         />
+        {errors.documents && <FieldError>{errors.documents}</FieldError>}
       </div>
 
       <div className="mb-[22px]">
@@ -128,6 +163,7 @@ export default function DocumentsUploadPage() {
       </div>
 
       <Input label="UPI ID" {...bankField('upi')} placeholder="e.g. name@okaxis" />
+      {errors.payout && <FieldError>{errors.payout}</FieldError>}
     </OnboardingShell>
   );
 }

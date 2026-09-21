@@ -2,40 +2,36 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { Phone } from 'lucide-react';
-import BrandLockup from '@/components/shell/BrandLockup';
+import EntryLoader from '@/components/auth/EntryLoader';
 import GoogleButton from '@/components/auth/GoogleButton';
+import { useSessionRedirect } from '@/components/auth/useSessionRedirect';
 import { useSignInFlow } from '@/components/auth/useSignInFlow';
 import Button from '@/components/ui/Button';
-import { useAuth } from '@/context/AuthContext';
 
 /**
- * Entry screen. Apple sign-in appears in the design but the backend has no
- * Apple path (only email, phone OTP and Google), so it is left out rather than
- * shipped as a dead button.
+ * Front door for a visitor with no session.
+ *
+ * Sign In is the primary action: most people opening the portal already have an
+ * account, so Register is a link beneath it rather than the big button it is on
+ * the app's first-launch screen. The design also shows Apple and phone sign-in;
+ * neither is offered — the backend has no Apple path, and phone sign-in cannot
+ * produce a session (verify-phone-otp returns no tokens and /login matches on
+ * email only), so both would be dead buttons.
  */
 export default function WelcomePage() {
-  const router = useRouter();
-  const { user, loading } = useAuth();
   const { busy, error, signInWithGoogle } = useSignInFlow();
+  // A vendor with a live session is forwarded to where they belong, and sees a
+  // loader meanwhile rather than this page flashing first.
+  const { pending } = useSessionRedirect();
 
-  // A vendor who still has a session should not be asked to sign in again.
-  useEffect(() => {
-    if (!loading && user) router.replace('/dashboard');
-  }, [loading, user, router]);
+  if (pending) return <EntryLoader />;
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center"
+      className="min-h-screen flex flex-col items-center justify-center"
       style={{ background: 'var(--color-canvas)' }}
     >
-      <div className="w-full max-w-[1180px] px-7 py-6">
-        <BrandLockup width={118} height={42} label={null} />
-      </div>
-
-      <div className="w-full max-w-[468px] px-6 pt-8 pb-[60px] text-center">
+      <div className="w-full max-w-[468px] px-6 py-[60px] text-center">
         <div className="flex justify-center mb-7">
           <Image
             src="/assets/keplix-icon.png"
@@ -59,26 +55,19 @@ export default function WelcomePage() {
           <p className="text-[12.5px] font-bold text-[var(--color-danger)] mb-4">{error}</p>
         )}
 
-        <Link href="/sign-up">
-          <Button fullWidth>Sign Up</Button>
+        <Link href="/sign-in">
+          <Button fullWidth>Sign In</Button>
         </Link>
 
-        <div className="mt-3">
-          <Link href="/sign-in">
-            <Button variant="outline" fullWidth>
-              Sign In
-            </Button>
+        <p className="text-[13px] text-[var(--color-muted)] mt-4">
+          New here?{' '}
+          <Link href="/sign-up" className="font-bold text-[var(--color-primary)]">
+            Register your workshop
           </Link>
-        </div>
+        </p>
 
-        <div className="mt-6 flex flex-col gap-3">
+        <div className="mt-6">
           <GoogleButton onCredential={signInWithGoogle} disabled={busy} />
-          <Link href="/sign-in/phone">
-            <Button variant="outline" fullWidth size="md">
-              <Phone size={16} />
-              Continue with phone number
-            </Button>
-          </Link>
         </div>
       </div>
     </div>

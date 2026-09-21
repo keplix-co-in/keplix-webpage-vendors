@@ -70,10 +70,3 @@ export function useResendCountdown(seconds = 30) {
   return { remaining, canResend: remaining <= 0, restart };
 }
 
-/** Masks a phone for display: +91 98110 ••••• */
-export const maskPhone = (phone = '') => {
-  const digits = String(phone).replace(/\D/g, '');
-  if (digits.length < 6) return phone;
-  const tail = digits.slice(-10);
-  return `+91 ${tail.slice(0, 5)} •••••`;
-};

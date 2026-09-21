@@ -112,7 +112,7 @@ export default function WalkInDetailPage() {
           <Row label="Customer" value={job.customerName} />
           <Row label="Mobile" value={job.customerPhone} />
           <Row label="Car number" value={job.registration} />
-          <Row label="Model" value={job.vehicleModel} />
+          <Row label="Vehicle" value={job.vehicleLabel} />
           <Row label="What it is in for" value={job.description} />
           <Row label="Checked in" value={job.createdAt ? formatDateTime(job.createdAt) : '—'} />
           {job.startedAt && <Row label="Started" value={formatDateTime(job.startedAt)} />}

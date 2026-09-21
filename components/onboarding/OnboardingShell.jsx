@@ -80,3 +80,15 @@ export function FieldLabel({ children, required = false, className = '' }) {
     </div>
   );
 }
+
+/**
+ * The same message style Input renders for its own errors, for the things a
+ * step validates that are not text fields — photos, uploads, a linked sub-step.
+ */
+export function FieldError({ children, className = '' }) {
+  return (
+    <p className={`mt-2 text-[11.5px] font-bold text-[var(--color-danger)] ${className}`}>
+      {children}
+    </p>
+  );
+}

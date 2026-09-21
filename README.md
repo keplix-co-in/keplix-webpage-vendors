@@ -21,9 +21,22 @@ to production the way the mobile app's fallback does.
 
 `npm run build` · `npx eslint .`
 
+### Screen index (dev only)
+
+`http://localhost:3000/dev/screens` lists every page in one place so you can
+open one directly instead of walking a flow to reach it — the web counterpart to
+the app's `VendorScreenTester`. It has search, a sample id for dynamic routes,
+and a **Preview guarded pages** toggle that stands in a fake vendor so the
+portal opens without a session (API calls still fail, so pages show their empty
+states — useful for looking at layout while the backend is down).
+
+Both the list and the toggle are gated on `NODE_ENV === 'development'`, which
+Next inlines at build time: in a production build the page renders a short
+notice and the preview flag is compiled out, so it cannot be switched on.
+
 ## How it is put together
 
-- `app/(auth)` — sign in/up, phone and email OTP, password recovery.
+- `app/(auth)` — sign in/up by email or Google, email OTP, password recovery.
 - `app/(onboarding)` — the four-step registration **hub** (completable in any
   order, not a wizard), ending in one submit.
 - `app/(portal)` — the signed-in app behind a sidebar shell. `layout.jsx`
@@ -42,6 +55,20 @@ to production the way the mobile app's fallback does.
   working mobile equivalent was left out rather than faked: Apple sign-in, the
   community forum, promotions/inventory. Support chat is local notes plus email,
   exactly as the app does it, because no support-chat backend exists.
+- **There is no phone sign-in or phone sign-up.** The endpoints exist, but
+  `verify-phone-otp` returns no tokens and `/login` matches on email only, so a
+  phone-only account can never sign in. The mobile app does not use them either.
+  Sign-in is email/password or Google; password recovery is by email OTP.
+- **The map is Leaflet + OpenStreetMap**, the same stack the app uses inside its
+  WebView, so there is no Maps API key to manage. Geocoding goes through
+  Nominatim (OSM's own), which keeps tiles and addresses on one dataset; the app
+  uses `expo-location` for this, which has no browser equivalent.
+- **Validation lives in `shared/utils/validation.js`.** The rules mirror what
+  the backend actually enforces — Indian mobile normalisation, walk-in
+  registration format, message length, payment-mode enum — so a form never
+  accepts what the API will reject. Statutory formats (GSTIN, PAN, IFSC, UPI)
+  are checked more strictly than the backend, which stores them as free text: a
+  typo there costs the vendor a failed verification days later.
 - **`vendorId` is the *user* id**, not the vendor profile id. Both the
   vendor-scoped REST paths and the socket's `user_<id>` room are keyed by it.
 - **The health sheet gates job completion.** Closing sends status, amount and

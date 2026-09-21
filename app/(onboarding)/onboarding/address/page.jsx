@@ -1,30 +1,58 @@
 'use client';
 
+import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { MapPin } from 'lucide-react';
 import OnboardingShell, { StepActions } from '@/components/onboarding/OnboardingShell';
 import { useDraft } from '@/components/onboarding/DraftProvider';
-import { useToast } from '@/components/ui/Toast';
+import MapPicker from '@/components/onboarding/MapPicker';
 import Input from '@/components/ui/Input';
+import { rules, validate } from '@/shared/utils/validation';
+
+const SCHEMA = {
+  street: [rules.required('Road / lane'), rules.maxLength(200, 'Road / lane')],
+  area: [rules.required('Area'), rules.maxLength(200, 'Area')],
+  city: [rules.required('City'), rules.maxLength(100, 'City')],
+  pincode: [rules.required('Pincode'), rules.pincode],
+  state: [rules.maxLength(100, 'State')],
+  landmark: [rules.maxLength(200, 'Landmark')],
+};
 
 export default function AddressEntryPage() {
   const router = useRouter();
-  const toast = useToast();
   const { draft, patch } = useDraft();
   const { address } = draft;
+  const [errors, setErrors] = useState({});
 
   const field = (key) => ({
     name: key,
     value: address[key],
-    onChange: (e) => patch({ address: { [key]: e.target.value } }),
+    error: errors[key],
+    onChange: (e) => {
+      patch({ address: { [key]: e.target.value } });
+      setErrors((current) => (current[key] ? { ...current, [key]: null } : current));
+    },
   });
 
+  // The pin fills the address fields in, but never overwrites something the
+  // vendor has already typed — the geocoder is a shortcut, not the authority.
+  const onPick = useCallback(
+    ({ lat, lng, label, ...resolved }) => {
+      const next = {};
+      Object.entries(resolved).forEach(([key, val]) => {
+        if (val && !address[key]) next[key] = val;
+      });
+      // Coordinates live under `location`, which is what the submit payload
+      // reads for latitude/longitude.
+      patch({ address: next, location: { latitude: lat, longitude: lng, label: label ?? '' } });
+    },
+    [address, patch]
+  );
+
   const save = () => {
-    const missing = ['street', 'area', 'city', 'pincode'].filter((key) => !address[key]);
-    if (missing.length > 0) {
-      toast.error('Road, area, city and pincode are all needed for the shop address.');
-      return;
-    }
+    const { errors: found, isValid } = validate(address, SCHEMA);
+    setErrors(found);
+    if (!isValid) return;
+
     router.push('/onboarding/workshop');
   };
 
@@ -40,24 +68,10 @@ export default function AddressEntryPage() {
         />
       }
     >
-      {/* The design ships a CSS mock of the map. Picking a pin needs the Maps
-          SDK and an API key, so this is an explicit placeholder rather than a
-          fake map: the typed address below is what actually gets saved. */}
-      <div
-        className="rounded-[18px] h-[180px] mb-[22px] flex flex-col items-center justify-center text-center px-6"
-        style={{
-          border: '1px dashed var(--color-line-strong)',
-          background:
-            'repeating-linear-gradient(0deg,#EEF1F5 0 1px,transparent 1px 44px),repeating-linear-gradient(90deg,#EEF1F5 0 1px,transparent 1px 44px),linear-gradient(135deg,#F7F8FA,#EDEFF3)',
-        }}
-      >
-        <MapPin size={26} color="var(--color-primary)" />
-        <div className="text-[13px] font-bold mt-2.5">Map pin coming soon</div>
-        <div className="text-[12px] text-[var(--color-muted)] mt-1 max-w-[380px] leading-[1.5]">
-          Enter the address below — it is what prints on invoices. You can drop the exact gate pin
-          from the app in the meantime.
-        </div>
-      </div>
+      <MapPicker
+        value={{ lat: draft.location.latitude, lng: draft.location.longitude, label: draft.location.label }}
+        onPick={onPick}
+      />
 
       <div className="grid grid-cols-2 gap-4 max-[880px]:grid-cols-1">
         <Input label="Shop no / building no (optional)" {...field('building')} />

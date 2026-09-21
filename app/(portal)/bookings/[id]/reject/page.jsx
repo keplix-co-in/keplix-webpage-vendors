@@ -12,9 +12,24 @@ import { useToast } from '@/components/ui/Toast';
 import { useAuth } from '@/context/AuthContext';
 import { useBookings } from '@/lib/queries';
 import { bookingsAPI } from '@/api/bookings';
-import { readBooking } from '@/components/bookings/bookingFields';
+import { ANY_BOOKING, formatSlotTime, readBooking } from '@/components/bookings/bookingFields';
 import { REJECTION_REASONS, DEFAULT_REJECTION_REASON } from '@/shared/constants/rejectReasons';
 import { formatMoney, formatRelativeDay } from '@/lib/format';
+import { rules, validate } from '@/shared/utils/validation';
+
+const OTHER_REASON = 'Other Reason';
+
+const SCHEMA = {
+  reason: [(value) => (REJECTION_REASONS.includes(value) ? null : 'Choose a reason.')],
+  // "Other" with nothing written says no more than declining silently.
+  details: [
+    (value, values) =>
+      values.reason === OTHER_REASON && !String(value ?? '').trim()
+        ? 'Tell the customer why, so the slot is not declined without explanation.'
+        : null,
+    rules.maxLength(2000, 'Details'),
+  ],
+};
 
 export default function RejectOrderPage() {
   const { id } = useParams();
@@ -25,9 +40,12 @@ export default function RejectOrderPage() {
 
   const [reason, setReason] = useState(DEFAULT_REJECTION_REASON);
   const [details, setDetails] = useState('');
+  const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
 
-  const { data: rawBookings = [] } = useBookings();
+  // ANY_BOOKING: the default hides bookings dated before today, so a pending
+  // request for an earlier slot would read as not found.
+  const { data: rawBookings = [] } = useBookings(ANY_BOOKING);
   const booking = useMemo(() => {
     const match = rawBookings.find((b) => String(b.id) === String(id));
     return match ? readBooking(match) : null;
@@ -36,12 +54,16 @@ export default function RejectOrderPage() {
   usePortalHeader('Reason for rejection', booking ? `${booking.token} · ${booking.serviceName}` : '');
 
   const submit = async () => {
+    const { errors: nextErrors, isValid } = validate({ reason, details }, SCHEMA);
+    setErrors(nextErrors);
+    if (!isValid) return;
+
     setBusy(true);
     // Only `vendor_status` is read by the backend's respond handler — the
     // reason is collected for the customer-facing message the app shows, but
     // nothing persists it yet, exactly as on mobile.
     const result = await bookingsAPI.respondToServiceRequest(vendorId, id, 'rejected', {
-      rejection_reason: reason === 'Other Reason' ? details.trim() || reason : reason,
+      rejection_reason: reason === OTHER_REASON ? details.trim() : reason,
     });
     setBusy(false);
 
@@ -91,7 +113,7 @@ export default function RejectOrderPage() {
             <div className="text-[12px] text-[var(--color-muted)] mt-1">
               {booking.token} · {booking.customerName}
               {booking.date ? ` · ${formatRelativeDay(booking.date)}` : ''}
-              {booking.time ? ` ${booking.time}` : ''}
+              {booking.time ? ` ${formatSlotTime(booking.time)}` : ''}
             </div>
             <div className="text-[13.5px] font-bold mt-2">{formatMoney(booking.price)}</div>
           </div>
@@ -117,7 +139,10 @@ export default function RejectOrderPage() {
                     name="reason"
                     value={option}
                     checked={selected}
-                    onChange={() => setReason(option)}
+                    onChange={() => {
+                      setReason(option);
+                      setErrors({});
+                    }}
                     className="accent-[var(--color-primary)]"
                   />
                   <span
@@ -135,10 +160,15 @@ export default function RejectOrderPage() {
           </fieldset>
 
           <Textarea
-            label="Anything to add?"
+            label={reason === OTHER_REASON ? 'Tell the customer why' : 'Anything to add?'}
+            required={reason === OTHER_REASON}
             placeholder="Specify here"
             value={details}
-            onChange={(e) => setDetails(e.target.value)}
+            onChange={(e) => {
+              setDetails(e.target.value);
+              setErrors((prev) => (prev.details ? { ...prev, details: undefined } : prev));
+            }}
+            error={errors.details}
             className="mt-4"
           />
         </div>

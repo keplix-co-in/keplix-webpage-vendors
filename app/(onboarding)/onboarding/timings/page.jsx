@@ -1,12 +1,16 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Plus, X } from 'lucide-react';
-import OnboardingShell, { FieldLabel, StepActions } from '@/components/onboarding/OnboardingShell';
-import TimeSelect from '@/components/onboarding/TimeSelect';
+import OnboardingShell, {
+  FieldError,
+  FieldLabel,
+  StepActions,
+} from '@/components/onboarding/OnboardingShell';
+import TimeSelect, { toMinutes } from '@/components/onboarding/TimeSelect';
 import { useDraft } from '@/components/onboarding/DraftProvider';
-import { useToast } from '@/components/ui/Toast';
 
 function RemovableChip({ label, onRemove }) {
   return (
@@ -28,17 +32,54 @@ function RemovableChip({ label, onRemove }) {
   );
 }
 
+/**
+ * Times come from a closed dropdown, so the format is guaranteed — what is
+ * worth checking is whether the window makes sense, and whether a break the
+ * vendor added earlier still fits inside it.
+ */
+export const validateTimings = ({ openTime, closeTime }, breaks = []) => {
+  const errors = {};
+  const open = toMinutes(openTime);
+  const close = toMinutes(closeTime);
+
+  if (open === null || close === null) {
+    errors.hours = 'Set both an opening and a closing time.';
+    return errors;
+  }
+  if (close <= open) {
+    errors.hours = 'Closing time must be after opening time.';
+    return errors;
+  }
+
+  const outside = breaks.filter((item) => {
+    const start = toMinutes(item.start);
+    const end = toMinutes(item.end);
+    return start === null || end === null || end <= start || start < open || end > close;
+  });
+
+  if (outside.length > 0) {
+    errors.breaks = 'A break falls outside your opening hours — remove it or change your hours.';
+  }
+
+  return errors;
+};
+
 export default function OnboardTimingsPage() {
   const router = useRouter();
-  const toast = useToast();
   const { draft, patch } = useDraft();
   const { timings, breaks, holidays } = draft;
+  const [errors, setErrors] = useState({});
+
+  const setTime = (key) => (value) => {
+    patch({ timings: { [key]: value } });
+    setErrors({});
+  };
 
   const done = () => {
-    if (!timings.openTime || !timings.closeTime) {
-      toast.error('Set both an opening and a closing time.');
-      return;
-    }
+    const found = validateTimings(timings, breaks);
+    setErrors(found);
+    if (Object.keys(found).length > 0) return;
+
     router.push('/onboarding');
   };
 
@@ -49,21 +90,24 @@ export default function OnboardTimingsPage() {
       footer={<StepActions backHref="/onboarding" nextLabel="Done" onNext={done} />}
     >
       <FieldLabel required>Set business hours</FieldLabel>
-      <div className="flex items-center gap-[18px] mb-7 flex-wrap">
+      <div className="flex items-center gap-[18px] flex-wrap">
         <TimeSelect
           ariaLabel="Opening time"
           value={timings.openTime}
-          onChange={(value) => patch({ timings: { openTime: value } })}
+          onChange={setTime('openTime')}
         />
         <span className="text-[13.5px] text-[var(--color-muted)]">To</span>
         <TimeSelect
           ariaLabel="Closing time"
           value={timings.closeTime}
-          onChange={(value) => patch({ timings: { closeTime: value } })}
+          onChange={setTime('closeTime')}
         />
       </div>
+      {errors.hours && <FieldError>{errors.hours}</FieldError>}
+      <div className="mb-7" />
 
       <FieldLabel>Breaks</FieldLabel>
+      {errors.breaks && <FieldError className="mt-0 mb-2">{errors.breaks}</FieldError>}
       <div className="flex gap-2.5 mb-6 flex-wrap">
         {breaks.length === 0 ? (
           <span className="text-[13px] text-[var(--color-disabled)]">No breaks added</span>
@@ -72,7 +116,10 @@ export default function OnboardTimingsPage() {
             <RemovableChip
               key={`${item.start}-${item.end}`}
               label={`${item.start} - ${item.end}`}
-              onRemove={() => patch({ breaks: breaks.filter((_, i) => i !== index) })}
+              onRemove={() => {
+                patch({ breaks: breaks.filter((_, i) => i !== index) });
+                setErrors({});
+              }}
             />
           ))
         )}

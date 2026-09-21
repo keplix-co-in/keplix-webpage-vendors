@@ -12,25 +12,35 @@ import Button from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Field';
 import { useToast } from '@/components/ui/Toast';
 import { useAuth } from '@/context/AuthContext';
-import { useBookings, useWalkIns } from '@/lib/queries';
+import { useWalkIns } from '@/lib/queries';
 import { bookingsAPI, walkInsAPI } from '@/api/bookings';
 import { bucketJobs } from '@/shared/utils/jobBuckets';
 import { formatMoney, formatRelativeDay, initialsOf } from '@/lib/format';
-import { readBooking, readWalkIn, BOOKING_TABS } from '@/components/bookings/bookingFields';
+import {
+  readBooking,
+  readWalkIn,
+  bookingBadge,
+  dateKey,
+  formatSlotTime,
+  BOOKING_TABS,
+} from '@/components/bookings/bookingFields';
+import { useTabbedBookings } from '@/components/bookings/useTabbedBookings';
+
+const WALK_IN_PARAMS = { limit: 100 };
 
 /** Seven-day strip, today in the middle of the week like the design. */
 const buildDays = (bookings) => {
   const counts = new Map();
   bookings.forEach((b) => {
-    if (!b.date) return;
-    const key = new Date(b.date).toDateString();
-    counts.set(key, (counts.get(key) ?? 0) + 1);
+    const key = dateKey(b.date);
+    if (key) counts.set(key, (counts.get(key) ?? 0) + 1);
   });
 
   return Array.from({ length: 7 }).map((_, index) => {
     const date = new Date();
     date.setDate(date.getDate() - 2 + index);
-    const key = date.toDateString();
+    // en-CA is YYYY-MM-DD, the same shape booking_date's ISO date part has.
+    const key = date.toLocaleDateString('en-CA');
     const jobs = counts.get(key) ?? 0;
     return {
       key,
@@ -52,8 +62,8 @@ export default function BookingsPage() {
   const [search, setSearch] = useState('');
   const [busyId, setBusyId] = useState(null);
 
-  const { data: rawBookings = [], isLoading } = useBookings();
-  const { data: rawWalkIns = [] } = useWalkIns();
+  const { bookings: rawBookings, isLoading } = useTabbedBookings();
+  const { data: rawWalkIns = [] } = useWalkIns(WALK_IN_PARAMS);
 
   usePortalHeader('Bookings', 'Accept requests, track live jobs and close them out');
 
@@ -80,10 +90,10 @@ export default function BookingsPage() {
 
     return bookings
       .filter((b) => statuses.includes(b.status))
-      .filter((b) => (day ? b.date && new Date(b.date).toDateString() === day : true))
+      .filter((b) => (day ? dateKey(b.date) === day : true))
       .filter((b) =>
         term
-          ? [b.customerName, b.serviceName, b.token, b.registration]
+          ? [b.customerName, b.customerPhone, b.serviceName, b.token]
               .filter(Boolean)
               .some((field) => String(field).toLowerCase().includes(term))
           : true
@@ -240,13 +250,13 @@ export default function BookingsPage() {
                   <div className="min-w-0">
                     <div className="text-[13px] font-semibold truncate">{booking.customerName}</div>
                     <div className="text-[11.5px] text-[var(--color-disabled)] truncate">
-                      {[booking.vehicleModel, booking.registration].filter(Boolean).join(' · ') || '—'}
+                      {booking.customerPhone ?? '—'}
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <div className="text-[13px] font-semibold">{booking.time || '—'}</div>
+                  <div className="text-[13px] font-semibold">{formatSlotTime(booking.time)}</div>
                   <div className="text-[11.5px] text-[var(--color-disabled)]">
                     {booking.date ? formatRelativeDay(booking.date) : ''}
                   </div>
@@ -289,7 +299,9 @@ export default function BookingsPage() {
                     </>
                   )}
 
-                  {!isPending && !isOngoing && <Badge tone={statusTone(booking.status)}>{booking.status || '—'}</Badge>}
+                  {!isPending && !isOngoing && (
+                    <Badge tone={bookingBadge(booking).tone}>{bookingBadge(booking).label}</Badge>
+                  )}
                 </div>
               </div>
             );

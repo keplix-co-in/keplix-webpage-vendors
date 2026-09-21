@@ -14,10 +14,33 @@ import { useAuth } from '@/context/AuthContext';
 import { vendorAPI, documentsAPI } from '@/api/vendor';
 import { unwrap } from '@/lib/queries';
 import { formatDate } from '@/lib/format';
+import { rules, validate } from '@/shared/utils/validation';
+
+// Format rules only — whether enough was filled in is the bank-or-UPI check in
+// savePayout, which cannot be expressed per-field.
+const SCHEMA = {
+  gst_number: [rules.gstin],
+  bank_account_number: [rules.accountNumber],
+  ifsc_code: [rules.ifsc],
+  bank_account_holder_name: [rules.maxLength(120, 'Account holder name')],
+  upi_id: [rules.upi],
+};
 
 // PAN and the trade licence are locked once Keplix has verified them — changing
 // a verified identity document has to go through support, not a self-serve edit.
 const LOCKED_TYPES = ['pan', 'trade_licence', 'trade_license'];
+
+// document_type is stored as a short code ("pan"), so a raw render read "Pan".
+const DOC_LABELS = {
+  pan: 'PAN card',
+  gstin: 'GSTIN certificate',
+  trade_licence: 'Trade licence',
+  trade_license: 'Trade licence',
+  bank_proof: 'Bank proof',
+};
+
+const docLabel = (type) =>
+  DOC_LABELS[String(type ?? '').toLowerCase()] ?? String(type ?? 'Document').replace(/_/g, ' ');
 
 const isVerified = (doc) =>
   ['verified', 'approved'].includes(String(doc?.status ?? '').toLowerCase());
@@ -28,6 +51,7 @@ export default function DocumentsPage() {
   const { vendorProfile } = useAuth();
   const [payout, setPayout] = useState({});
   const [seeded, setSeeded] = useState(null);
+  const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
   const [newDoc, setNewDoc] = useState({ file: null, type: 'bank_proof' });
 
@@ -43,7 +67,9 @@ export default function DocumentsPage() {
   if (vendorProfile && seeded !== vendorProfile) {
     setSeeded(vendorProfile);
     setPayout({
-      gstin: vendorProfile.gstin ?? '',
+      // The column is gst_number — `gstin` matched nothing, so the box showed
+      // blank and a save wrote a field the backend silently ignores.
+      gst_number: vendorProfile.gst_number ?? '',
       bank_account_number: vendorProfile.bank_account_number ?? '',
       ifsc_code: vendorProfile.ifsc_code ?? '',
       bank_account_holder_name: vendorProfile.bank_account_holder_name ?? '',
@@ -51,8 +77,19 @@ export default function DocumentsPage() {
     });
   }
 
+  const setField = (key) => (event) => {
+    setPayout((prev) => ({ ...prev, [key]: event.target.value }));
+    setErrors((prev) => (prev[key] ? { ...prev, [key]: undefined } : prev));
+  };
+
   const savePayout = async (event) => {
     event.preventDefault();
+
+    // Format first, so "add your bank details" is never shown for a value the
+    // vendor did fill in but mistyped.
+    const { errors: nextErrors, isValid } = validate(payout, SCHEMA);
+    setErrors(nextErrors);
+    if (!isValid) return;
 
     // The backend accepts either a full bank triplet or a UPI id — saving
     // neither would leave payouts with nowhere to land.
@@ -108,9 +145,10 @@ export default function DocumentsPage() {
 
           <Input
             label="GSTIN number"
-            name="gstin"
-            value={payout.gstin ?? ''}
-            onChange={(e) => setPayout({ ...payout, gstin: e.target.value })}
+            name="gst_number"
+            value={payout.gst_number ?? ''}
+            onChange={setField('gst_number')}
+            error={errors.gst_number}
             className="mb-4"
           />
 
@@ -119,25 +157,29 @@ export default function DocumentsPage() {
               label="Bank account number"
               name="bank_account_number"
               value={payout.bank_account_number ?? ''}
-              onChange={(e) => setPayout({ ...payout, bank_account_number: e.target.value })}
+              onChange={setField('bank_account_number')}
+              error={errors.bank_account_number}
             />
             <Input
               label="IFSC code"
               name="ifsc_code"
               value={payout.ifsc_code ?? ''}
-              onChange={(e) => setPayout({ ...payout, ifsc_code: e.target.value })}
+              onChange={setField('ifsc_code')}
+              error={errors.ifsc_code}
             />
             <Input
               label="Name in the bank"
               name="bank_account_holder_name"
               value={payout.bank_account_holder_name ?? ''}
-              onChange={(e) => setPayout({ ...payout, bank_account_holder_name: e.target.value })}
+              onChange={setField('bank_account_holder_name')}
+              error={errors.bank_account_holder_name}
             />
             <Input
               label="UPI ID"
               name="upi_id"
               value={payout.upi_id ?? ''}
-              onChange={(e) => setPayout({ ...payout, upi_id: e.target.value })}
+              onChange={setField('upi_id')}
+              error={errors.upi_id}
               hint="Bank details or UPI — either is enough."
             />
           </div>
@@ -166,14 +208,29 @@ export default function DocumentsPage() {
                   <FileText size={16} className="shrink-0 text-[var(--color-muted)]" />
                   <div className="flex-1 min-w-0">
                     <div className="text-[13px] font-bold capitalize truncate">
-                      {String(doc.document_type ?? 'Document').replace(/_/g, ' ')}
+                      {docLabel(doc.document_type)}
                     </div>
                     <div className="text-[11.5px] text-[var(--color-disabled)]">
-                      {formatDate(doc.createdAt ?? doc.created_at)}
+                      {formatDate(doc.createdAt)}
+                      {doc.file_url && (
+                        <>
+                          {' · '}
+                          <a
+                            href={doc.file_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="font-bold text-[var(--color-primary)]"
+                          >
+                            View file
+                          </a>
+                        </>
+                      )}
                     </div>
                   </div>
                   {locked && <Lock size={13} className="text-[var(--color-disabled)] shrink-0" />}
-                  <Badge tone={statusTone(doc.status)}>{doc.status ?? 'In review'}</Badge>
+                  <Badge tone={statusTone(doc.status)}>
+                    {doc.status === 'pending' ? 'In review' : (doc.status ?? 'In review')}
+                  </Badge>
                 </div>
               );
             })

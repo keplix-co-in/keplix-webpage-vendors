@@ -28,10 +28,24 @@ export const paymentsAPI = {
   },
 
   getVendorPayments: (vendorId) => api.get(`/service_api/vendor/${vendorId}/payments`),
-  getPaymentByBooking: (bookingId) => api.get(`/service_api/bookings/${bookingId}/payment`),
-  createPaymentOrder: (bookingId, paymentData) =>
-    api.post(`/service_api/bookings/${bookingId}/payment/create`, paymentData),
-  verifyPayment: (paymentData) => api.post('/service_api/payments/verify', paymentData),
 };
+
+/**
+ * Booking payments are a CUSTOMER concern and are deliberately absent here.
+ *
+ * The mobile client carries getPaymentByBooking/createPaymentOrder/verifyPayment
+ * pointed at `/service_api/bookings/:id/payment*`, but those paths are not
+ * mounted — user booking routes live under `/service_api/user`, so every one of
+ * them 404s. Nothing in this portal called them, so they are not ported rather
+ * than shipped broken. A vendor never charges a booking; the customer pays in
+ * the customer app and the vendor only ever reads the result.
+ *
+ * If a vendor→Keplix payment screen (subscription/ads, as in the app's
+ * Payment4.jsx) is ever built, the working endpoints are:
+ *   POST /service_api/vendor/payments/order/create  { amount, currency?, gateway? }
+ *   POST /service_api/vendor/payments/verify        { orderId, paymentId, signature, gateway }
+ * Note the verify body is camelCase, not the razorpay_* snake_case the customer
+ * flow uses.
+ */
 
 export default paymentsAPI;

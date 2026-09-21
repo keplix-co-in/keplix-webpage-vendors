@@ -15,6 +15,28 @@ import Modal from '@/components/ui/Modal';
 import { SERVICE_CATEGORIES } from '@/shared/constants/services';
 import { VEHICLE_SEGMENTS } from '@/shared/constants/vehicleSegments';
 import { DURATIONS, DURATION_MAP, durationLabelFor } from '@/shared/constants/durations';
+import { rules, validate } from '@/shared/utils/validation';
+
+const SEGMENT_IDS = VEHICLE_SEGMENTS.map((s) => s.id);
+const CATEGORY_NAMES = SERVICE_CATEGORIES.map((c) => c.name);
+
+// Category, segment and duration are fixed lists the backend stores as enums or
+// exact minutes, so a value outside them is a rejected save, not a typo.
+const SCHEMA = {
+  name: [rules.required('Service name'), rules.maxLength(120, 'Service name')],
+  description: [rules.maxLength(2000, 'Description')],
+  price: [
+    rules.required('Price'),
+    rules.positiveNumber('Price'),
+    rules.maxAmount(100000, 'Price'),
+  ],
+  duration: [(value) => (DURATIONS.includes(value) ? null : 'Choose how long this takes.')],
+  category: [(value) => (CATEGORY_NAMES.includes(value) ? null : 'Choose a category.')],
+  segment: [
+    (value) =>
+      SEGMENT_IDS.includes(value) ? null : 'Pick the vehicle segment this price applies to.',
+  ],
+};
 
 /**
  * Create and edit share one form, as they do on mobile (EditService.jsx): the
@@ -31,14 +53,24 @@ export default function ServiceForm({ service }) {
   const { vendorId } = useAuth();
   const fileRef = useRef(null);
 
+  // The API returns these as `segmentPrices` (camelCase) — reading the
+  // snake_case name found nothing, so editing never pre-selected the segment
+  // and always showed the service's base price.
+  const existingSegments = service?.segmentPrices ?? [];
+
   const [form, setForm] = useState({
     name: service?.name ?? '',
     description: service?.description ?? '',
     category: service?.category ?? SERVICE_CATEGORIES[0]?.name ?? '',
-    segment: service?.segment_prices?.[0]?.segment ?? VEHICLE_SEGMENTS[0].id,
+    segment: existingSegments[0]?.segment ?? VEHICLE_SEGMENTS[0].id,
     vehicle_note: service?.vehicle_note ?? '',
     duration: durationLabelFor(service?.duration) ?? DURATIONS[0],
-    price: service?.price != null ? String(service.price) : '',
+    price:
+      existingSegments[0]?.price != null
+        ? String(Number(existingSegments[0].price))
+        : service?.price != null
+          ? String(Number(service.price))
+          : '',
   });
   const [imageFile, setImageFile] = useState(null);
   const [preview, setPreview] = useState(service?.image_url ?? null);
@@ -57,19 +89,17 @@ export default function ServiceForm({ service }) {
     setPreview(URL.createObjectURL(file));
   };
 
-  const validate = () => {
-    const next = {};
-    if (!form.name.trim()) next.name = 'Give this service a name.';
-    if (!form.segment) next.segment = 'Pick the vehicle segment this price applies to.';
-    const price = Number(form.price);
-    if (!form.price || !Number.isFinite(price) || price <= 0) next.price = 'Enter a price.';
-    setErrors(next);
-    return Object.keys(next).length === 0;
+  const setField = (key, value) => {
+    setForm((prev) => ({ ...prev, [key]: value }));
+    setErrors((prev) => (prev[key] ? { ...prev, [key]: undefined } : prev));
   };
 
   const submit = async (event) => {
     event.preventDefault();
-    if (!validate()) return;
+
+    const { errors: nextErrors, isValid } = validate(form, SCHEMA);
+    setErrors(nextErrors);
+    if (!isValid) return;
 
     const payload = {
       name: form.name.trim(),
@@ -79,7 +109,15 @@ export default function ServiceForm({ service }) {
       price: Number(form.price),
       is_active: service?.is_active ?? true,
       vehicle_note: form.vehicle_note.trim() || undefined,
-      segment_prices: [{ segment: form.segment, price: Number(form.price) }],
+      // The form edits one segment, but a service made in the app can price
+      // several. Sending only the edited one would replace the list and silently
+      // delete the rest, so the others are carried through unchanged.
+      segment_prices: [
+        ...existingSegments
+          .filter((entry) => entry.segment !== form.segment)
+          .map((entry) => ({ segment: entry.segment, price: Number(entry.price) })),
+        { segment: form.segment, price: Number(form.price) },
+      ],
     };
 
     setBusy(true);
@@ -162,7 +200,7 @@ export default function ServiceForm({ service }) {
               <button
                 key={segment.id}
                 type="button"
-                onClick={() => setForm({ ...form, segment: segment.id })}
+                onClick={() => setField('segment', segment.id)}
                 className="flex items-center justify-between gap-3 rounded-[var(--radius-field)] px-4 py-3.5 text-left cursor-pointer"
                 style={{
                   border: `1px solid ${active ? 'var(--color-primary)' : 'var(--color-line)'}`,
@@ -189,7 +227,7 @@ export default function ServiceForm({ service }) {
           name="vehicle_note"
           placeholder="Eg: Swift, i20"
           value={form.vehicle_note}
-          onChange={(e) => setForm({ ...form, vehicle_note: e.target.value })}
+          onChange={(e) => setField('vehicle_note', e.target.value)}
           className="mt-4"
         />
       </Card>
@@ -202,7 +240,8 @@ export default function ServiceForm({ service }) {
           required
           options={categoryOptions}
           value={form.category}
-          onChange={(e) => setForm({ ...form, category: e.target.value })}
+          onChange={(e) => setField('category', e.target.value)}
+          error={errors.category}
           className="mb-4"
         />
         <Input
@@ -211,7 +250,7 @@ export default function ServiceForm({ service }) {
           required
           placeholder="Eg: Engine Oil Change"
           value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          onChange={(e) => setField('name', e.target.value)}
           error={errors.name}
           className="mb-4"
         />
@@ -220,7 +259,8 @@ export default function ServiceForm({ service }) {
           name="description"
           placeholder="What is included in this service?"
           value={form.description}
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
+          onChange={(e) => setField('description', e.target.value)}
+          error={errors.description}
         />
       </Card>
 
@@ -232,7 +272,8 @@ export default function ServiceForm({ service }) {
           required
           options={DURATIONS.map((d) => ({ value: d, label: d }))}
           value={form.duration}
-          onChange={(e) => setForm({ ...form, duration: e.target.value })}
+          onChange={(e) => setField('duration', e.target.value)}
+          error={errors.duration}
           className="mb-4"
         />
         <Input
@@ -243,7 +284,7 @@ export default function ServiceForm({ service }) {
           required
           placeholder="Eg: 899"
           value={form.price}
-          onChange={(e) => setForm({ ...form, price: e.target.value })}
+          onChange={(e) => setField('price', e.target.value)}
           error={errors.price}
         />
       </Card>

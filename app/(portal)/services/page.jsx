@@ -41,19 +41,30 @@ export default function ServicesPage() {
   );
 
   const togglePause = async (service) => {
+    const next = !service.is_active;
+
     setPausing(service.id);
-    const result = await servicesAPI.updateService(vendorId, service.id, {
-      ...service,
-      is_active: !service.is_active,
-    });
+    // Only the flag, as the app sends it. Spreading the whole row also posted
+    // fields the update route has no business receiving.
+    const result = await servicesAPI.updateService(vendorId, service.id, { is_active: next });
     setPausing(null);
 
-    if (result?.success) {
-      queryClient.invalidateQueries({ queryKey: ['services'] });
-      toast.success(service.is_active ? 'Service paused' : 'Service is live again');
-    } else {
+    if (!result?.success) {
       toast.error(result?.error || 'Could not update that service');
+      return;
     }
+
+    // A 200 is not proof the change landed: a backend that drops the flag still
+    // answers 200 with the row unchanged, and the toast used to claim success.
+    // Trust the row that comes back.
+    const saved = result.data?.service ?? result.data;
+    if (saved && typeof saved.is_active === 'boolean' && saved.is_active !== next) {
+      toast.error('The change was not saved. Please try again.');
+      return;
+    }
+
+    queryClient.invalidateQueries({ queryKey: ['services'] });
+    toast.success(next ? 'Service is live again' : 'Service paused');
   };
 
   return (

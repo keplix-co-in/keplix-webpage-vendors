@@ -11,6 +11,13 @@ import { Textarea } from '@/components/ui/Field';
 import { useToast } from '@/components/ui/Toast';
 import { useAuth } from '@/context/AuthContext';
 import { bookingsAPI } from '@/api/bookings';
+import { rules, validate } from '@/shared/utils/validation';
+
+// A booking's amount was fixed and paid when the customer booked, so there is
+// nothing to collect here — only the record of what was done.
+const SCHEMA = {
+  notes: [rules.maxLength(2000, 'Notes')],
+};
 
 // Notes survive the trip through the health-sheet gate; photos cannot be
 // stashed (File objects are not serialisable), and the normal route inspects
@@ -36,6 +43,7 @@ function CompletionForm() {
 
   const [notes, setNotes] = useState('');
   const [images, setImages] = useState([]);
+  const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
 
   usePortalHeader('Service completion', 'Photos, notes and the final bill');
@@ -78,6 +86,10 @@ function CompletionForm() {
   };
 
   const submit = async () => {
+    const { errors: nextErrors, isValid } = validate({ notes }, SCHEMA);
+    setErrors(nextErrors);
+    if (!isValid) return;
+
     setBusy(true);
 
     // Rebuilt per attempt: a FormData consumed by a failed request cannot be
@@ -181,7 +193,11 @@ function CompletionForm() {
           label="What was done?"
           placeholder="Work carried out, parts replaced, anything the customer should know"
           value={notes}
-          onChange={(e) => setNotes(e.target.value)}
+          onChange={(e) => {
+            setNotes(e.target.value);
+            setErrors((prev) => (prev.notes ? { ...prev, notes: undefined } : prev));
+          }}
+          error={errors.notes}
           rows={5}
         />
       </Card>

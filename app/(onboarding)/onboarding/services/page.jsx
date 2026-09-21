@@ -9,10 +9,17 @@ import { useToast } from '@/components/ui/Toast';
 import Input from '@/components/ui/Input';
 import { Select, Textarea } from '@/components/ui/Field';
 import SERVICE_CATEGORIES from '@/shared/constants/services';
+import { rules, validate } from '@/shared/utils/validation';
 
 // The same eight options the app offers, and the vocabulary formatDuration
 // prints back — so a service reads identically on web and on the phone.
 const DURATIONS = ['30 min', '45 min', '1 Hour', '1.5 Hours', '2 Hours', '2.5 Hours', '3 Hours', '4 Hours'];
+
+const SCHEMA = {
+  name: [rules.required('Service name'), rules.maxLength(120, 'Service name')],
+  description: [rules.maxLength(2000, 'Description')],
+  price: [rules.required('Price'), rules.positiveNumber('Price'), rules.maxAmount(100000, 'Price')],
+};
 
 export default function ChooseServicePage() {
   return (
@@ -49,17 +56,17 @@ function ChooseServiceForm() {
         }
   );
 
-  const set = (key, value) => setForm((current) => ({ ...current, [key]: value }));
+  const [errors, setErrors] = useState({});
+
+  const set = (key, value) => {
+    setForm((current) => ({ ...current, [key]: value }));
+    setErrors((current) => (current[key] ? { ...current, [key]: null } : current));
+  };
 
   const addService = () => {
-    if (!form.name) {
-      toast.error('Give the service a name.');
-      return;
-    }
-    if (!form.price || Number(form.price) <= 0) {
-      toast.error('Set a price for this service.');
-      return;
-    }
+    const { errors: found, isValid } = validate(form, SCHEMA);
+    setErrors(found);
+    if (!isValid) return;
 
     const next = editing
       ? draft.serviceDetails.map((service, index) => (index === editIndex ? form : service))
@@ -112,6 +119,7 @@ function ChooseServiceForm() {
         name="serviceName"
         value={form.name}
         onChange={(e) => set('name', e.target.value)}
+        error={errors.name}
         placeholder="Eg: Fuel Injector Cleaning"
         className="mb-[18px]"
       />
@@ -122,6 +130,7 @@ function ChooseServiceForm() {
         rows={3}
         value={form.description}
         onChange={(e) => set('description', e.target.value)}
+        error={errors.description}
         placeholder="What the job includes."
         className="mb-[18px]"
       />
@@ -142,6 +151,7 @@ function ChooseServiceForm() {
           inputMode="numeric"
           value={form.price}
           onChange={(e) => set('price', e.target.value.replace(/[^\d.]/g, ''))}
+          error={errors.price}
           placeholder="₹ 1500"
         />
       </div>

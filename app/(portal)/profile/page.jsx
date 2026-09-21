@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
+import { ChevronRight, Clock } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { usePortalHeader } from '../layout';
 import { Card, CardHeader } from '@/components/ui/Card';
@@ -10,6 +12,7 @@ import { Textarea } from '@/components/ui/Field';
 import { useToast } from '@/components/ui/Toast';
 import { useAuth } from '@/context/AuthContext';
 import { vendorAPI } from '@/api/vendor';
+import { normalizeIndianMobile, rules, validate } from '@/shared/utils/validation';
 
 const FIELDS = [
   { name: 'business_name', label: 'Shop name', required: true },
@@ -19,6 +22,14 @@ const FIELDS = [
   { name: 'state', label: 'State' },
   { name: 'pincode', label: 'Pincode' },
 ];
+
+const SCHEMA = {
+  business_name: [rules.required('Shop name'), rules.maxLength(120, 'Shop name')],
+  phone: [rules.required('Contact number'), rules.mobile],
+  pincode: [rules.pincode],
+  email: [rules.email],
+  description: [rules.maxLength(2000, 'Description')],
+};
 
 export default function ProfilePage() {
   const toast = useToast();
@@ -48,17 +59,25 @@ export default function ProfilePage() {
     });
   }
 
+  const setField = (key) => (event) => {
+    setForm((prev) => ({ ...prev, [key]: event.target.value }));
+    setErrors((prev) => (prev[key] ? { ...prev, [key]: undefined } : prev));
+  };
+
   const save = async (event) => {
     event.preventDefault();
 
-    const next = {};
-    if (!form.business_name?.trim()) next.business_name = 'Your shop needs a name.';
-    if (!form.phone?.trim()) next.phone = 'Customers need a number to reach you on.';
-    setErrors(next);
-    if (Object.keys(next).length > 0) return;
+    const { errors: nextErrors, isValid } = validate(form, SCHEMA);
+    setErrors(nextErrors);
+    if (!isValid) return;
 
     setBusy(true);
-    const result = await vendorAPI.updateProfile(form);
+    // Stored in the same normalised form the backend uses everywhere else, so
+    // this number matches the one on a walk-in or an OTP record.
+    const result = await vendorAPI.updateProfile({
+      ...form,
+      phone: normalizeIndianMobile(form.phone) ?? form.phone,
+    });
     setBusy(false);
 
     if (result?.success) {
@@ -81,7 +100,7 @@ export default function ProfilePage() {
               name={field.name}
               required={field.required}
               value={form[field.name] ?? ''}
-              onChange={(e) => setForm({ ...form, [field.name]: e.target.value })}
+              onChange={setField(field.name)}
               error={errors[field.name]}
             />
           ))}
@@ -92,10 +111,29 @@ export default function ProfilePage() {
           name="description"
           className="mt-4"
           value={form.description ?? ''}
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
+          onChange={setField('description')}
+          error={errors.description}
           placeholder="What your workshop specialises in."
         />
       </Card>
+
+      {/* Timings left the sidebar; this is now the way in to the page. */}
+      <Link
+        href="/timings"
+        className="flex items-center justify-between gap-4 bg-white rounded-[var(--radius-portal)] px-[22px] py-4 mb-5"
+        style={{ border: '1px solid var(--color-line)' }}
+      >
+        <span className="flex items-center gap-3 min-w-0">
+          <Clock size={18} color="var(--color-primary)" />
+          <span>
+            <span className="block text-[13.5px] font-bold">Timings &amp; holidays</span>
+            <span className="block text-[12px] text-[var(--color-muted)]">
+              Opening hours, mid-day breaks and weekly closures
+            </span>
+          </span>
+        </span>
+        <ChevronRight size={16} color="var(--color-disabled)" />
+      </Link>
 
       <Button type="submit" loading={busy}>
         Save changes

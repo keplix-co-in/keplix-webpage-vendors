@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import OnboardingShell, { FieldLabel, StepActions } from '@/components/onboarding/OnboardingShell';
 import { PhotoWell } from '@/components/onboarding/PhotoPickers';
@@ -8,18 +9,30 @@ import { useDraft } from '@/components/onboarding/DraftProvider';
 import { useToast } from '@/components/ui/Toast';
 import Input from '@/components/ui/Input';
 import { initialsOf } from '@/lib/format';
+import { rules, validate } from '@/shared/utils/validation';
+
+const SCHEMA = {
+  fullName: [rules.required('Owner name'), rules.minLength(2, 'Owner name'), rules.maxLength(100, 'Owner name')],
+  phone: [rules.required('Owner phone number'), rules.mobile],
+};
 
 export default function OwnerDetailsPage() {
   const router = useRouter();
   const toast = useToast();
   const { draft, files, patch, setFile } = useDraft();
   const { ownerDetails } = draft;
+  const [errors, setErrors] = useState({});
+
+  const setField = (key) => (event) => {
+    patch({ ownerDetails: { [key]: event.target.value } });
+    setErrors((current) => (current[key] ? { ...current, [key]: null } : current));
+  };
 
   const done = () => {
-    if (!ownerDetails.fullName || !ownerDetails.phone) {
-      toast.error('The owner’s name and phone number are both required.');
-      return;
-    }
+    const { errors: found, isValid } = validate(ownerDetails, SCHEMA);
+    setErrors(found);
+    if (!isValid) return;
+
     router.push('/onboarding/workshop');
   };
 
@@ -46,7 +59,8 @@ export default function OwnerDetailsPage() {
         required
         name="ownerName"
         value={ownerDetails.fullName}
-        onChange={(e) => patch({ ownerDetails: { fullName: e.target.value } })}
+        onChange={setField('fullName')}
+        error={errors.fullName}
         placeholder="Eg: Rajesh Sharma"
         className="mb-[18px]"
       />
@@ -58,7 +72,8 @@ export default function OwnerDetailsPage() {
         type="tel"
         inputMode="tel"
         value={ownerDetails.phone}
-        onChange={(e) => patch({ ownerDetails: { phone: e.target.value } })}
+        onChange={setField('phone')}
+        error={errors.phone}
         placeholder="+91 98110 44718"
         className="mb-[18px]"
       />

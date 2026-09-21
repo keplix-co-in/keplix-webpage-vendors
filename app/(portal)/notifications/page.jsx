@@ -6,22 +6,37 @@ import { usePortalHeader } from '../layout';
 import { Card, EmptyState } from '@/components/ui/Card';
 import { notificationsAPI } from '@/api/customers';
 import { unwrap } from '@/lib/queries';
+import { toNotification } from '@/lib/entities';
 import { formatDateTime } from '@/lib/format';
 
-// The icon and tint are chosen from the notification type the backend sends.
 const LOOK = {
   booking: { Icon: Bell, bg: 'var(--color-primary-tint)', fg: 'var(--color-primary)' },
   payment: { Icon: IndianRupee, bg: 'var(--color-success-tint)', fg: 'var(--color-success-dark)' },
   review: { Icon: Star, bg: 'var(--color-warning-tint)', fg: 'var(--color-warning-dark)' },
   message: { Icon: MessageSquare, bg: '#EFF6FF', fg: '#2563EB' },
-  cancellation: { Icon: X, bg: 'var(--color-danger-tint)', fg: 'var(--color-danger)' },
-  verification: { Icon: Check, bg: 'var(--color-success-tint)', fg: 'var(--color-success-dark)' },
+  problem: { Icon: X, bg: 'var(--color-danger-tint)', fg: 'var(--color-danger)' },
+  done: { Icon: Check, bg: 'var(--color-success-tint)', fg: 'var(--color-success-dark)' },
 };
 
-const lookFor = (type = '') => {
-  const value = String(type).toLowerCase();
-  const key = Object.keys(LOOK).find((k) => value.includes(k));
-  return LOOK[key] ?? LOOK.booking;
+// Ordered on purpose: BOOKING_CANCELLED_BY_CUSTOMER contains "booking", so the
+// more specific matches must run first or every cancellation shows the plain
+// booking bell. Types are the constants in keplix-backend's notification
+// templates (BOOKING_*, PAYMENT_RECEIVED, PAYOUT_SETTLED, REFUND_*, NEW_MESSAGE,
+// SERVICE_*, DISPUTE_*, EARLY_START_*).
+const RULES = [
+  [/cancel|declin|expire|missed|dispute|refund_failed/, 'problem'],
+  [/payment|payout|refund/, 'payment'],
+  [/message/, 'message'],
+  [/review/, 'review'],
+  [/completed|settled|resolved|confirmed|accepted/, 'done'],
+];
+
+// `type` is null on every row written before that column existed, so the title
+// stands in for it.
+const lookFor = (type, title = '') => {
+  const value = String(type ?? title).toLowerCase();
+  const match = RULES.find(([pattern]) => pattern.test(value));
+  return LOOK[match ? match[1] : 'booking'];
 };
 
 export default function NotificationsPage() {
@@ -30,7 +45,7 @@ export default function NotificationsPage() {
 
   const { data: notifications = [], isLoading } = useQuery({
     queryKey: ['notifications'],
-    queryFn: async () => unwrap(await notificationsAPI.getNotifications(), 'notifications'),
+    queryFn: async () => unwrap(await notificationsAPI.getNotifications(), 'notifications').map(toNotification),
   });
 
   const markRead = async (id) => {
@@ -46,8 +61,8 @@ export default function NotificationsPage() {
         <EmptyState title="Nothing new" body="Booking, payment and review alerts land here." />
       ) : (
         notifications.map((notification) => {
-          const { Icon, bg, fg } = lookFor(notification.type ?? notification.category);
-          const unread = !(notification.is_read ?? notification.read);
+          const { Icon, bg, fg } = lookFor(notification.type, notification.title);
+          const unread = !notification.read;
 
           return (
             <button
@@ -73,12 +88,12 @@ export default function NotificationsPage() {
                   {notification.title ?? 'Notification'}
                 </span>
                 <span className="block text-[12.5px] text-[var(--color-muted)] leading-[1.6]">
-                  {notification.body ?? notification.message}
+                  {notification.body}
                 </span>
               </span>
 
               <span className="text-[11.5px] text-[var(--color-disabled)] shrink-0 whitespace-nowrap">
-                {formatDateTime(notification.createdAt ?? notification.created_at)}
+                {formatDateTime(notification.at)}
               </span>
             </button>
           );

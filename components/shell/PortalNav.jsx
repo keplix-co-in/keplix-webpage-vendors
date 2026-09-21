@@ -13,7 +13,6 @@ import {
   Bell,
   Store,
   Folder,
-  Clock,
   HelpCircle,
   LogOut,
 } from 'lucide-react';
@@ -56,7 +55,6 @@ const NAV_GROUPS = [
     items: [
       { href: '/profile', label: 'Business profile', Icon: Store },
       { href: '/documents', label: 'My documents', Icon: Folder },
-      { href: '/timings', label: 'Timings & holidays', Icon: Clock },
       { href: '/support', label: 'Support & FAQs', Icon: HelpCircle },
     ],
   },

@@ -2,19 +2,22 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import OnboardingShell, { FieldLabel, StepActions } from '@/components/onboarding/OnboardingShell';
-import TimeSelect from '@/components/onboarding/TimeSelect';
+import OnboardingShell, {
+  FieldError,
+  FieldLabel,
+  StepActions,
+} from '@/components/onboarding/OnboardingShell';
+import TimeSelect, { toMinutes } from '@/components/onboarding/TimeSelect';
 import { useDraft } from '@/components/onboarding/DraftProvider';
-import { useToast } from '@/components/ui/Toast';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 export default function SetBreaksPage() {
   const router = useRouter();
-  const toast = useToast();
   const { draft, patch } = useDraft();
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
+  const [error, setError] = useState(null);
 
   const toggleHoliday = (day) => {
     const next = draft.holidays.includes(day)
@@ -26,12 +29,30 @@ export default function SetBreaksPage() {
   // Both a break and any holiday changes only take effect on Add, which is what
   // the screen promises.
   const add = () => {
-    if (start && !end) {
-      toast.error('Pick when the break ends.');
-      return;
-    }
+    if (start || end) {
+      const from = toMinutes(start);
+      const to = toMinutes(end);
 
-    if (start && end) {
+      if (from === null || to === null) {
+        setError('Pick both a start and an end time for the break.');
+        return;
+      }
+      if (to <= from) {
+        setError('A break must end after it starts.');
+        return;
+      }
+
+      // A break outside opening hours would silently never apply, so it is
+      // rejected here rather than saved and ignored.
+      const open = toMinutes(draft.timings.openTime);
+      const close = toMinutes(draft.timings.closeTime);
+      if (open !== null && close !== null && (from < open || to > close)) {
+        setError(
+          `Breaks have to sit inside your opening hours (${draft.timings.openTime} – ${draft.timings.closeTime}).`
+        );
+        return;
+      }
+
       const duplicate = draft.breaks.some((b) => b.start === start && b.end === end);
       if (!duplicate) patch({ breaks: [...draft.breaks, { start, end }] });
     }
@@ -48,11 +69,29 @@ export default function SetBreaksPage() {
       }
     >
       <FieldLabel>Breaks</FieldLabel>
-      <div className="flex items-center gap-[18px] mb-7 flex-wrap">
-        <TimeSelect ariaLabel="Break starts" value={start} onChange={setStart} highlighted />
+      <div className="flex items-center gap-[18px] flex-wrap">
+        <TimeSelect
+          ariaLabel="Break starts"
+          value={start}
+          onChange={(value) => {
+            setStart(value);
+            setError(null);
+          }}
+          highlighted
+        />
         <span className="text-[13.5px] text-[var(--color-muted)]">To</span>
-        <TimeSelect ariaLabel="Break ends" value={end} onChange={setEnd} highlighted />
+        <TimeSelect
+          ariaLabel="Break ends"
+          value={end}
+          onChange={(value) => {
+            setEnd(value);
+            setError(null);
+          }}
+          highlighted
+        />
       </div>
+      {error && <FieldError>{error}</FieldError>}
+      <div className="mb-7" />
 
       <FieldLabel>Holidays</FieldLabel>
       <div className="flex gap-2.5 mb-7 flex-wrap">

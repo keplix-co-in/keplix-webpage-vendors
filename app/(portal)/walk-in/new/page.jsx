@@ -13,6 +13,16 @@ import { useServices } from '@/lib/queries';
 import { walkInsAPI } from '@/api/bookings';
 import { formatMoney } from '@/lib/format';
 import { formatDuration, totalDurationMinutes } from '@/shared/utils/duration';
+import { normalizeIndianMobile, rules, validate } from '@/shared/utils/validation';
+
+// Mirrors createWalkInJobSchema on the backend, so a job is never rejected
+// after the vendor has already walked away from the counter.
+const SCHEMA = {
+  customerName: [rules.required('Customer name'), rules.minLength(2, 'Customer name')],
+  customerPhone: [rules.required('Mobile number'), rules.mobile],
+  registration: [rules.required('Car number'), rules.registration],
+  amount: [rules.nonNegativeNumber('Estimate'), rules.maxAmount(500000, 'Estimate')],
+};
 
 export default function NewWalkInPage() {
   const router = useRouter();
@@ -47,24 +57,29 @@ export default function NewWalkInPage() {
       prev.includes(serviceId) ? prev.filter((x) => x !== serviceId) : [...prev, serviceId]
     );
 
+  // Editing a field clears its error, so a corrected value stops looking wrong
+  // before the vendor submits again.
+  const setField = (key) => (event) => {
+    setForm((prev) => ({ ...prev, [key]: event.target.value }));
+    setErrors((prev) => (prev[key] ? { ...prev, [key]: undefined } : prev));
+  };
+
   const submit = async (event) => {
     event.preventDefault();
 
-    const nextErrors = {};
-    if (!form.customerName.trim()) nextErrors.customerName = 'Customer name is required.';
-    if (!form.customerPhone.trim()) nextErrors.customerPhone = 'Mobile number is required.';
-    if (!form.registration.trim()) nextErrors.registration = 'Car number is required.';
-
+    const { errors: nextErrors, isValid } = validate(form, SCHEMA);
     setErrors(nextErrors);
-    if (Object.keys(nextErrors).length) return;
+    if (!isValid) return;
 
     setBusy(true);
 
     const payload = {
       customer_name: form.customerName.trim(),
-      customer_phone: form.customerPhone.trim(),
+      // Sent in the shape the backend normalises to, so what the vendor typed
+      // and what is stored cannot disagree.
+      customer_phone: normalizeIndianMobile(form.customerPhone),
       vehicle: {
-        registration: form.registration.trim(),
+        registration: form.registration.replace(/[\s-]/g, '').toUpperCase(),
         model: form.model.trim() || undefined,
       },
       // `description` is deliberately not sent — the backend composes it from
@@ -101,7 +116,7 @@ export default function NewWalkInPage() {
             required
             placeholder="Eg: Sunil Kapoor"
             value={form.customerName}
-            onChange={(e) => setForm({ ...form, customerName: e.target.value })}
+            onChange={setField('customerName')}
             error={errors.customerName}
           />
           <Input
@@ -111,7 +126,7 @@ export default function NewWalkInPage() {
             inputMode="tel"
             placeholder="Eg: +91 98110 77219"
             value={form.customerPhone}
-            onChange={(e) => setForm({ ...form, customerPhone: e.target.value })}
+            onChange={setField('customerPhone')}
             error={errors.customerPhone}
           />
           <Input
@@ -119,14 +134,14 @@ export default function NewWalkInPage() {
             required
             placeholder="Eg: DL 5C AB 7719"
             value={form.registration}
-            onChange={(e) => setForm({ ...form, registration: e.target.value })}
+            onChange={setField('registration')}
             error={errors.registration}
           />
           <Input
             label="Car model (optional)"
             placeholder="Eg: Maruti Swift"
             value={form.model}
-            onChange={(e) => setForm({ ...form, model: e.target.value })}
+            onChange={setField('model')}
           />
         </div>
       </Card>
@@ -179,7 +194,8 @@ export default function NewWalkInPage() {
           min="0"
           placeholder="₹ Estimated amount"
           value={form.amount}
-          onChange={(e) => setForm({ ...form, amount: e.target.value })}
+          onChange={setField('amount')}
+          error={errors.amount}
         />
       </Card>
 

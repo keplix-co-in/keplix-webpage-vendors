@@ -1,20 +1,36 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ChevronRight, Pencil, Plus } from 'lucide-react';
-import OnboardingShell, { FieldLabel, StepActions } from '@/components/onboarding/OnboardingShell';
+import OnboardingShell, {
+  FieldError,
+  FieldLabel,
+  StepActions,
+} from '@/components/onboarding/OnboardingShell';
 import { PhotoWell, PhotoGrid } from '@/components/onboarding/PhotoPickers';
 import { useDraft } from '@/components/onboarding/DraftProvider';
 import { useToast } from '@/components/ui/Toast';
 import Input from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Field';
 import { initialsOf } from '@/lib/format';
+import { rules, validate } from '@/shared/utils/validation';
+
+const SCHEMA = {
+  workshopName: [rules.required('Workshop name'), rules.maxLength(120, 'Workshop name')],
+  description: [rules.maxLength(2000, 'Description')],
+};
+
+// Matches the address step's own required fields, so this step cannot report
+// itself done on an address that step would reject.
+const ADDRESS_REQUIRED = ['street', 'area', 'city', 'pincode'];
 
 export default function WorkshopInfoPage() {
   const router = useRouter();
   const toast = useToast();
   const { draft, files, shopPhotos, patch, setFile, addShopPhoto, removeShopPhoto } = useDraft();
+  const [errors, setErrors] = useState({});
 
   const { workshopInfo, address, ownerDetails } = draft;
 
@@ -22,15 +38,27 @@ export default function WorkshopInfoPage() {
     .filter(Boolean)
     .join(', ');
 
+  const setField = (key) => (event) => {
+    patch({ workshopInfo: { [key]: event.target.value } });
+    setErrors((current) => (current[key] ? { ...current, [key]: null } : current));
+  };
+
   const next = () => {
-    if (!workshopInfo.workshopName) {
-      toast.error('Your workshop name is required.');
-      return;
-    }
+    const { errors: found, isValid } = validate(workshopInfo, SCHEMA);
+
     if (shopPhotos.length === 0) {
-      toast.error('Add at least one photo of your workshop.');
-      return;
+      found.photos = 'Add at least one photo of your workshop.';
     }
+    if (ADDRESS_REQUIRED.some((key) => !address[key])) {
+      found.address = 'Add your shop address — road, area, city and pincode are all needed.';
+    }
+    if (!ownerDetails.fullName || !ownerDetails.phone) {
+      found.owner = 'Add the owner’s name and phone number.';
+    }
+
+    setErrors(found);
+    if (!isValid || found.photos || found.address || found.owner) return;
+
     router.push('/onboarding');
   };
 
@@ -56,7 +84,8 @@ export default function WorkshopInfoPage() {
         required
         name="workshopName"
         value={workshopInfo.workshopName}
-        onChange={(e) => patch({ workshopInfo: { workshopName: e.target.value } })}
+        onChange={setField('workshopName')}
+        error={errors.workshopName}
         placeholder="Eg: Dwarka Mor Service"
         className="mb-[18px]"
       />
@@ -66,7 +95,8 @@ export default function WorkshopInfoPage() {
         name="description"
         rows={4}
         value={workshopInfo.description}
-        onChange={(e) => patch({ workshopInfo: { description: e.target.value } })}
+        onChange={setField('description')}
+        error={errors.description}
         placeholder="What your workshop specialises in, pick-up and drop, anything a customer should know."
         className="mb-[18px]"
       />
@@ -90,6 +120,7 @@ export default function WorkshopInfoPage() {
         <Plus size={14} />
         {addressLine ? 'Edit workshop address' : 'Add workshop address'}
       </Link>
+      {errors.address && <FieldError>{errors.address}</FieldError>}
 
       <FieldLabel required>Upload workshop images</FieldLabel>
       <div className="mb-[26px]">
@@ -99,11 +130,12 @@ export default function WorkshopInfoPage() {
           onRemove={removeShopPhoto}
           onError={toast.error}
         />
+        {errors.photos && <FieldError>{errors.photos}</FieldError>}
       </div>
 
       <Link
         href="/onboarding/owner"
-        className="flex items-center gap-3.5 rounded-[var(--radius-field)] p-[18px] mb-[26px]"
+        className="flex items-center gap-3.5 rounded-[var(--radius-field)] p-[18px]"
         style={{ border: '1px solid var(--color-line)' }}
       >
         <div
@@ -120,6 +152,8 @@ export default function WorkshopInfoPage() {
         </div>
         <ChevronRight size={16} className="text-[var(--color-disabled)] shrink-0" />
       </Link>
+      {errors.owner && <FieldError>{errors.owner}</FieldError>}
+      <div className="mb-[26px]" />
     </OnboardingShell>
   );
 }

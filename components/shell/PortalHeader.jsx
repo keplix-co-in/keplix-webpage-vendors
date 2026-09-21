@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { Bell } from 'lucide-react';
+import { Toggle } from '@/components/ui/Field';
 import { initialsOf } from '@/lib/format';
 
 /**
@@ -30,23 +31,28 @@ export default function PortalHeader({
 
       <div className="flex items-center gap-3">
         {onToggleOnline && (
-          <button
-            type="button"
-            onClick={() => onToggleOnline(!online)}
-            disabled={onlineBusy}
-            className="flex items-center gap-2 rounded-[var(--radius-pill)] pl-2.5 pr-3.5 py-1.5 text-[12.5px] font-bold cursor-pointer disabled:cursor-wait"
+          <div
+            className="flex items-center gap-3 rounded-[var(--radius-pill)] pl-4 pr-2.5 py-1.5"
             style={{
               border: `1px solid ${online ? '#D1FAE5' : 'var(--color-line)'}`,
               background: online ? 'var(--color-success-tint)' : 'var(--color-divider)',
-              color: online ? 'var(--color-success-dark)' : 'var(--color-muted)',
             }}
           >
             <span
-              className="w-2 h-2 rounded-full"
-              style={{ background: online ? 'var(--color-success)' : 'var(--color-disabled)' }}
+              className="text-[12.5px] font-bold"
+              style={{ color: online ? 'var(--color-success-dark)' : 'var(--color-muted)' }}
+            >
+              {online ? 'Accepting jobs' : 'Offline'}
+            </span>
+            {/* onlineBusy is checked here because Toggle has no disabled state:
+                a second click while the request is in flight would send the
+                opposite value and race the first. */}
+            <Toggle
+              checked={Boolean(online)}
+              onChange={(next) => !onlineBusy && onToggleOnline(next)}
+              label="Accepting jobs"
             />
-            {online ? 'Accepting jobs' : 'Offline'}
-          </button>
+          </div>
         )}
 
         <Link
