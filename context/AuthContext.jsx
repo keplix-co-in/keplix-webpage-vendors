@@ -6,6 +6,7 @@ import { authAPI } from '@/api/auth';
 import { vendorAPI } from '@/api/vendor';
 import { tokenStore } from '@/lib/tokenStore';
 import { onSessionExpired } from '@/lib/sessionExpiry';
+import { closeSocket } from '@/lib/socket';
 import { rememberNext } from '@/lib/nextTarget';
 import { resolveVendorLanding, VENDOR_LANDING } from '@/shared/utils/vendorLanding';
 import {
@@ -71,6 +72,11 @@ export function AuthProvider({ children }) {
   const [sessionEnded, setSessionEnded] = useState(false);
 
   const clearSession = useCallback(() => {
+    // WHY here rather than in signOut: every way a session ends (logout, a 401
+    // on restore, session expiry) funnels through clearSession, and the socket
+    // must go with it — otherwise the shell's still-mounted listener kept a
+    // connection authenticated as the signed-out vendor.
+    closeSocket();
     tokenStore.clearAll();
     setUser(null);
     setVendorProfile(null);
@@ -95,7 +101,7 @@ export function AuthProvider({ children }) {
     // Blacklists the token server-side; a failure here should still log the
     // vendor out locally rather than trapping them in the portal.
     try {
-      await authAPI.logout();
+      await authAPI.logout(tokenStore.getRefreshToken());
     } finally {
       clearSession();
       router.replace('/sign-in');

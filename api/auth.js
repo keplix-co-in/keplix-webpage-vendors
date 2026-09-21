@@ -3,7 +3,11 @@ import api from '@/lib/api';
 export const authAPI = {
   signup: (userData) => api.post('/accounts/auth/signup', userData),
   login: (credentials) => api.post('/accounts/auth/login', credentials),
-  logout: () => api.post('/accounts/auth/logout'),
+  // WHY refresh in the body: the backend blacklists the access token from the
+  // header, and (since the logout fix) the refresh token from this body too, so
+  // a logged-out 30-day refresh token can't mint new sessions. Older backends
+  // ignore the extra field.
+  logout: (refresh) => api.post('/accounts/auth/logout', refresh ? { refresh } : undefined),
   getProfile: () => api.get('/accounts/auth/profile'),
   updateProfile: (profileData) => api.put('/accounts/auth/profile', profileData),
 

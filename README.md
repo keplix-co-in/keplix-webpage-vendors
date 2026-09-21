@@ -44,7 +44,7 @@ notice and the preview flag is compiled out, so it cannot be switched on.
 - `api/` — one module per feature, mapped 1:1 to the backend's real routes.
 - `lib/api.js` — port of the mobile client: bearer token, single-flight refresh,
   and the same `{ success, data, error, status }` envelope (it resolves errors
-  rather than throwing, except on 429).
+  rather than throwing; 429 resolves too, with `isRateLimited: true`).
 - `shared/` — logic copied from `keplix-frontend` so the two apps cannot drift:
   `resolveVendorLanding`, the dashboard's job buckets, service categories,
   vehicle segments, durations, FAQs, reject reasons, inspection items.
