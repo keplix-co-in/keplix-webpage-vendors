@@ -1,3 +1,5 @@
+import { publicSiteUrl } from '@/lib/siteUrl';
+
 /**
  * Only the three pre-session pages are public; everything else in this portal
  * is a vendor's own workshop data behind an auth guard, so it is kept out of
@@ -7,10 +9,12 @@
  * `/sign-up/otp` — that one is disallowed explicitly. Crawlers apply the most
  * specific matching rule, so the narrower Disallow wins over the wider Allow.
  *
- * No `sitemap` is emitted: the portal's public origin is not known at build
- * time and a wrong absolute URL is worse than none.
+ * The `Sitemap:` and `Host:` lines are emitted only when NEXT_PUBLIC_SITE_URL
+ * is set (production, https://partner.keplix.co.in). A preview or local build
+ * does not know its public origin, and a wrong absolute URL is worse than none.
  */
 export default function robots() {
+  const site = publicSiteUrl();
   return {
     rules: [
       {
@@ -19,5 +23,6 @@ export default function robots() {
         disallow: ['/', '/sign-up/otp'],
       },
     ],
+    ...(site && { sitemap: `${site}/sitemap.xml`, host: site }),
   };
 }

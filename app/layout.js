@@ -1,6 +1,7 @@
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
+import { metadataBaseUrl } from "@/lib/siteUrl";
 
 // The handoff specifies DM Sans 400/500/700 — the same family the mobile app
 // uses, so web and app read as one product.
@@ -11,13 +12,11 @@ const dmSans = DM_Sans({
 });
 
 // Relative canonical/openGraph URLs need an absolute base to resolve against.
-// The portal's production origin is not known here, so it comes from the
-// environment; the localhost fallback keeps dev and CI builds working without
-// baking in a guessed domain.
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-
+// lib/siteUrl.js picks it: NEXT_PUBLIC_SITE_URL in production, the Vercel
+// preview URL on previews, localhost otherwise.
 export const metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(metadataBaseUrl()),
+  applicationName: "Keplix Partner",
   title: "Keplix Partner — Vendor Portal",
   description:
     "Manage bookings, walk-ins, your service catalog and earnings for your Keplix workshop.",

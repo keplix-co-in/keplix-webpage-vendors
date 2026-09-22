@@ -1,16 +1,23 @@
 /**
  * Server wrapper for metadata only — welcome/page.jsx is a client component and
  * so cannot export it. This is the portal's public front door and the one page
- * worth indexing, hence the canonical URL and the social cards.
+ * worth indexing, hence the canonical URL, the social cards and the JSON-LD.
  *
  * The canonical and openGraph URLs are relative on purpose: they resolve
- * against `metadataBase` in app/layout.js, which is driven by
- * NEXT_PUBLIC_SITE_URL rather than a hardcoded origin.
+ * against `metadataBase` in app/layout.js (see lib/siteUrl.js) rather than a
+ * hardcoded origin. The share image comes from app/opengraph-image.js.
+ *
+ * Title and description target what a garage owner searches for ("garage
+ * management", "workshop software") rather than the brand alone; the marketing
+ * pitch for vendors lives on keplix.co.in/business, which links here.
  */
+const title = 'Keplix Partner — Workshop & Garage Management Portal';
+const description =
+  'Run your car workshop on Keplix: accept service bookings, log walk-ins, send job cards and health reports, and track your earnings — one account for the web portal and the Keplix Partner app.';
+
 export const metadata = {
-  title: 'Keplix Partner — Run your workshop from anywhere',
-  description:
-    'Sign in or register your workshop on Keplix Partner. Accept bookings, log walk-ins, close jobs and track your earnings — the same account as the Keplix Partner app.',
+  title,
+  description,
   alternates: { canonical: '/welcome' },
   // Opts back in: the root layout defaults every route to noindex because the
   // portal is private, and this is one of the three public pages.
@@ -18,19 +25,38 @@ export const metadata = {
   openGraph: {
     type: 'website',
     siteName: 'Keplix Partner',
+    locale: 'en_IN',
     url: '/welcome',
-    title: 'Keplix Partner — Run your workshop from anywhere',
-    description:
-      'Accept bookings, log walk-ins, close jobs and track your earnings from the Keplix Partner vendor portal.',
+    title,
+    description,
   },
-  twitter: {
-    card: 'summary',
-    title: 'Keplix Partner — Run your workshop from anywhere',
-    description:
-      'Accept bookings, log walk-ins, close jobs and track your earnings from the Keplix Partner vendor portal.',
-  },
+  twitter: { card: 'summary_large_image', title, description },
+};
+
+// Tells search engines this is Keplix's own web app, published by the same
+// organization as keplix.co.in, so the two properties are understood as one
+// brand rather than as competing sites. Static data only, no user input.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Keplix Partner',
+  url: 'https://partner.keplix.co.in/welcome',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  inLanguage: 'en-IN',
+  description,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' },
+  publisher: { '@type': 'Organization', name: 'Keplix', url: 'https://keplix.co.in' },
 };
 
 export default function WelcomeLayout({ children }) {
-  return children;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {children}
+    </>
+  );
 }
