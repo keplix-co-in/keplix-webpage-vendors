@@ -17,6 +17,12 @@ export const paymentsAPI = {
         ...payload,
         today_earnings: payload.today_earnings || payload.today_earning || 0,
         total_earnings: payload.total_earnings || payload.total_earning || 0,
+        // NOT DATA. The backend's earning controller returns a hard-coded 0 for
+        // this field — it has never been computed from anything. Kept in the
+        // normalised shape so web and mobile stay identical, but no web screen
+        // renders it: a "0% growth" chip is a claim about the business, and the
+        // server has no basis for it. If growth is ever really calculated,
+        // that is the moment to surface it.
         growth_percentage: payload.growth_percentage || 0,
         today_earning: payload.today_earning || payload.today_earnings || 0,
         total_earning: payload.total_earning || payload.total_earnings || 0,

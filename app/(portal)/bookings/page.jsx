@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { Search } from 'lucide-react';
 import { usePortalHeader } from '../layout';
-import { Card, EmptyState } from '@/components/ui/Card';
+import { Card, EmptyState, ErrorState } from '@/components/ui/Card';
 import Badge, { statusTone } from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Field';
@@ -62,7 +62,12 @@ export default function BookingsPage() {
   const [search, setSearch] = useState('');
   const [busyId, setBusyId] = useState(null);
 
-  const { bookings: rawBookings, isLoading } = useTabbedBookings();
+  const {
+    bookings: rawBookings,
+    isLoading,
+    isError: bookingsFailed,
+    refetch: refetchBookings,
+  } = useTabbedBookings();
   const { data: rawWalkIns = [] } = useWalkIns(WALK_IN_PARAMS);
 
   usePortalHeader('Bookings', 'Accept requests, track live jobs and close them out');
@@ -207,6 +212,14 @@ export default function BookingsPage() {
 
         {isLoading ? (
           <div className="px-[22px] py-8 text-[13px] text-[var(--color-muted)]">Loading bookings…</div>
+        ) : bookingsFailed ? (
+          // WHY before the empty check: a failed request and an empty tab used
+          // to render the same "Nothing in this tab", which hid outages.
+          <ErrorState
+            title="We could not load your bookings"
+            body="Your jobs are safe — this is only a problem fetching them. Try again in a moment."
+            onRetry={() => refetchBookings()}
+          />
         ) : rows.length === 0 ? (
           <EmptyState
             title="Nothing in this tab"

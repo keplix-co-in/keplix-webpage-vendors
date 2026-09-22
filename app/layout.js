@@ -10,15 +10,31 @@ const dmSans = DM_Sans({
   weight: ["400", "500", "700"],
 });
 
+// Relative canonical/openGraph URLs need an absolute base to resolve against.
+// The portal's production origin is not known here, so it comes from the
+// environment; the localhost fallback keeps dev and CI builds working without
+// baking in a guessed domain.
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 export const metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Keplix Partner — Vendor Portal",
   description:
     "Manage bookings, walk-ins, your service catalog and earnings for your Keplix workshop.",
+  // Default to noindex and let only the three public pages (/welcome, /sign-in,
+  // /sign-up) opt back in via their own layouts. Almost every route here is a
+  // signed-in vendor's own workshop data, and the portal and onboarding layouts
+  // are `'use client'` (their pages import hooks from them), so they cannot
+  // export metadata themselves. Denying by default also means a route added
+  // later is private unless someone deliberately publishes it.
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({ children }) {
+  // en-IN: the portal is an India-only product (INR, Indian addresses and
+  // phone number formats), so the regional tag is the accurate one.
   return (
-    <html lang="en" className={`${dmSans.variable} h-full`}>
+    <html lang="en-IN" className={`${dmSans.variable} h-full`}>
       <body
         className="min-h-full"
         style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}

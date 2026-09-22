@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { useMemo } from 'react';
-import { Clock } from 'lucide-react';
+import { Clock, ShieldCheck } from 'lucide-react';
 import { usePortalHeader } from '../layout';
-import { Card, CardHeader, Kicker, EmptyState } from '@/components/ui/Card';
+import { Card, CardHeader, Kicker, EmptyState, ErrorState, ErrorNotice } from '@/components/ui/Card';
 import Badge, { statusTone } from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
 import { useAuth } from '@/context/AuthContext';
@@ -25,6 +25,13 @@ import {
 // Only the live walk-ins matter here; the app asks for the same slice.
 const LIVE_WALK_INS = { status: 'open,in_progress', limit: 100 };
 
+// VendorProfile.status in the backend schema defaults to "pending" and is moved
+// to "approved" only by the admin endpoint (Admin/vendorController.setVendorStatus).
+// A fresh vendor logs in with status:'pending' and onboarding_completed:false.
+const VERIFIED_STATUS = 'approved';
+// These are not "under review" any more, so they must not get the waiting copy.
+const CLOSED_STATUSES = ['rejected', 'suspended'];
+
 const greeting = () => {
   const hour = new Date().getHours();
   if (hour < 12) return 'Good morning';
@@ -34,11 +41,34 @@ const greeting = () => {
 
 export default function DashboardPage() {
   const { user, vendorProfile } = useAuth();
-  const { data: bookings = [], isLoading } = useBookings(DASHBOARD_BOOKINGS);
+  const {
+    data: bookings = [],
+    isLoading,
+    isError: bookingsFailed,
+    refetch: refetchBookings,
+  } = useBookings(DASHBOARD_BOOKINGS);
   const { data: walkIns = [] } = useWalkIns(LIVE_WALK_INS);
-  const { data: earnings } = useEarnings();
+  const {
+    data: earnings,
+    isError: earningsFailed,
+    refetch: refetchEarnings,
+  } = useEarnings();
 
   const businessName = vendorProfile?.business_name ?? user?.business_name ?? 'your workshop';
+
+  // Read-only consumption of what the portal layout already fetched into
+  // AuthContext — no extra request, and nothing here writes to the context.
+  // `status` lives on the VendorProfile; `onboarding_completed` is on both the
+  // profile and the login payload, so the profile wins and the user is the
+  // fallback for the first paint before the profile query resolves.
+  const verificationStatus = vendorProfile?.status ?? null;
+  const onboardingCompleted =
+    vendorProfile?.onboarding_completed ?? user?.onboarding_completed ?? false;
+  const awaitingVerification =
+    verificationStatus != null &&
+    verificationStatus !== VERIFIED_STATUS &&
+    !CLOSED_STATUSES.includes(verificationStatus) &&
+    (verificationStatus === 'pending' || Boolean(onboardingCompleted));
 
   usePortalHeader(
     `${greeting()}, ${businessName}`,
@@ -68,6 +98,54 @@ export default function DashboardPage() {
 
   return (
     <div>
+      {/*
+        WHY: a vendor who finishes registration lands straight on a dashboard
+        that looks live but cannot receive bookings until an admin approves the
+        profile, and nothing on the page said so — the only mention of review
+        was the one-off onboarding success screen, which they never see again.
+        Deliberately not dismissible: it is a statement of account state, not a
+        notification, and it disappears on its own when status turns 'approved'.
+        Copy mirrors app/(onboarding)/onboarding/success/page.jsx.
+      */}
+      {awaitingVerification && (
+        <div
+          className="rounded-[var(--radius-portal)] px-5 py-4 flex items-center gap-4 mb-5 flex-wrap"
+          style={{
+            background: 'var(--color-primary-tint)',
+            border: '1px solid var(--color-primary-tint-border)',
+          }}
+        >
+          <div className="w-[42px] h-[42px] rounded-[var(--radius-well)] bg-white flex items-center justify-center shrink-0">
+            <ShieldCheck size={20} color="var(--color-primary)" />
+          </div>
+          <div className="flex-1 min-w-[200px]">
+            <div className="text-[14px] font-bold" style={{ color: 'var(--color-primary-dark)' }}>
+              Your workshop is under review. Bookings switch on once verification clears.
+            </div>
+            <div className="text-[12.5px] text-[var(--color-muted)] mt-0.5">
+              The Keplix team reviews most applications within one working day. You can keep setting
+              up your services and timings in the meantime.
+            </div>
+          </div>
+        </div>
+      )}
+
+      {(earningsFailed || bookingsFailed) && (
+        <ErrorNotice
+          message={
+            earningsFailed && bookingsFailed
+              ? 'We could not reach Keplix just now, so your earnings and today’s schedule are unavailable.'
+              : earningsFailed
+                ? 'We could not load your earnings just now. Your money is unaffected.'
+                : 'We could not load today’s schedule just now.'
+          }
+          onRetry={() => {
+            if (earningsFailed) refetchEarnings();
+            if (bookingsFailed) refetchBookings();
+          }}
+        />
+      )}
+
       {buckets.awaitingDecision.length > 0 && (
         <div
           className="bg-white rounded-[14px] px-5 py-4 flex items-center gap-4 mb-5 flex-wrap"
@@ -108,10 +186,13 @@ export default function DashboardPage() {
         >
           <div className="text-[10.5px] tracking-[1px] font-bold opacity-80 mb-2">TOTAL EARNINGS</div>
           <div className="text-[30px] font-bold tracking-[-1px] leading-none">
-            {formatMoney(earnings?.total_earnings ?? 0)}
+            {/* No `?? 0`: formatMoney renders "—" when there is no figure yet.
+                WHY: "₹0" while loading, or after a failed call, read as a real
+                lifetime total of zero. */}
+            {formatMoney(earnings?.total_earnings)}
           </div>
           <div className="text-[11.5px] mt-2.5 opacity-80">
-            {formatMoney(earnings?.today_earnings ?? 0)} today
+            {formatMoney(earnings?.today_earnings)} today
           </div>
         </div>
 
@@ -122,7 +203,10 @@ export default function DashboardPage() {
               className="text-[30px] font-bold tracking-[-1px] leading-none"
               style={{ color: stat.color }}
             >
-              {stat.value}
+              {/* WHY "—": these counts are derived from the bookings call, so a
+                  failed or in-flight request produced a confident "0" requests
+                  pending when the truth is that we do not know. */}
+              {isLoading || bookingsFailed ? '—' : stat.value}
             </div>
             <div className="text-[11.5px] text-[var(--color-muted)] mt-2.5">{stat.note}</div>
           </Card>
@@ -144,6 +228,14 @@ export default function DashboardPage() {
 
             {isLoading ? (
               <div className="px-[22px] py-8 text-[13px] text-[var(--color-muted)]">Loading…</div>
+            ) : bookingsFailed ? (
+              // Keeps "Nothing booked for today" honest: it now means the day is
+              // genuinely clear, not that the request fell over.
+              <ErrorState
+                title="We could not load today’s schedule"
+                body="Your bookings are safe — this is only a problem fetching them."
+                onRetry={() => refetchBookings()}
+              />
             ) : todaysJobs.length === 0 ? (
               <EmptyState
                 title="Nothing booked for today"

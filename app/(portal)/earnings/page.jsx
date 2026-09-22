@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { usePortalHeader } from '../layout';
-import { Card, CardHeader, Kicker, EmptyState } from '@/components/ui/Card';
+import { Card, CardHeader, Kicker, EmptyState, ErrorState, ErrorNotice } from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
 import { Chip } from '@/components/ui/Field';
 import { useAuth } from '@/context/AuthContext';
@@ -16,8 +16,17 @@ const TABS = ['All', 'Paid out', 'Pending'];
 
 export default function EarningsPage() {
   const { vendorProfile } = useAuth();
-  const { data: earnings } = useEarnings();
-  const { data: bookings = [], isLoading } = useBookings(ANY_BOOKING);
+  const {
+    data: earnings,
+    isError: earningsFailed,
+    refetch: refetchEarnings,
+  } = useEarnings();
+  const {
+    data: bookings = [],
+    isLoading,
+    isError: bookingsFailed,
+    refetch: refetchBookings,
+  } = useBookings(ANY_BOOKING);
   const [tab, setTab] = useState('All');
 
   usePortalHeader('Earnings & payouts', 'Transaction history and your settlement account');
@@ -56,6 +65,13 @@ export default function EarningsPage() {
 
   return (
     <div>
+      {earningsFailed && (
+        <ErrorNotice
+          message="We could not load your earnings just now, so the totals below are unavailable. Your money is unaffected."
+          onRetry={() => refetchEarnings()}
+        />
+      )}
+
       <div className="grid grid-cols-4 gap-4 mb-5 max-[1000px]:grid-cols-2">
         {stats.map((stat) => (
           <div
@@ -88,7 +104,10 @@ export default function EarningsPage() {
               className="text-[26px] font-bold tracking-[-1px] leading-none"
               style={{ color: stat.feature ? '#fff' : stat.tint ? 'var(--color-primary-dark)' : 'var(--color-ink)' }}
             >
-              {formatMoney(stat.value ?? 0)}
+              {/* No `?? 0`: formatMoney renders "—" for a missing value. WHY:
+                  while the call is in flight or after it failed there is no
+                  figure to show, and "₹0" read as a real total of zero. */}
+              {formatMoney(stat.value)}
             </div>
             <div
               className="text-[11.5px] mt-2.5"
@@ -117,6 +136,14 @@ export default function EarningsPage() {
 
           {isLoading ? (
             <div className="px-[22px] py-8 text-[13px] text-[var(--color-muted)]">Loading…</div>
+          ) : bookingsFailed ? (
+            // Before this, a failed bookings call fell through to "No
+            // transactions yet" — indistinguishable from a real empty history.
+            <ErrorState
+              title="We could not load your transactions"
+              body="This is a connection problem, not a missing payout. Try again in a moment."
+              onRetry={() => refetchBookings()}
+            />
           ) : visible.length === 0 ? (
             <EmptyState
               title="No transactions yet"

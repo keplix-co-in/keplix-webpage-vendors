@@ -35,13 +35,15 @@ export function useTabbedBookings() {
     [ongoingQuery.data, upcomingQuery.data, completedQuery.data, canceledQuery.data]
   );
 
+  const queries = [ongoingQuery, upcomingQuery, completedQuery, canceledQuery];
+
   return {
     bookings,
-    isLoading:
-      ongoingQuery.isLoading ||
-      upcomingQuery.isLoading ||
-      completedQuery.isLoading ||
-      canceledQuery.isLoading,
+    isLoading: queries.some((query) => query.isLoading),
+    // WHY surfaced: all four calls used to fail silently into an empty list, so
+    // an outage was shown to the vendor as "Nothing in this tab".
+    isError: queries.some((query) => query.isError),
+    refetch: () => queries.forEach((query) => query.refetch()),
   };
 }
 

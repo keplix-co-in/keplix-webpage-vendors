@@ -1,0 +1,81 @@
+name: CI
+
+# Added 2026-09-21: this project had no CI at all -- nothing checked a pull
+# request or a push to main, so a lint error or a build-breaking change only
+# surfaced when someone ran the dev server locally. This is a check-only
+# workflow; it does not deploy anything.
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+# Read-only. This workflow only checks out code and runs checks; it never
+# pushes, comments, or publishes, so it needs nothing beyond contents: read.
+permissions:
+  contents: read
+
+# Cancel superseded runs on the same ref -- a force-push or a second commit to
+# an open PR makes the in-flight run's result irrelevant.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Node 22 to match the house style in kepix-admin's and
+      # keplix-website's deploy workflows (both '22'). Next 16.3.5 (see
+      # package.json) requires Node >= 20.9 anyway, so 22 is the lowest
+      # supported LTS that is also already used elsewhere in this monorepo.
+      # No `engines` field in this project's package.json to contradict that.
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      # npm pinned to the exact patch, matching keplix-website's deploy
+      # workflow. Reasoning, since it differs per project in this monorepo:
+      #   - package-lock.json here is lockfileVersion 3, which needs npm >= 7;
+      #     that part is satisfied by anything modern.
+      #   - The actual hazard is the npm shipped with the runner image (npm
+      #     10.9.x at the time of writing) and its Arborist
+      #     "Cannot read properties of null (reading 'edgesOut')" bug, which
+      #     is triggered by lockfiles carrying many optional platform-specific
+      #     binaries. This lockfile has exactly that shape (Next/SWC ships one
+      #     native binary per OS/arch), so it is in scope for the bug.
+      #   - keplix-backend pinned npm to 11.7.0 for the same reason and later
+      #     dropped the pin only after regenerating its lockfile against the
+      #     Linux runner (see its commits 81226dc and d1d22b0). That
+      #     regeneration has not been done here, so keep the pin.
+      # If you ever regenerate this lockfile on Linux, this step can go.
+      - name: Pin npm to a known-good version
+        run: npm install --global npm@11.7.0
+
+      - name: Install dependencies
+        run: npm ci
+
+      # `npm run lint` is `eslint` (flat config in eslint.config.mjs, which
+      # defaults to linting the whole project). Verified locally on
+      # 2026-09-21: exits 0 with zero errors and zero warnings, so this is a
+      # hard gate -- unlike the two Expo apps, which are report-only.
+      - name: Lint
+        run: npm run lint
+
+      # NEXT_PUBLIC_API_URL is deliberately a dummy, non-resolvable hostname
+      # and is NOT a secret. lib/apiConfig.js throws at module load when the
+      # variable is unset, which would fail the build for a reason unrelated
+      # to the change under test. Nothing in `next build` makes a network
+      # request to it -- the value is only inlined into the client bundle --
+      # so an invalid host is fine here and is safer than baking the real
+      # production origin into a CI artifact that is then thrown away.
+      - name: Build
+        env:
+          NEXT_PUBLIC_API_URL: https://example.invalid
+        run: npx next build
