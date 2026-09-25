@@ -1,6 +1,7 @@
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
+import { Analytics } from "@vercel/analytics/next";
 import { metadataBaseUrl } from "@/lib/siteUrl";
 
 // The handoff specifies DM Sans 400/500/700 — the same family the mobile app
@@ -39,6 +40,7 @@ export default function RootLayout({ children }) {
         style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
       >
         <Providers>{children}</Providers>
+        <Analytics />
       </body>
     </html>
   );
