@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { CalendarCheck, ClipboardCheck, IndianRupee } from 'lucide-react';
+import { CalendarCheck, ClipboardCheck, IndianRupee, Smartphone, Wrench } from 'lucide-react';
 import EntryLoader from '@/components/auth/EntryLoader';
 import GoogleButton, { isGoogleConfigured } from '@/components/auth/GoogleButton';
 import { useSessionRedirect } from '@/components/auth/useSessionRedirect';
@@ -18,10 +18,9 @@ import Button from '@/components/ui/Button';
  * sign-in cannot produce a session (verify-phone-otp returns no tokens and
  * /login matches on email only), so both would be dead buttons.
  *
- * Layout: sign-in on the left, and on wide screens a static preview of the
- * portal on the right, so a garage owner sees what they get before logging in.
- * The preview is decorative (aria-hidden) and its figures are labelled as a
- * sample — it must never read as real data.
+ * Layout: sign-in on the left, and on wide screens the four steps of a Keplix
+ * job on the right, so a garage owner sees how the platform works before
+ * logging in. It is real content (not decorative), so it stays readable.
  */
 
 const POINTS = [
@@ -30,65 +29,58 @@ const POINTS = [
   { Icon: IndianRupee, text: 'See every payment and what you have earned' },
 ];
 
-const SAMPLE_JOBS = [
-  { time: '9:30', car: 'Swift', work: 'Full service', status: 'In progress', tone: 'teal' },
-  { time: '11:00', car: 'i20', work: 'Brake pads', status: 'Accepted', tone: 'primary' },
-  { time: '2:15', car: 'City', work: 'AC check', status: 'New request', tone: 'warning' },
+// The real order of a Keplix job, in the words a workshop owner uses. Kept to
+// what the platform does today: no payout timing or fee is promised here, since
+// both are still owner decisions (see PROJECT_LOG backlog).
+const STEPS = [
+  {
+    Icon: Smartphone,
+    title: 'A customer books you',
+    text: 'They pick your workshop and a time slot in the Keplix app.',
+  },
+  {
+    Icon: CalendarCheck,
+    title: 'You accept the request',
+    text: 'Accept or decline. Accepting locks that slot in your day.',
+  },
+  {
+    Icon: Wrench,
+    title: 'You do the job',
+    text: 'Inspect the car, take photos and close the job with a summary.',
+  },
+  {
+    Icon: IndianRupee,
+    title: 'You get paid',
+    text: 'The customer confirms the work and the payment is settled to you.',
+  },
 ];
 
-const TONES = {
-  teal: 'bg-[var(--color-teal)]/15 text-[#23736e]',
-  primary: 'bg-[var(--color-primary-tint)] text-[var(--color-primary-dark)]',
-  warning: 'bg-[var(--color-warning-tint-strong)] text-[var(--color-warning-text)]',
-};
-
-function PortalPreview() {
+function HowItWorks() {
   return (
-    <div
-      aria-hidden="true"
-      className="w-full max-w-[420px] rounded-[var(--radius-modal)] bg-white p-5 select-none"
-      style={{ boxShadow: '0 30px 60px rgba(17, 12, 60, 0.45)' }}
-    >
-      <div className="flex items-center justify-between mb-4">
-        <p className="text-[15px] font-bold text-[var(--color-ink)]">Today at your workshop</p>
-        <span className="text-[11px] font-bold rounded-full px-2.5 py-1 bg-[var(--color-success-tint)] text-[var(--color-success-dark)]">
-          Accepting jobs
-        </span>
-      </div>
+    <div className="w-full max-w-[440px] text-white">
+      <h2 className="text-[22px] font-bold tracking-[-0.4px] leading-[1.2]">
+        How Keplix works for your workshop
+      </h2>
 
-      <ul className="flex flex-col gap-2.5">
-        {SAMPLE_JOBS.map((job) => (
-          <li
-            key={job.time}
-            className="flex items-center gap-3 rounded-[var(--radius-small)] border border-[var(--color-line)] px-3.5 py-3"
-          >
-            <span className="w-11 text-[13px] font-bold text-[var(--color-ink-secondary)] tabular-nums">
-              {job.time}
+      <ol className="mt-8">
+        {STEPS.map(({ Icon, title, text }, i) => (
+          <li key={title} className="relative flex gap-4 pb-8 last:pb-0">
+            {i < STEPS.length - 1 && (
+              <span
+                aria-hidden="true"
+                className="absolute left-[19px] top-11 bottom-1 w-px bg-white/25"
+              />
+            )}
+            <span className="grid place-items-center w-10 h-10 shrink-0 rounded-full bg-white text-[var(--color-primary)]">
+              <Icon size={19} aria-hidden="true" />
             </span>
-            <span className="flex-1 min-w-0">
-              <span className="block text-[13.5px] font-bold text-[var(--color-ink)]">
-                {job.car}
-              </span>
-              <span className="block text-[12px] text-[var(--color-muted)]">{job.work}</span>
-            </span>
-            <span className={`text-[11px] font-bold rounded-full px-2.5 py-1 ${TONES[job.tone]}`}>
-              {job.status}
-            </span>
+            <div className="pt-0.5">
+              <p className="text-[15.5px] font-bold">{title}</p>
+              <p className="text-[13.5px] leading-[1.55] text-white/80 mt-1">{text}</p>
+            </div>
           </li>
         ))}
-      </ul>
-
-      <div className="mt-4 rounded-[var(--radius-small)] bg-[var(--color-primary-tint)] px-4 py-3 flex items-center justify-between">
-        <span className="text-[12.5px] font-bold text-[var(--color-primary-dark)]">
-          Earned this week
-        </span>
-        <span className="text-[18px] font-bold text-[var(--color-primary-dark)] tabular-nums">
-          ₹18,400
-        </span>
-      </div>
-      <p className="text-[11px] text-[var(--color-disabled)] mt-3 text-center">
-        Sample data — your own bookings appear here
-      </p>
+      </ol>
     </div>
   );
 }
@@ -198,7 +190,7 @@ export default function WelcomePage() {
               'radial-gradient(120% 90% at 20% 10%, #6a62d0 0%, #4e46b4 45%, #2a2470 100%)',
           }}
         >
-          <PortalPreview />
+          <HowItWorks />
         </aside>
       </div>
     </>

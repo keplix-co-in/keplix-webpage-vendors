@@ -31,6 +31,10 @@ export const authAPI = {
   // The backend verifies the id token against GOOGLE_ALLOWED_AUDIENCES, so the
   // web OAuth client ID must be listed there for this to succeed.
   googleAuth: (googleData) => api.post('/accounts/auth/google', googleData),
+
+  // Background (Web Push) alerts. `subscription` is PushSubscription.toJSON().
+  registerWebPush: (subscription) => api.post('/accounts/auth/web-push', subscription),
+  unregisterWebPush: (endpoint) => api.delete('/accounts/auth/web-push', { data: { endpoint } }),
 };
 
 export default authAPI;

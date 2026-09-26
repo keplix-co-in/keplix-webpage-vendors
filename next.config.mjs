@@ -73,6 +73,16 @@ const nextConfig = {
   async headers() {
     return [
       {
+        // The service worker must never be served stale — a cached copy would
+        // keep delivering alerts with old code — and is scoped to the whole site.
+        source: '/sw.js',
+        headers: [
+          { key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate' },
+          { key: 'Service-Worker-Allowed', value: '/' },
+          { key: 'Content-Type', value: 'text/javascript; charset=utf-8' },
+        ],
+      },
+      {
         source: '/:path*',
         headers: [
           {

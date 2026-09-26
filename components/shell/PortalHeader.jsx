@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { Bell } from 'lucide-react';
 import { Toggle } from '@/components/ui/Field';
-import { initialsOf } from '@/lib/format';
+import Avatar from '@/components/ui/Avatar';
+import AlertSettings from './AlertSettings';
 
 /**
  * Sticky portal header. The prototype's "Workflow map" pill is replaced by the
@@ -14,6 +15,7 @@ export default function PortalHeader({
   title,
   subtitle,
   businessName,
+  image,
   online,
   onToggleOnline,
   onlineBusy = false,
@@ -55,6 +57,8 @@ export default function PortalHeader({
           </div>
         )}
 
+        <AlertSettings />
+
         <Link
           href="/notifications"
           aria-label="Notifications"
@@ -75,12 +79,7 @@ export default function PortalHeader({
           className="flex items-center gap-2.5 rounded-[var(--radius-pill)] pl-[5px] pr-3.5 py-[5px] bg-white"
           style={{ border: '1px solid var(--color-line)' }}
         >
-          <span
-            className="w-7 h-7 rounded-full text-white text-[12px] font-bold flex items-center justify-center"
-            style={{ background: 'var(--color-primary)' }}
-          >
-            {initialsOf(businessName)}
-          </span>
+          <Avatar src={image} name={businessName} size={28} />
           <span className="text-[12.5px] font-bold text-[var(--color-ink-secondary)] max-w-[180px] truncate">
             {businessName || 'My workshop'}
           </span>

@@ -140,6 +140,7 @@ export default function PortalLayout({ children }) {
             title={header.title}
             subtitle={header.subtitle}
             businessName={profile?.business_name ?? user?.business_name}
+            image={profile?.cover_image}
             online={online}
             onToggleOnline={toggleOnline}
             onlineBusy={onlineBusy}

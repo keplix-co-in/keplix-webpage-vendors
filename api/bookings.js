@@ -1,4 +1,5 @@
 import api, { uploadWithFetch } from '@/lib/api';
+import { stopAlertBeep } from '@/lib/alertSound';
 
 export const bookingsAPI = {
   getVendorBookings: (vendorId, params = {}) => {
@@ -13,11 +14,15 @@ export const bookingsAPI = {
     api.patch(`/service_api/vendor/${vendorId}/bookings/update/${bookingId}`, { status }),
 
   // accept / reject
-  respondToServiceRequest: (vendorId, bookingId, vendor_status, extra = {}) =>
-    api.patch(`/service_api/vendor/${vendorId}/bookings/${bookingId}/respond`, {
+  // Any accept/reject silences a ringing new-request beep, from every screen
+  // that calls this (list, detail, reject form) — see lib/alertSound.js.
+  respondToServiceRequest: (vendorId, bookingId, vendor_status, extra = {}) => {
+    stopAlertBeep();
+    return api.patch(`/service_api/vendor/${vendorId}/bookings/${bookingId}/respond`, {
       vendor_status,
       ...extra,
-    }),
+    });
+  },
 
   // A request, not a state change: the customer has to approve before the job
   // can actually start early.

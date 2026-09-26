@@ -7,6 +7,7 @@ import { authAPI } from '@/api/auth';
 import { tokenStore } from '@/lib/tokenStore';
 import { onSessionExpired } from '@/lib/sessionExpiry';
 import { closeSocket } from '@/lib/socket';
+import { disableWebPush } from '@/lib/webPush';
 import { rememberNext } from '@/lib/nextTarget';
 import { resolveVendorLanding, VENDOR_LANDING } from '@/shared/utils/vendorLanding';
 import {
@@ -106,6 +107,9 @@ export function AuthProvider({ children }) {
     // Blacklists the token server-side; a failure here should still log the
     // vendor out locally rather than trapping them in the portal.
     try {
+      // Drop this browser's push subscription while the token is still valid, so
+      // the next person to use it is not sent this vendor's booking alerts.
+      await disableWebPush();
       await authAPI.logout(tokenStore.getRefreshToken());
     } finally {
       clearSession();
