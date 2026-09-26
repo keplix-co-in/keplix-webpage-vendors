@@ -42,3 +42,6 @@ next-env.d.ts
 
 # .env.example documents required config and is meant to be committed.
 !.env.example
+
+.vercel
+.env*

@@ -2,8 +2,8 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import { authAPI } from '@/api/auth';
-import { vendorAPI } from '@/api/vendor';
 import { tokenStore } from '@/lib/tokenStore';
 import { onSessionExpired } from '@/lib/sessionExpiry';
 import { closeSocket } from '@/lib/socket';
@@ -57,6 +57,7 @@ export const landingRouteFor = (user) => {
 
 export function AuthProvider({ children }) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [user, setUser] = useState(null);
   const [vendorProfile, setVendorProfile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -78,9 +79,13 @@ export function AuthProvider({ children }) {
     // connection authenticated as the signed-out vendor.
     closeSocket();
     tokenStore.clearAll();
+    // WHY: the query cache outlives the session. Without this, a second vendor
+    // signing in on the same tab was served the previous vendor's cached
+    // profile, notifications and chats until each query went stale.
+    queryClient.clear();
     setUser(null);
     setVendorProfile(null);
-  }, []);
+  }, [queryClient]);
 
   const signOut = useCallback(async () => {
     // Leaving preview has to turn the flag off too, or the guard would let the
@@ -177,16 +182,6 @@ export function AuthProvider({ children }) {
     [clearSession, router]
   );
 
-  const loadVendorProfile = useCallback(async () => {
-    const result = await vendorAPI.getVendorProfile();
-    if (result?.success) {
-      const profile = result.data?.vendor ?? result.data?.profile ?? result.data;
-      setVendorProfile(profile);
-      return profile;
-    }
-    return null;
-  }, []);
-
   /**
    * Completes a sign-in once the backend has returned tokens and a user.
    * Runs the same landing rule as the mobile app: a customer account is refused
@@ -219,9 +214,10 @@ export function AuthProvider({ children }) {
         setUser(next);
         tokenStore.setUser(next);
       },
+      // Fed by the portal layout's ['vendor-profile', vendorId] query — that
+      // query is the single fetch; this is only a convenient handle on it.
       vendorProfile,
       setVendorProfile,
-      loadVendorProfile,
       // The USER id, not the vendor profile id. Both the vendor-scoped REST
       // paths (/service_api/vendor/:vendorId/...) and the socket's personal
       // room (`user_<id>`, checked against authUser.id in keplix-backend
@@ -247,7 +243,6 @@ export function AuthProvider({ children }) {
     [
       user,
       vendorProfile,
-      loadVendorProfile,
       loading,
       isPreview,
       hadSession,

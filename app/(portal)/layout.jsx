@@ -12,7 +12,7 @@ import { bookingsAPI } from '@/api/bookings';
 import { notificationsAPI } from '@/api/customers';
 import { useVendorSocket } from '@/lib/useVendorSocket';
 import { DASHBOARD_BOOKINGS } from '@/components/bookings/bookingFields';
-import { unwrap } from '@/lib/queries';
+import { unwrapOrThrow } from '@/lib/queries';
 import { rememberNext } from '@/lib/nextTarget';
 import { toNotification } from '@/lib/entities';
 
@@ -61,7 +61,7 @@ export default function PortalLayout({ children }) {
     queryKey: ['bookings', vendorId, DASHBOARD_BOOKINGS],
     enabled: Boolean(vendorId),
     queryFn: async () => {
-      return unwrap(await bookingsAPI.getVendorBookings(vendorId, DASHBOARD_BOOKINGS), 'bookings');
+      return unwrapOrThrow(await bookingsAPI.getVendorBookings(vendorId, DASHBOARD_BOOKINGS), 'bookings');
     },
   });
 
@@ -69,7 +69,9 @@ export default function PortalLayout({ children }) {
     queryKey: ['notifications'],
     enabled: Boolean(user),
     queryFn: async () => {
-      return unwrap(await notificationsAPI.getNotifications(), 'notifications').map(toNotification);
+      return unwrapOrThrow(await notificationsAPI.getNotifications(), 'notifications').map(
+        toNotification
+      );
     },
   });
 

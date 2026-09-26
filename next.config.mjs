@@ -48,7 +48,8 @@ const csp = [
   // only outside production because the dev compiler/React Refresh needs it.
   `script-src 'self' 'unsafe-inline' ${isProd ? '' : "'unsafe-eval' "}https://accounts.google.com`,
   // Tailwind/Next inject style tags; leaflet's CSS is bundled and served from 'self'.
-  "style-src 'self' 'unsafe-inline'",
+  // accounts.google.com: the Google button loads /gsi/style from there.
+  "style-src 'self' 'unsafe-inline' https://accounts.google.com",
   "img-src 'self' data: blob: https://res.cloudinary.com https://*.tile.openstreetmap.org",
   "font-src 'self' data:",
   `connect-src 'self' https://accounts.google.com https://nominatim.openstreetmap.org${apiOrigins.length ? ` ${apiOrigins.join(' ')}` : ''}`,
@@ -62,6 +63,9 @@ const csp = [
   "base-uri 'self'",
   // No <object>/<embed>/<applet> is used anywhere in the portal.
   "object-src 'none'",
+  // Violations land in app/api/csp-report/route.js (Vercel function logs).
+  'report-uri /api/csp-report',
+  'report-to csp',
 ].join('; ');
 
 /** @type {import('next').NextConfig} */
@@ -103,6 +107,11 @@ const nextConfig = {
             // of the portal's action buttons in browsers that ignore the former.
             key: 'X-Frame-Options',
             value: 'DENY',
+          },
+          {
+            // Names the `report-to csp` group used by the CSP below.
+            key: 'Reporting-Endpoints',
+            value: 'csp="/api/csp-report"',
           },
           {
             // WHY: report-only on purpose. The allow-list above is derived from
