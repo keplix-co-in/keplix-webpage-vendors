@@ -9,15 +9,16 @@ export const reviewsAPI = {
 };
 
 /**
- * Vendor-to-Keplix feedback. The route's own swagger block documents
- * `{ comment, rating }`, but the controller destructures
- * `{ title, message, category }` and 500s on anything else — verified against
- * the live backend, where the documented shape fails and this one returns 201.
+ * Vendor-to-Keplix feedback. Routes moved to `/vendor/feedback` and
+ * `/vendor/feedback/create` (previously unprefixed `/vendor/` and
+ * `/vendor/create`, which collided with sibling routers) and the backend now
+ * validates the body as `{ title, message, category }`, rejecting anything
+ * else instead of 500ing.
  */
 export const feedbackAPI = {
-  getFeedback: (params = {}) => api.get('/interactions/api/vendor/', { params }),
+  getFeedback: (params = {}) => api.get('/interactions/api/vendor/feedback', { params }),
   createFeedback: ({ title, message, category }) =>
-    api.post('/interactions/api/vendor/create', { title, message, category }),
+    api.post('/interactions/api/vendor/feedback/create', { title, message, category }),
 };
 
 /**
