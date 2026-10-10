@@ -87,12 +87,17 @@ export default function NotificationsPage() {
                 <span className="block text-[13.5px] font-bold">
                   {notification.title ?? 'Notification'}
                 </span>
-                <span className="block text-[12.5px] text-[var(--color-muted)] leading-[1.6]">
+                <span className="block text-[12.5px] text-[var(--color-muted)] leading-[1.6] [overflow-wrap:anywhere]">
                   {notification.body}
+                </span>
+                {/* Phones: the time goes under the text instead of eating
+                    ~110px of a narrow row. */}
+                <span className="sm:hidden block text-[11px] text-[var(--color-disabled)] mt-1">
+                  {formatDateTime(notification.at)}
                 </span>
               </span>
 
-              <span className="text-[11.5px] text-[var(--color-disabled)] shrink-0 whitespace-nowrap">
+              <span className="max-sm:hidden text-[11.5px] text-[var(--color-disabled)] shrink-0 whitespace-nowrap">
                 {formatDateTime(notification.at)}
               </span>
             </button>

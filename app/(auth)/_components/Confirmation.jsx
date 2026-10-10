@@ -7,7 +7,7 @@ import { Check } from 'lucide-react';
 export default function Confirmation({ message, ctaLabel, ctaHref }) {
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center text-center px-7 py-10"
+      className="min-h-dvh flex flex-col items-center justify-center text-center px-4 sm:px-7 py-10"
       style={{ background: 'var(--color-primary)' }}
     >
       <div className="w-[92px] h-[92px] rounded-full bg-white flex items-center justify-center mb-8">

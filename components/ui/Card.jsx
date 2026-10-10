@@ -7,7 +7,7 @@ export function Card({ className = '', padded = true, style, children, ...props 
     <div
       className={[
         'bg-white border border-[var(--color-line)] rounded-[var(--radius-portal)]',
-        padded ? 'p-[22px]' : '',
+        padded ? 'p-4 sm:p-[22px]' : '',
         className,
       ].join(' ')}
       style={{ boxShadow: 'var(--shadow-card)', ...style }}
@@ -20,7 +20,7 @@ export function Card({ className = '', padded = true, style, children, ...props 
 
 export function CardHeader({ title, action, subtitle }) {
   return (
-    <div className="flex items-center justify-between gap-4 mb-[18px]">
+    <div className="flex items-center justify-between gap-x-4 gap-y-2.5 flex-wrap mb-[18px]">
       <div className="min-w-0">
         <div className="text-[15px] font-bold">{title}</div>
         {subtitle && <div className="text-[12px] text-[var(--color-muted)] mt-0.5">{subtitle}</div>}

@@ -78,9 +78,9 @@ export default function OnboardingHubPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: 'var(--color-canvas)' }}>
+    <div className="min-h-dvh" style={{ background: 'var(--color-canvas)' }}>
       <div style={{ background: 'var(--color-primary)', borderRadius: '0 0 30px 30px' }} className="pb-10">
-        <div className="max-w-[1120px] mx-auto px-7 pt-[26px] flex items-center justify-between gap-4 flex-wrap">
+        <div className="max-w-[1120px] mx-auto px-4 sm:px-7 pt-[26px] flex items-center justify-between gap-4 flex-wrap">
           <BrandLockup label="Partner portal" onDark />
           <Link
             href="/sign-in"
@@ -91,8 +91,8 @@ export default function OnboardingHubPage() {
           </Link>
         </div>
 
-        <div className="max-w-[1120px] mx-auto px-7 pt-[34px]">
-          <h1 className="text-[34px] font-bold text-white tracking-[-0.9px] leading-[1.15] max-w-[560px] mb-2.5">
+        <div className="max-w-[1120px] mx-auto px-4 sm:px-7 pt-[34px]">
+          <h1 className="text-[26px] sm:text-[34px] font-bold text-white tracking-[-0.9px] leading-[1.15] max-w-[560px] mb-2.5">
             Get started, it takes only 5 minutes
           </h1>
           <p className="text-[15px]" style={{ color: 'rgba(255,255,255,.8)' }}>
@@ -101,9 +101,9 @@ export default function OnboardingHubPage() {
         </div>
       </div>
 
-      <div className="max-w-[1120px] mx-auto px-7 pt-[34px] pb-[70px]">
+      <div className="max-w-[1120px] mx-auto px-4 sm:px-7 pt-[34px] pb-[70px]">
         <div
-          className="bg-white rounded-[var(--radius-auth)] p-8 max-[880px]:p-6"
+          className="bg-white rounded-[var(--radius-auth)] p-8 max-[880px]:p-6 max-sm:p-5"
           style={{ border: '1px solid var(--color-line)' }}
         >
           {STEPS.map((step, index) => {

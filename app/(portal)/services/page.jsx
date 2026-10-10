@@ -125,7 +125,7 @@ export default function ServicesPage() {
                 </p>
               )}
 
-              <div className="flex items-center justify-between gap-3 pt-1">
+              <div className="flex items-center justify-between gap-3 pt-1 flex-wrap">
                 <div className="flex items-baseline gap-2">
                   <span className="text-[17px] font-bold">{formatMoney(service.price)}</span>
                   {formatDuration(service.duration) && (

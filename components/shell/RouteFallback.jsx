@@ -17,7 +17,7 @@ import BrandLockup from '@/components/shell/BrandLockup';
 export function FullPageState({ title, body, action, footer }) {
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center px-7 py-10"
+      className="min-h-dvh flex flex-col items-center justify-center px-4 sm:px-7 py-10"
       style={{ background: 'var(--color-canvas)' }}
     >
       <div className="mb-7">
@@ -43,7 +43,7 @@ export function FullPageState({ title, body, action, footer }) {
 export function FullPageLoading({ message = 'Loading…' }) {
   return (
     <div
-      className="min-h-screen grid place-items-center text-[13px] text-[var(--color-muted)]"
+      className="min-h-dvh grid place-items-center text-[13px] text-[var(--color-muted)]"
       style={{ background: 'var(--color-canvas)' }}
     >
       {message}

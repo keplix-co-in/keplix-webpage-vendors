@@ -220,8 +220,7 @@ export default function InspectionSheet({ bookingId, walkInJobId, onSaved }) {
 
   return (
     <div
-      className="grid gap-6 items-start max-[880px]:grid-cols-[minmax(0,1fr)]"
-      style={{ gridTemplateColumns: 'minmax(0,1fr) minmax(0,340px)' }}
+      className="kx-split gap-6 items-start"
     >
       <div className="min-w-0">
         {cards.map((card) => (
@@ -244,7 +243,8 @@ export default function InspectionSheet({ bookingId, walkInJobId, onSaved }) {
               </div>
             </div>
 
-            <div className="flex gap-2 mb-4 flex-wrap">
+            {/* Three equal columns: with min-w-[96px] they wrapped 2+1 on phones. */}
+            <div className="grid grid-cols-3 gap-2 mb-4">
               {STATUS_OPTIONS.map((option) => {
                 const selected = statuses[card.key] === option.value;
                 return (
@@ -252,7 +252,7 @@ export default function InspectionSheet({ bookingId, walkInJobId, onSaved }) {
                     key={option.value}
                     type="button"
                     onClick={() => setStatuses((prev) => ({ ...prev, [card.key]: option.value }))}
-                    className="flex-1 min-w-[96px] rounded-[var(--radius-pill)] py-2.5 text-[12.5px] font-bold cursor-pointer"
+                    className="min-w-0 px-1 rounded-[var(--radius-pill)] py-2.5 text-[12px] sm:text-[12.5px] font-bold cursor-pointer"
                     style={{
                       border: `1px solid ${selected ? option.color : STATUS_UNSELECTED.border}`,
                       background: selected ? option.bg : STATUS_UNSELECTED.bg,
@@ -376,7 +376,9 @@ export default function InspectionSheet({ bookingId, walkInJobId, onSaved }) {
       </div>
 
       <div className="min-w-0">
-        <Card className="sticky top-[86px]">
+        {/* Sticky only beside the checklist; stacked on phones it would ride over
+            the cards below the shorter-than-assumed header. */}
+        <Card className="min-[881px]:sticky min-[881px]:top-[86px]">
           <CardHeader title="Running bill" />
           {cards.map((card) => {
             const value = Number((prices[card.key] ?? '').toString().trim());

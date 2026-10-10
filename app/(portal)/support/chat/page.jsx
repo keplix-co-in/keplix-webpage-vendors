@@ -72,7 +72,7 @@ export default function SupportChatPage() {
         that is what reaches the partner team.
       </div>
 
-      <Card padded={false} className="flex flex-col" style={{ height: '58vh' }}>
+      <Card padded={false} className="flex flex-col h-[58dvh] min-h-[320px]">
         <div ref={threadRef} className="kx-scroll flex-1 overflow-y-auto p-5 flex flex-col gap-2.5">
           {messages.length === 0 ? (
             <p className="text-[13px] text-[var(--color-muted)] m-auto text-center max-w-[360px] leading-[1.6]">
@@ -82,7 +82,7 @@ export default function SupportChatPage() {
             messages.map((message) => (
               <div
                 key={message.id}
-                className="max-w-[72%] px-3.5 py-2.5 self-end"
+                className="max-w-[85%] sm:max-w-[72%] px-3.5 py-2.5 self-end [overflow-wrap:anywhere]"
                 style={{
                   background: 'var(--color-primary)',
                   color: '#fff',

@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Send } from 'lucide-react';
+import { ChevronLeft, Send } from 'lucide-react';
 import { usePortalHeader } from '../layout';
 import { Card, EmptyState } from '@/components/ui/Card';
 import { useToast } from '@/components/ui/Toast';
@@ -37,6 +37,10 @@ function Messages() {
   // "Message customer" on a booking links here with ?booking=<id>.
   const bookingParam = useSearchParams().get('booking');
   const [activeId, setActiveId] = useState(null);
+  // Phones (≤880px) show one pane at a time: the list, or the open thread with
+  // a back button. Stacked, the vendor had to scroll past every chat to reach
+  // the composer. A ?booking= link opens straight on its thread.
+  const [mobileThread, setMobileThread] = useState(Boolean(bookingParam));
   const [draft, setDraft] = useState('');
   const [sending, setSending] = useState(false);
   const threadRef = useRef(null);
@@ -168,10 +172,10 @@ function Messages() {
 
   return (
     <div
-      className="grid gap-5 items-start max-[880px]:grid-cols-[minmax(0,1fr)]"
-      style={{ gridTemplateColumns: 'minmax(0,320px) minmax(0,1fr)' }}
+      className="kx-split gap-5 items-start"
+      style={{ '--kx-split-cols': 'minmax(0,320px) minmax(0,1fr)' }}
     >
-      <Card padded={false} className="min-w-0 overflow-hidden">
+      <Card padded={false} className={`min-w-0 overflow-hidden ${mobileThread ? 'max-[880px]:hidden' : ''}`}>
         {conversations.map((conversation) => {
           const selected = String(conversation.id) === String(active?.id);
           const name = conversation.customer ?? 'Customer';
@@ -180,7 +184,10 @@ function Messages() {
             <button
               key={conversation.id}
               type="button"
-              onClick={() => setActiveId(conversation.id)}
+              onClick={() => {
+                setActiveId(conversation.id);
+                setMobileThread(true);
+              }}
               className="w-full text-left px-4 py-3.5 flex items-center gap-3"
               style={{
                 background: selected ? 'var(--color-primary-tint)' : 'white',
@@ -205,13 +212,28 @@ function Messages() {
         })}
       </Card>
 
-      <Card padded={false} className="min-w-0 flex flex-col" style={{ height: '70vh' }}>
+      {/* dvh, not vh: 70vh ignored the mobile URL bar and keyboard and could
+          push the composer off screen. */}
+      <Card
+        padded={false}
+        className={`min-w-0 flex flex-col h-[calc(100dvh-210px)] min-h-[360px] min-[881px]:h-[70vh] ${
+          mobileThread ? '' : 'max-[880px]:hidden'
+        }`}
+      >
         <div
-          className="px-5 py-3.5 flex items-center gap-3"
+          className="px-3 sm:px-5 py-3.5 flex items-center gap-3"
           style={{ borderBottom: '1px solid var(--color-divider)' }}
         >
+          <button
+            type="button"
+            onClick={() => setMobileThread(false)}
+            aria-label="Back to conversations"
+            className="min-[881px]:hidden w-9 h-9 -mr-1 rounded-full flex items-center justify-center shrink-0 cursor-pointer"
+          >
+            <ChevronLeft size={20} />
+          </button>
           <span
-            className="w-9 h-9 rounded-full text-white text-[13px] font-bold flex items-center justify-center"
+            className="w-9 h-9 rounded-full text-white text-[13px] font-bold flex items-center justify-center shrink-0"
             style={{ background: 'var(--color-primary)' }}
           >
             {initialsOf(active?.customer)}
@@ -226,13 +248,13 @@ function Messages() {
           </div>
         </div>
 
-        <div ref={threadRef} className="kx-scroll flex-1 overflow-y-auto p-5 flex flex-col gap-2.5">
+        <div ref={threadRef} className="kx-scroll flex-1 overflow-y-auto p-3.5 sm:p-5 flex flex-col gap-2.5">
           {messages.map((message) => {
             const mine = isMine(message);
             return (
               <div
                 key={message.id}
-                className="max-w-[72%] px-3.5 py-2.5"
+                className="max-w-[85%] sm:max-w-[72%] px-3.5 py-2.5 [overflow-wrap:anywhere]"
                 style={{
                   alignSelf: mine ? 'flex-end' : 'flex-start',
                   background: mine ? 'var(--color-primary)' : '#fff',
@@ -265,7 +287,7 @@ function Messages() {
             onChange={(e) => setDraft(e.target.value)}
             placeholder="Write a message…"
             maxLength={MESSAGE_LIMIT}
-            className="flex-1 rounded-[var(--radius-pill)] px-4 py-3 text-[13.5px] outline-none"
+            className="flex-1 min-w-0 rounded-[var(--radius-pill)] px-4 py-3 text-base sm:text-[13.5px] outline-none"
             style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-line)' }}
           />
           <button

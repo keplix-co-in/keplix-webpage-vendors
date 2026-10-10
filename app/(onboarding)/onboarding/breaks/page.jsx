@@ -69,7 +69,7 @@ export default function SetBreaksPage() {
       }
     >
       <FieldLabel>Breaks</FieldLabel>
-      <div className="flex items-center gap-[18px] flex-wrap">
+      <div className="flex items-center gap-3 sm:gap-[18px] flex-wrap">
         <TimeSelect
           ariaLabel="Break starts"
           value={start}

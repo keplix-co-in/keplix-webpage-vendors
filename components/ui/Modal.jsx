@@ -42,7 +42,7 @@ export default function Modal({ open, onClose, title, headerTone, children, foot
       >
         {title && (
           <div
-            className="flex items-center justify-between gap-4 px-6 py-[18px]"
+            className="flex items-center justify-between gap-4 px-5 sm:px-6 py-[18px]"
             style={
               headerTone === 'danger'
                 ? { background: 'var(--color-danger)', color: '#fff' }
@@ -54,17 +54,20 @@ export default function Modal({ open, onClose, title, headerTone, children, foot
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="cursor-pointer opacity-70 hover:opacity-100"
+              className="cursor-pointer opacity-70 hover:opacity-100 p-2 -m-2"
             >
               <X size={18} />
             </button>
           </div>
         )}
 
-        <div className="px-6 py-6">{children}</div>
+        <div className="px-5 sm:px-6 py-5 sm:py-6">{children}</div>
 
         {footer && (
-          <div className="px-6 pb-6 pt-0 flex gap-3 justify-end flex-wrap">{footer}</div>
+          // Phones: buttons stack full width, primary action on top.
+          <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-0 flex flex-col-reverse sm:flex-row gap-3 sm:justify-end sm:flex-wrap [&>*]:w-full sm:[&>*]:w-auto">
+            {footer}
+          </div>
         )}
       </div>
     </div>

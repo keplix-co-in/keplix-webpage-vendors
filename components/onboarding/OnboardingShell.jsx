@@ -17,8 +17,8 @@ export default function OnboardingShell({
   footer,
 }) {
   return (
-    <div className="min-h-screen" style={{ background: 'var(--color-canvas)' }}>
-      <div className="max-w-[1120px] mx-auto px-7 py-6 flex items-center justify-between gap-4 flex-wrap">
+    <div className="min-h-dvh" style={{ background: 'var(--color-canvas)' }}>
+      <div className="max-w-[1120px] mx-auto px-4 sm:px-7 py-6 flex items-center justify-between gap-4 flex-wrap">
         <BrandLockup label="Partner portal" />
         {pill && (
           <Link
@@ -31,12 +31,12 @@ export default function OnboardingShell({
         )}
       </div>
 
-      <div className="max-w-[1120px] mx-auto px-7 pt-1 pb-[70px]">
+      <div className="max-w-[1120px] mx-auto px-4 sm:px-7 pt-1 pb-[70px]">
         <div
-          className="bg-white rounded-[var(--radius-auth)] p-8 max-[880px]:p-6"
+          className="bg-white rounded-[var(--radius-auth)] p-8 max-[880px]:p-6 max-sm:p-5"
           style={{ border: '1px solid var(--color-line)' }}
         >
-          <h1 className="text-[27px] font-bold tracking-[-0.6px]">{title}</h1>
+          <h1 className="text-[23px] sm:text-[27px] font-bold tracking-[-0.6px]">{title}</h1>
           {subtitle && (
             <p className="text-[13.5px] text-[var(--color-muted)] mt-1.5 mb-[26px] leading-[1.55]">
               {subtitle}
@@ -45,7 +45,12 @@ export default function OnboardingShell({
 
           {children}
 
-          {footer && <div className="flex gap-3 flex-wrap mt-[26px]">{footer}</div>}
+          {/* Phones: Back / Next stack full width, Next on top. */}
+          {footer && (
+            <div className="flex flex-col-reverse sm:flex-row gap-3 sm:flex-wrap mt-[26px] [&>*]:w-full sm:[&>*]:w-auto">
+              {footer}
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -58,7 +63,9 @@ export function StepActions({ backHref, onBack, nextLabel = 'Next', onNext, next
     <>
       {backHref ? (
         <Link href={backHref}>
-          <Button variant="outline">Back</Button>
+          <Button variant="outline" className="w-full sm:w-auto">
+            Back
+          </Button>
         </Link>
       ) : (
         <Button variant="outline" onClick={onBack} type="button">

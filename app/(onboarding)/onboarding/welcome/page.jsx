@@ -8,8 +8,8 @@ const CHECKLIST = ['PAN Number', 'GSTIN Number', 'Trade Licence', 'Bank IFSC and
 
 export default function OnboardingWelcomePage() {
   return (
-    <div className="min-h-screen" style={{ background: 'var(--color-canvas)' }}>
-      <div className="max-w-[1120px] mx-auto px-7 py-6 flex items-center justify-between gap-4 flex-wrap">
+    <div className="min-h-dvh" style={{ background: 'var(--color-canvas)' }}>
+      <div className="max-w-[1120px] mx-auto px-4 sm:px-7 py-6 flex items-center justify-between gap-4 flex-wrap">
         <BrandLockup label="Partner portal" />
         <Link
           href="/sign-in"
@@ -20,12 +20,12 @@ export default function OnboardingWelcomePage() {
         </Link>
       </div>
 
-      <div className="max-w-[1120px] mx-auto px-7 pt-1 pb-[70px]">
+      <div className="max-w-[1120px] mx-auto px-4 sm:px-7 pt-1 pb-[70px]">
         <div
-          className="bg-white rounded-[var(--radius-auth)] p-[34px] max-[880px]:p-6"
+          className="bg-white rounded-[var(--radius-auth)] p-[34px] max-[880px]:p-6 max-sm:p-5"
           style={{ border: '1px solid var(--color-line)' }}
         >
-          <h1 className="text-[34px] font-bold tracking-[-0.9px] leading-[1.15] max-w-[420px]">
+          <h1 className="text-[26px] sm:text-[34px] font-bold tracking-[-0.9px] leading-[1.15] max-w-[420px]">
             Let&apos;s start our onboarding process!
           </h1>
 

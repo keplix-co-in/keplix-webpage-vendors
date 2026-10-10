@@ -19,7 +19,7 @@ export function Select({ label, error, required, options = [], className = '', i
         <select
           id={selectId}
           className={[
-            'w-full appearance-none rounded-[var(--radius-field)] px-[18px] py-[15px] pr-11 text-[14px] outline-none cursor-pointer',
+            'w-full appearance-none rounded-[var(--radius-field)] px-[18px] py-[15px] pr-11 text-base sm:text-[14px] outline-none cursor-pointer', // 16px on phones: see Input.jsx
             error
               ? 'bg-white border-2 border-[var(--color-danger-light)]'
               : 'bg-[var(--color-canvas)] border border-[var(--color-line)] focus:border-[var(--color-primary)]',
@@ -59,7 +59,7 @@ export function Textarea({ label, error, required, rows = 4, className = '', id,
         id={areaId}
         rows={rows}
         className={[
-          'w-full rounded-[var(--radius-field)] px-[18px] py-[15px] text-[14px] outline-none resize-y leading-[1.6]',
+          'w-full rounded-[var(--radius-field)] px-[18px] py-[15px] text-base sm:text-[14px] outline-none resize-y leading-[1.6]', // 16px on phones: see Input.jsx
           'placeholder:text-[var(--color-disabled)]',
           error
             ? 'bg-white border-2 border-[var(--color-danger-light)]'
@@ -78,7 +78,7 @@ export function Chip({ active = false, children, className = '', ...props }) {
     <button
       type="button"
       className={[
-        'rounded-[var(--radius-pill)] px-4 py-2 text-[12.5px] font-bold border cursor-pointer whitespace-nowrap',
+        'rounded-[var(--radius-pill)] px-4 py-2 text-[12.5px] font-bold border cursor-pointer whitespace-nowrap max-w-full truncate', // a long service-name chip must not widen its row
         active
           ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)]'
           : 'bg-white text-[var(--color-ink-body)] border-[var(--color-line)]',

@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import PortalNav from '@/components/shell/PortalNav';
@@ -33,6 +33,11 @@ export default function PortalLayout({ children }) {
   const { user, loading, vendorId, setVendorProfile, isPreview, signOut, sessionEnded } = useAuth();
   const [header, setHeader] = useState({ title: '', subtitle: '' });
   const [onlineBusy, setOnlineBusy] = useState(false);
+  // Mobile nav drawer (below lg). Stable callbacks so PortalNav's Escape
+  // listener isn't re-bound on every render.
+  const [navOpen, setNavOpen] = useState(false);
+  const openNav = useCallback(() => setNavOpen(true), []);
+  const closeNav = useCallback(() => setNavOpen(false), []);
 
   useEffect(() => {
     if (loading || user) return;
@@ -105,7 +110,7 @@ export default function PortalLayout({ children }) {
 
   if (loading || !user) {
     return (
-      <div className="min-h-screen grid place-items-center text-[13px] text-[var(--color-muted)]">
+      <div className="min-h-dvh grid place-items-center text-[13px] text-[var(--color-muted)]">
         Loading your workshop…
       </div>
     );
@@ -114,12 +119,12 @@ export default function PortalLayout({ children }) {
   return (
     <HeaderContext.Provider value={setHeader}>
       <div className="kx-shell">
-        <PortalNav badges={badges} />
+        <PortalNav badges={badges} open={navOpen} onClose={closeNav} />
 
         <div className="flex flex-col min-w-0">
           {isPreview && (
             <div
-              className="px-7 py-2 flex items-center justify-between gap-4 flex-wrap text-[12px] font-bold"
+              className="px-4 sm:px-7 py-2 flex items-center justify-between gap-4 flex-wrap text-[12px] font-bold"
               style={{ background: 'var(--color-warning-tint-strong)', color: 'var(--color-warning-text)' }}
             >
               <span>
@@ -145,8 +150,10 @@ export default function PortalLayout({ children }) {
             onToggleOnline={toggleOnline}
             onlineBusy={onlineBusy}
             hasUnread={badges.unreadNotifications > 0}
+            onOpenMenu={openNav}
+            menuOpen={navOpen}
           />
-          <main className="px-7 pt-[26px] pb-[60px] min-w-0">{children}</main>
+          <main className="px-4 sm:px-7 pt-5 sm:pt-[26px] pb-[60px] min-w-0">{children}</main>
         </div>
       </div>
     </HeaderContext.Provider>

@@ -40,14 +40,16 @@ export function ToastProvider({ children }) {
   return (
     <ToastContext.Provider value={value}>
       {children}
-      <div className="fixed bottom-6 right-6 z-[100] flex flex-col gap-2.5 max-w-[calc(100vw-48px)]">
+      {/* Full width on phones; a fixed w-[340px] toast used to spill past a
+          327px-wide container at 375px. */}
+      <div className="fixed bottom-4 inset-x-4 sm:inset-x-auto sm:bottom-6 sm:right-6 sm:w-[340px] z-[100] flex flex-col gap-2.5">
         {toasts.map(({ id, message, tone }) => {
           const { bg, fg, Icon } = TONE[tone] ?? TONE.info;
           return (
             <div
               key={id}
               role="status"
-              className="flex items-start gap-2.5 rounded-[14px] px-4 py-3 text-[13px] font-medium w-[340px]"
+              className="flex items-start gap-2.5 rounded-[14px] px-4 py-3 text-[13px] font-medium w-full"
               style={{ background: bg, color: fg, boxShadow: 'var(--shadow-modal)' }}
             >
               <Icon size={16} className="mt-px shrink-0" />
@@ -56,7 +58,7 @@ export function ToastProvider({ children }) {
                 type="button"
                 onClick={() => dismiss(id)}
                 aria-label="Dismiss"
-                className="shrink-0 cursor-pointer opacity-70 hover:opacity-100"
+                className="shrink-0 cursor-pointer opacity-70 hover:opacity-100 p-2 -m-2"
               >
                 <X size={14} />
               </button>

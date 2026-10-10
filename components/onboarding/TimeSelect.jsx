@@ -35,7 +35,9 @@ export default function TimeSelect({ value, onChange, highlighted = false, ariaL
       aria-label={ariaLabel}
       value={value || ''}
       onChange={(e) => onChange(e.target.value)}
-      className="rounded-[var(--radius-pill)] px-[26px] py-[13px] text-[16px] font-bold text-center outline-none cursor-pointer min-w-[160px]"
+      // Narrower on phones so "from – to" fits on one line in a 375px card;
+      // two 160px selects used to wrap and leave "to" dangling.
+      className="rounded-[var(--radius-pill)] px-2.5 sm:px-[26px] py-[13px] text-[15px] sm:text-[16px] font-bold text-center outline-none cursor-pointer w-[116px] sm:w-auto sm:min-w-[160px]"
       style={
         highlighted
           ? {

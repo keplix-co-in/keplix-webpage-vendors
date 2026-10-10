@@ -78,23 +78,50 @@ body {
   background: var(--color-primary-tint-border);
 }
 
-/* Portal shell: 248px sidebar + content. At 1000px it collapses to one column
-   and the sidebar becomes a horizontally scrolling strip above the content.
+/* Portal shell: 248px sidebar + content. Below Tailwind's `lg` (1024px) it
+   collapses to one column and PortalNav becomes an off-canvas drawer opened from
+   the header's menu button. (It used to become a ~340px block stacked above
+   every page, which on a phone pushed the content below the fold.)
    Every collapsing grid uses minmax(0,1fr) rather than 1fr — plain 1fr lets the
-   children refuse to shrink and the page scrolls sideways. */
+   children refuse to shrink and the page scrolls sideways.
+   dvh, not vh: on mobile browsers 100vh is taller than the visible area. */
 .kx-shell {
   display: grid;
   grid-template-columns: 248px minmax(0, 1fr);
-  min-height: 100vh;
+  min-height: 100dvh;
   background: var(--color-canvas);
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1023px) {
   .kx-shell {
     grid-template-columns: minmax(0, 1fr);
   }
   .kx-shell > * {
     min-width: 0;
+  }
+}
+
+/* Two-column page layout: main content + a fixed-max side column, collapsing
+   to one column at 880px. Pages set the template with --kx-split-cols.
+   WHY a class: these grids used to set gridTemplateColumns inline next to a
+   `max-[880px]:grid-cols-[…]` class. An inline style always beats a class, so
+   they never collapsed — at 375px the minmax(0,340px) side column took all the
+   space and the main column rendered 0px wide. Keep the template out of
+   `style` (a CSS variable is fine, because the media query below overrides the
+   property itself, not the variable). */
+.kx-split {
+  display: grid;
+  grid-template-columns: var(--kx-split-cols, minmax(0, 1fr) minmax(0, 340px));
+}
+@media (max-width: 880px) {
+  .kx-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+/* The dashboard keeps its two columns down to the shell breakpoint. */
+@media (max-width: 1023px) {
+  .kx-split.kx-split-lg {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

@@ -90,7 +90,7 @@ export default function OnboardTimingsPage() {
       footer={<StepActions backHref="/onboarding" nextLabel="Done" onNext={done} />}
     >
       <FieldLabel required>Set business hours</FieldLabel>
-      <div className="flex items-center gap-[18px] flex-wrap">
+      <div className="flex items-center gap-3 sm:gap-[18px] flex-wrap">
         <TimeSelect
           ariaLabel="Opening time"
           value={timings.openTime}

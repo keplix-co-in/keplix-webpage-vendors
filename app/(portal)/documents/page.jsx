@@ -136,8 +136,7 @@ export default function DocumentsPage() {
 
   return (
     <div
-      className="grid gap-6 items-start max-[880px]:grid-cols-[minmax(0,1fr)]"
-      style={{ gridTemplateColumns: 'minmax(0,1fr) minmax(0,340px)' }}
+      className="kx-split gap-6 items-start"
     >
       <form onSubmit={savePayout} className="min-w-0">
         <Card className="mb-5">

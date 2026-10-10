@@ -40,7 +40,7 @@ export default function ReceiptPage() {
   const rows = [
     { label: 'Transaction number', value: row.transactionId ?? row.token },
     { label: 'Payment time', value: row.paidAt ? formatDateTime(row.paidAt) : '—' },
-    { label: 'Payment method', value: row.method ?? '—' },
+    { label: 'Payment method', value: row.method ?? '—', capitalize: true },
     { label: 'Customer', value: row.customer ?? '—' },
     { label: 'Service', value: row.service ?? '—' },
   ];
@@ -63,11 +63,20 @@ export default function ReceiptPage() {
         {rows.map((item) => (
           <div
             key={item.label}
-            className="flex items-center justify-between gap-4 py-3"
+            className="flex items-start justify-between gap-4 py-3"
             style={{ borderBottom: '1px solid var(--color-divider)' }}
           >
-            <span className="text-[13px] text-[var(--color-muted)]">{item.label}</span>
-            <span className="text-[13px] font-medium text-right capitalize">{item.value}</span>
+            <span className="text-[13px] text-[var(--color-muted)] shrink-0">{item.label}</span>
+            {/* Only the method is capitalised: applied to every row, CSS
+                capitalize turned a "pay_…" transaction id into "Pay_…". The
+                value wraps, because an unbroken id overflowed the card on phones. */}
+            <span
+              className={`text-[13px] font-medium text-right min-w-0 [overflow-wrap:anywhere] ${
+                item.capitalize ? 'capitalize' : ''
+              }`}
+            >
+              {item.value}
+            </span>
           </div>
         ))}
 

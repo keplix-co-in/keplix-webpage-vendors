@@ -79,8 +79,7 @@ export default function ReviewsPage() {
 
   return (
     <div
-      className="grid gap-6 items-start max-[880px]:grid-cols-[minmax(0,1fr)]"
-      style={{ gridTemplateColumns: 'minmax(0,1fr) minmax(0,340px)' }}
+      className="kx-split gap-6 items-start"
     >
       <div className="min-w-0">
         {isLoading ? (
@@ -97,7 +96,7 @@ export default function ReviewsPage() {
         ) : (
           reviews.map((review) => (
             <Card key={review.id} className="mb-4">
-              <div className="flex items-start gap-3.5 mb-3">
+              <div className="flex items-start gap-3.5 mb-3 flex-wrap">
                 <span
                   className="w-10 h-10 rounded-full text-white text-[14px] font-bold flex items-center justify-center shrink-0"
                   style={{ background: 'var(--color-primary)' }}

@@ -11,6 +11,7 @@ import { useBookings, useEarnings } from '@/lib/queries';
 import { isEarningBooking, toEarningRow } from '@/lib/entities';
 import { ANY_BOOKING } from '@/components/bookings/bookingFields';
 import { formatMoney, formatDate } from '@/lib/format';
+import TileMoney from '@/components/ui/TileMoney';
 
 const TABS = ['All', 'Paid out', 'Pending'];
 
@@ -101,13 +102,13 @@ export default function EarningsPage() {
               {stat.label}
             </div>
             <div
-              className="text-[26px] font-bold tracking-[-1px] leading-none"
+              className="text-[22px] sm:text-[26px] font-bold tracking-[-1px] leading-none"
               style={{ color: stat.feature ? '#fff' : stat.tint ? 'var(--color-primary-dark)' : 'var(--color-ink)' }}
             >
               {/* No `?? 0`: formatMoney renders "—" for a missing value. WHY:
                   while the call is in flight or after it failed there is no
                   figure to show, and "₹0" read as a real total of zero. */}
-              {formatMoney(stat.value)}
+              <TileMoney value={stat.value} />
             </div>
             <div
               className="text-[11.5px] mt-2.5"
@@ -122,8 +123,7 @@ export default function EarningsPage() {
       </div>
 
       <div
-        className="grid gap-6 items-start max-[880px]:grid-cols-[minmax(0,1fr)]"
-        style={{ gridTemplateColumns: 'minmax(0,1fr) minmax(0,340px)' }}
+        className="kx-split gap-6 items-start"
       >
         <Card padded={false} className="min-w-0">
           <div className="px-[22px] pt-[22px] pb-4 flex gap-2.5 flex-wrap">

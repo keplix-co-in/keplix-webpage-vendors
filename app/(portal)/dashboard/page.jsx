@@ -11,6 +11,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useBookings, useWalkIns, useEarnings } from '@/lib/queries';
 import { bucketJobs } from '@/shared/utils/jobBuckets';
 import { formatMoney } from '@/lib/format';
+import TileMoney from '@/components/ui/TileMoney';
 import {
   DASHBOARD_BOOKINGS,
   bookingBadge,
@@ -185,11 +186,11 @@ export default function DashboardPage() {
           }}
         >
           <div className="text-[10.5px] tracking-[1px] font-bold opacity-80 mb-2">TOTAL EARNINGS</div>
-          <div className="text-[30px] font-bold tracking-[-1px] leading-none">
+          <div className="text-[26px] sm:text-[30px] font-bold tracking-[-1px] leading-none">
             {/* No `?? 0`: formatMoney renders "—" when there is no figure yet.
                 WHY: "₹0" while loading, or after a failed call, read as a real
                 lifetime total of zero. */}
-            {formatMoney(earnings?.total_earnings)}
+            <TileMoney value={earnings?.total_earnings} />
           </div>
           <div className="text-[11.5px] mt-2.5 opacity-80">
             {formatMoney(earnings?.today_earnings)} today
@@ -200,7 +201,7 @@ export default function DashboardPage() {
           <Card key={stat.label} className="p-5">
             <Kicker className="mb-2">{stat.label}</Kicker>
             <div
-              className="text-[30px] font-bold tracking-[-1px] leading-none"
+              className="text-[24px] sm:text-[30px] font-bold tracking-[-1px] leading-none [overflow-wrap:anywhere]"
               style={{ color: stat.color }}
             >
               {/* WHY "—": these counts are derived from the bookings call, so a
@@ -213,7 +214,9 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      <div className="grid gap-5 max-[1000px]:grid-cols-[minmax(0,1fr)]" style={{ gridTemplateColumns: 'minmax(0,1.6fr) minmax(0,1fr)' }}>
+      {/* kx-split (globals.css): the old inline gridTemplateColumns overrode the
+          collapse class, so this stayed two columns on phones. */}
+      <div className="kx-split kx-split-lg gap-5" style={{ '--kx-split-cols': 'minmax(0,1.6fr) minmax(0,1fr)' }}>
         <div className="min-w-0">
           <Card className="mb-5" padded={false}>
             <div

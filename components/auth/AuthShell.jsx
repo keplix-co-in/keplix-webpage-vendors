@@ -17,15 +17,15 @@ import BrandLockup from '@/components/shell/BrandLockup';
 export default function AuthShell({ title, subtitle, children, footer }) {
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center"
+      className="min-h-dvh flex flex-col items-center justify-center"
       style={{ background: 'var(--color-canvas)' }}
     >
-      <div className="w-full max-w-[468px] px-6 py-[60px]">
+      <div className="w-full max-w-[468px] px-5 sm:px-6 py-10 sm:py-[60px]">
         <div className="mb-8">
           <BrandLockup width={84} height={30} label="Partner" />
         </div>
 
-        <h1 className="text-[28px] font-bold tracking-[-0.6px]">{title}</h1>
+        <h1 className="text-[24px] sm:text-[28px] font-bold tracking-[-0.6px]">{title}</h1>
         {subtitle && (
           <p className="text-[13.5px] text-[var(--color-muted)] mt-[7px] mb-7 leading-[1.55]">
             {subtitle}
@@ -39,12 +39,12 @@ export default function AuthShell({ title, subtitle, children, footer }) {
         <p className="text-[11px] text-[var(--color-disabled)] text-center leading-[1.7] mt-[26px]">
           By continuing, I accept the{' '}
           <a
-            href="https://keplix.co.in/terms"
+            href="https://keplix.co.in/partner-terms"
             target="_blank"
             rel="noreferrer"
             className="text-[var(--color-muted)] font-bold underline"
           >
-            Terms and Conditions
+            Partner Terms
           </a>{' '}
           and have read the{' '}
           <a

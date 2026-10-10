@@ -24,11 +24,13 @@ import { formatDuration } from '@/shared/utils/duration';
 
 const Row = ({ label, value }) => (
   <div
-    className="flex items-center justify-between gap-4 py-3"
+    className="flex items-start justify-between gap-4 py-3"
     style={{ borderBottom: '1px solid var(--color-divider)' }}
   >
-    <span className="text-[12.5px] text-[var(--color-muted)]">{label}</span>
-    <span className="text-[13px] font-semibold text-right min-w-0 truncate">{value ?? '—'}</span>
+    <span className="text-[12.5px] text-[var(--color-muted)] shrink-0">{label}</span>
+    {/* Wraps instead of truncating: on a phone an email or a long note was cut
+        off with no way to read the rest. */}
+    <span className="text-[13px] font-semibold text-right min-w-0 [overflow-wrap:anywhere]">{value ?? '—'}</span>
   </div>
 );
 
@@ -122,8 +124,7 @@ export default function BookingDetailPage() {
 
   return (
     <div
-      className="grid gap-6 items-start max-[880px]:grid-cols-[minmax(0,1fr)]"
-      style={{ gridTemplateColumns: 'minmax(0,1fr) minmax(0,340px)' }}
+      className="kx-split gap-6 items-start"
     >
       <div className="min-w-0">
         <Card className="mb-5">

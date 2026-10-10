@@ -41,7 +41,9 @@ export default function Input({
           type={isPassword && revealed ? 'text' : type}
           aria-invalid={Boolean(error)}
           className={[
-            'w-full rounded-[var(--radius-field)] px-[18px] py-[15px] text-[14px] outline-none',
+            // text-base below sm: iOS Safari zooms the page in when a focused field's
+            // text is under 16px, and stays zoomed after typing.
+            'w-full rounded-[var(--radius-field)] px-[18px] py-[15px] text-base sm:text-[14px] outline-none',
             'placeholder:text-[var(--color-disabled)]',
             error
               ? 'bg-white border-2 border-[var(--color-danger-light)]'

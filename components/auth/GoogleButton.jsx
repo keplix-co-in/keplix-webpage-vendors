@@ -47,15 +47,38 @@ export default function GoogleButton({ label = 'Continue with Google', onCredent
       return undefined;
     }
 
-    const script = document.createElement('script');
-    script.src = 'https://accounts.google.com/gsi/client';
-    script.async = true;
-    script.defer = true;
-    script.onload = init;
-    document.head.appendChild(script);
+    // GIS is ~150 KB of third-party JS (gsi/client plus what it pulls from
+    // gstatic). Injecting it during hydration made it compete with the page's
+    // own chunks and font for bandwidth, and Lighthouse put /welcome's mobile
+    // LCP at 4.9s. Waiting for idle time lets the page paint first. The styled
+    // button stays disabled until `ready`, so a very early click is a no-op,
+    // not a broken sign-in.
+    let script = null;
+    const load = () => {
+      if (window.google?.accounts?.id) {
+        init();
+        return;
+      }
+      script = document.querySelector('script[src="https://accounts.google.com/gsi/client"]');
+      if (script) {
+        script.addEventListener('load', init);
+        return;
+      }
+      script = document.createElement('script');
+      script.src = 'https://accounts.google.com/gsi/client';
+      script.async = true;
+      script.addEventListener('load', init);
+      document.head.appendChild(script);
+    };
+
+    const idle = window.requestIdleCallback
+      ? window.requestIdleCallback(load, { timeout: 2000 })
+      : window.setTimeout(load, 1);
 
     return () => {
-      script.onload = null;
+      if (window.cancelIdleCallback) window.cancelIdleCallback(idle);
+      else window.clearTimeout(idle);
+      script?.removeEventListener('load', init);
     };
   }, [handleCredential]);
 

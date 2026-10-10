@@ -161,7 +161,7 @@ export default function MapPicker({ value, onPick }) {
   return (
     <div className="mb-[22px]">
       <form onSubmit={search} className="flex gap-2.5 mb-3 flex-wrap">
-        <div className="relative flex-1 min-w-[200px]">
+        <div className="relative flex-1 min-w-[200px] max-sm:basis-full">
           <Search
             size={15}
             className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-disabled)]"
@@ -171,7 +171,7 @@ export default function MapPicker({ value, onPick }) {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search for your shop's area"
             aria-label="Search for a location"
-            className="w-full rounded-[var(--radius-field)] pl-10 pr-4 py-3 text-[13.5px] outline-none"
+            className="w-full rounded-[var(--radius-field)] pl-10 pr-4 py-3 text-base sm:text-[13.5px] outline-none"
             style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-line)' }}
           />
         </div>

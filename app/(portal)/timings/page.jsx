@@ -175,7 +175,7 @@ export default function TimingsPage() {
         ) : (
           breaks.map((item, index) => (
             <div key={index} className="py-2">
-              <div className="flex items-center gap-2.5 flex-wrap">
+              <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
                 <TimeSelect
                   ariaLabel={`Break ${index + 1} start`}
                   value={item.start}

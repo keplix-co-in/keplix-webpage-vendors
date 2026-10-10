@@ -47,17 +47,18 @@ export default function AlertSettings() {
     };
   }, []);
 
-  // Close on outside click / Escape.
+  // Close on outside click / Escape. pointerdown, not mousedown, so a tap
+  // outside closes it on touch screens too.
   useEffect(() => {
     if (!open) return undefined;
     const onDown = (e) => {
       if (rootRef.current && !rootRef.current.contains(e.target)) setOpen(false);
     };
     const onKey = (e) => e.key === 'Escape' && setOpen(false);
-    document.addEventListener('mousedown', onDown);
+    document.addEventListener('pointerdown', onDown);
     document.addEventListener('keydown', onKey);
     return () => {
-      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('pointerdown', onDown);
       document.removeEventListener('keydown', onKey);
     };
   }, [open]);
@@ -110,7 +111,7 @@ export default function AlertSettings() {
         aria-haspopup="dialog"
         aria-expanded={open}
         aria-label="Alert settings"
-        className="w-[38px] h-[38px] rounded-full flex items-center justify-center cursor-pointer"
+        className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
         style={{ border: '1px solid var(--color-line)', background: 'var(--color-canvas)' }}
       >
         {sound ? (
@@ -126,7 +127,9 @@ export default function AlertSettings() {
         <div
           role="dialog"
           aria-label="Alert settings"
-          className="absolute right-0 top-[46px] w-[320px] bg-white rounded-[var(--radius-portal)] p-4 z-40"
+          // Phones: pinned to the viewport edges. Anchored right-0 to the
+          // button, a 320px panel started off the left edge of a 375px screen.
+          className="fixed inset-x-3 top-[64px] max-h-[calc(100dvh-80px)] overflow-y-auto sm:absolute sm:inset-x-auto sm:right-0 sm:top-[50px] sm:w-[320px] bg-white rounded-[var(--radius-portal)] p-4 z-40"
           style={{ border: '1px solid var(--color-line)', boxShadow: 'var(--shadow-modal)' }}
         >
           <p className="text-[14px] font-bold">New request alerts</p>
