@@ -153,7 +153,7 @@ export default function BookingsPage() {
             </Chip>
           ))}
         </div>
-        <div className="flex-1" />
+        <div className="flex-1 max-[880px]:hidden" />
         <div
           className="flex items-center gap-2 rounded-[var(--radius-pill)] px-3.5 py-2 min-w-[220px] mr-[22px] max-[880px]:mx-4 max-[880px]:mb-[18px] max-[880px]:w-[calc(100%-32px)] max-[880px]:min-w-0"
           style={{ border: '1px solid var(--color-line)' }}
@@ -164,7 +164,7 @@ export default function BookingsPage() {
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search customer, service or token"
             aria-label="Search bookings"
-            className="flex-1 min-w-0 text-[12.5px] outline-none bg-transparent placeholder:text-[var(--color-disabled)]"
+            className="flex-1 min-w-0 py-2 -my-2 text-base sm:text-[12.5px] outline-none bg-transparent placeholder:text-[var(--color-disabled)]" // 16px on phones: iOS zooms smaller inputs
           />
         </div>
       </Card>
@@ -185,9 +185,9 @@ export default function BookingsPage() {
                   color: active ? 'white' : 'var(--color-ink-body)',
                 }}
               >
-                <div className="text-[10.5px] font-semibold opacity-75">{d.dow}</div>
+                <div className="text-[11px] font-semibold opacity-75">{d.dow}</div>
                 <div className="text-[17px] font-bold">{d.date}</div>
-                <div className="text-[10px] opacity-75">{d.jobs}</div>
+                <div className="text-[11px] opacity-75">{d.jobs}</div>
               </button>
             );
           })}
@@ -252,7 +252,8 @@ export default function BookingsPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2.5 min-w-0">
+                {/* Own line on phones: beside the slot it shrank to ~33px at 320. */}
+                <div className="flex items-center gap-2.5 min-w-0 max-[880px]:col-span-2">
                   <span
                     className="w-[30px] h-[30px] rounded-full text-[12px] font-bold flex items-center justify-center shrink-0"
                     style={{ background: 'var(--color-primary-tint)', color: 'var(--color-primary)' }}
@@ -267,16 +268,16 @@ export default function BookingsPage() {
                   </div>
                 </div>
 
-                <div className="max-[880px]:text-right">
+                <div>
                   <div className="text-[13px] font-semibold">{formatSlotTime(booking.time)}</div>
                   <div className="text-[11.5px] text-[var(--color-disabled)]">
                     {booking.date ? formatRelativeDay(booking.date) : ''}
                   </div>
                 </div>
 
-                <div className="text-[13.5px] font-bold">{formatMoney(booking.price)}</div>
+                <div className="text-[13.5px] font-bold max-[880px]:text-right">{formatMoney(booking.price)}</div>
 
-                <div className="flex gap-2 justify-end flex-wrap">
+                <div className="flex gap-2 justify-end flex-wrap max-[880px]:col-span-2">
                   {isPending && (
                     <>
                       <Link href={`/bookings/${booking.id}/reject`}>

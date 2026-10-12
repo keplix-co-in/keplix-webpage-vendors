@@ -239,7 +239,7 @@ export default function InspectionSheet({ bookingId, walkInJobId, onSaved }) {
                 />
               </div>
               <div className="flex-1 min-w-0 pt-1">
-                <div className="text-[15px] font-bold truncate">{card.label}</div>
+                <div className="text-[15px] font-bold line-clamp-2 sm:truncate">{card.label}</div>
               </div>
             </div>
 
@@ -252,7 +252,7 @@ export default function InspectionSheet({ bookingId, walkInJobId, onSaved }) {
                     key={option.value}
                     type="button"
                     onClick={() => setStatuses((prev) => ({ ...prev, [card.key]: option.value }))}
-                    className="min-w-0 px-1 rounded-[var(--radius-pill)] py-2.5 text-[12px] sm:text-[12.5px] font-bold cursor-pointer"
+                    className="min-w-0 min-h-10 px-1 rounded-[var(--radius-pill)] py-2.5 text-[12px] sm:text-[12.5px] font-bold cursor-pointer"
                     style={{
                       border: `1px solid ${selected ? option.color : STATUS_UNSELECTED.border}`,
                       background: selected ? option.bg : STATUS_UNSELECTED.bg,
@@ -306,7 +306,7 @@ export default function InspectionSheet({ bookingId, walkInJobId, onSaved }) {
                     type="button"
                     onClick={() => removePhoto(card.key, index)}
                     aria-label="Remove photo"
-                    className="absolute top-1 right-1 w-5 h-5 rounded-full flex items-center justify-center cursor-pointer"
+                    className="absolute top-1 right-1 w-5 h-5 rounded-full flex items-center justify-center cursor-pointer after:absolute after:-inset-2.5 after:content-['']"
                     style={{ background: 'rgba(17,24,39,.6)' }}
                   >
                     <X size={11} color="#fff" />
@@ -378,7 +378,7 @@ export default function InspectionSheet({ bookingId, walkInJobId, onSaved }) {
       <div className="min-w-0">
         {/* Sticky only beside the checklist; stacked on phones it would ride over
             the cards below the shorter-than-assumed header. */}
-        <Card className="min-[881px]:sticky min-[881px]:top-[86px]">
+        <Card className="lg:sticky lg:top-[86px]">
           <CardHeader title="Running bill" />
           {cards.map((card) => {
             const value = Number((prices[card.key] ?? '').toString().trim());
@@ -388,7 +388,7 @@ export default function InspectionSheet({ bookingId, walkInJobId, onSaved }) {
                 className="flex items-center justify-between gap-3 py-2.5"
                 style={{ borderBottom: '1px solid var(--color-divider)' }}
               >
-                <span className="text-[12.5px] text-[var(--color-muted)] truncate">{card.label}</span>
+                <span className="text-[12.5px] text-[var(--color-muted)] min-w-0 [overflow-wrap:anywhere]">{card.label}</span>
                 <span className="text-[13px] font-semibold shrink-0">
                   {Number.isFinite(value) && value > 0 ? formatMoney(value) : '—'}
                 </span>

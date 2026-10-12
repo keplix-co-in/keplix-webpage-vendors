@@ -111,7 +111,11 @@ export default function ReviewsPage() {
                     {review.service?.name ?? 'Service'} · {formatDate(review.createdAt)}
                   </div>
                 </div>
-                <StarRating value={Number(review.rating) || 0} showValue />
+                {/* Phones: stars on their own line under the name (indented past the
+                    avatar); beside it they squeezed the name to "Priya Ve…" at 320px. */}
+                <div className="max-sm:basis-full max-sm:pl-[54px] max-sm:-mt-1.5">
+                  <StarRating value={Number(review.rating) || 0} showValue />
+                </div>
               </div>
 
               {review.comment && (

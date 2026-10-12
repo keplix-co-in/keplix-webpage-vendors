@@ -17,7 +17,9 @@ import AlertSettings from './AlertSettings';
  * used to be a ~425–530px row that never shrank, so at 375px every portal page
  * scrolled sideways by ~150px. On phones the bell is hidden (Notifications is
  * in the drawer) and its unread dot moves onto the menu button, and the profile
- * pill shows only the avatar.
+ * pill shows only the avatar. On very short screens (a phone in landscape,
+ * under 500px tall) the header is not sticky: two pinned rows covered ~30% of
+ * the view.
  */
 export default function PortalHeader({
   title,
@@ -33,7 +35,7 @@ export default function PortalHeader({
 }) {
   return (
     <header
-      className="bg-white px-4 sm:px-7 py-3 lg:py-3.5 flex items-center gap-x-3 gap-y-2.5 lg:gap-5 sticky top-0 z-30 flex-wrap"
+      className="bg-white px-4 sm:px-7 py-3 lg:py-3.5 flex items-center gap-x-3 gap-y-2.5 lg:gap-5 sticky top-0 z-30 flex-wrap [@media(max-height:500px)]:static"
       style={{ borderBottom: '1px solid var(--color-line)' }}
     >
       {onOpenMenu && (

@@ -142,10 +142,11 @@ export default function TimingsPage() {
       <Card className="mb-5">
         <CardHeader title="Business hours" subtitle="Your opening window, every working day" />
 
-        <div className="flex items-center gap-3 flex-wrap">
-          <TimeSelect ariaLabel="Opening time" value={openTime} onChange={setHour('open')} />
+        {/* Phones: grid columns so both selects share one row at 320px. */}
+        <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 sm:flex sm:gap-3">
+          <TimeSelect ariaLabel="Opening time" value={openTime} onChange={setHour('open')} className="max-sm:w-full" />
           <span className="text-[var(--color-disabled)]">to</span>
-          <TimeSelect ariaLabel="Closing time" value={closeTime} onChange={setHour('close')} />
+          <TimeSelect ariaLabel="Closing time" value={closeTime} onChange={setHour('close')} className="max-sm:w-full" />
         </div>
 
         {errors.hours && (
@@ -175,23 +176,25 @@ export default function TimingsPage() {
         ) : (
           breaks.map((item, index) => (
             <div key={index} className="py-2">
-              <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
+              <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto] items-center gap-2 sm:flex sm:gap-2.5">
                 <TimeSelect
                   ariaLabel={`Break ${index + 1} start`}
                   value={item.start}
                   onChange={(value) => setBreak(index, 'start', value)}
+                  className="max-sm:w-full"
                 />
                 <span className="text-[var(--color-disabled)]">to</span>
                 <TimeSelect
                   ariaLabel={`Break ${index + 1} end`}
                   value={item.end}
                   onChange={(value) => setBreak(index, 'end', value)}
+                  className="max-sm:w-full"
                 />
                 <button
                   type="button"
                   onClick={() => setBreaks(breaks.filter((_, i) => i !== index))}
                   aria-label={`Remove break ${index + 1}`}
-                  className="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer"
+                  className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
                   style={{ border: '1px solid var(--color-line)' }}
                 >
                   <X size={13} color="var(--color-danger)" />

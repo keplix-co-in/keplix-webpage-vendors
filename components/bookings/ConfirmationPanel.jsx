@@ -29,7 +29,12 @@ export default function ConfirmationPanel({ tone = 'primary', title, body, child
         </p>
       )}
 
-      {children && <div className="mt-8 flex gap-3 flex-wrap justify-center">{children}</div>}
+      {/* Phones: actions stack full width instead of wrapping into two odd-width pills. */}
+      {children && (
+        <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:flex-wrap justify-center w-full sm:w-auto [&>*]:w-full sm:[&>*]:w-auto">
+          {children}
+        </div>
+      )}
     </div>
   );
 }

@@ -11,6 +11,8 @@ import { toEarningRow } from '@/lib/entities';
 import { ANY_BOOKING } from '@/components/bookings/bookingFields';
 import { formatMoney, formatDateTime } from '@/lib/format';
 
+const METHOD_LABELS = { upi: 'UPI', card: 'Card', netbanking: 'Net banking', wallet: 'Wallet' };
+
 export default function ReceiptPage() {
   const { id } = useParams();
   // The receipt is a booking plus its payment row; there is no per-transaction
@@ -40,7 +42,8 @@ export default function ReceiptPage() {
   const rows = [
     { label: 'Transaction number', value: row.transactionId ?? row.token },
     { label: 'Payment time', value: row.paidAt ? formatDateTime(row.paidAt) : '—' },
-    { label: 'Payment method', value: row.method ?? '—', capitalize: true },
+    // Acronyms by name: CSS capitalize alone rendered "upi" as "Upi".
+    { label: 'Payment method', value: METHOD_LABELS[String(row.method).toLowerCase()] ?? row.method ?? '—', capitalize: true },
     { label: 'Customer', value: row.customer ?? '—' },
     { label: 'Service', value: row.service ?? '—' },
   ];
@@ -49,7 +52,7 @@ export default function ReceiptPage() {
     <div className="max-w-[640px]">
       <Link
         href="/earnings"
-        className="inline-flex items-center gap-2 text-[12.5px] font-bold text-[var(--color-ink-body)] mb-4"
+        className="inline-flex items-center gap-2 min-h-10 text-[12.5px] font-bold text-[var(--color-ink-body)] mb-2"
       >
         <ArrowLeft size={14} /> Back to earnings
       </Link>

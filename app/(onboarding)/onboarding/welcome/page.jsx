@@ -13,7 +13,7 @@ export default function OnboardingWelcomePage() {
         <BrandLockup label="Partner portal" />
         <Link
           href="/sign-in"
-          className="whitespace-nowrap bg-white text-[var(--color-ink-body)] text-[12.5px] font-bold rounded-[var(--radius-pill)] px-[18px] py-[9px]"
+          className="whitespace-nowrap bg-white text-[var(--color-ink-body)] text-[12.5px] font-bold rounded-[var(--radius-pill)] px-[18px] min-h-10 inline-flex items-center ml-auto"
           style={{ border: '1px solid var(--color-line)' }}
         >
           Save &amp; exit
@@ -31,7 +31,7 @@ export default function OnboardingWelcomePage() {
 
           <div className="relative my-[30px] mb-7 max-w-[520px]">
             <div
-              className="bg-white p-7 pb-[34px] rounded-[18px]"
+              className="bg-white p-4 pb-5 sm:p-7 sm:pb-[34px] rounded-[18px]"
               style={{ border: '1px solid var(--color-disabled)', borderTopRightRadius: 0 }}
             >
               {/* Folded corner from the design. */}
@@ -60,8 +60,8 @@ export default function OnboardingWelcomePage() {
             </div>
           </div>
 
-          <Link href="/onboarding">
-            <Button>Let&apos;s begin</Button>
+          <Link href="/onboarding" className="block sm:inline-block">
+            <Button className="w-full sm:w-auto">Let&apos;s begin</Button>
           </Link>
         </div>
       </div>

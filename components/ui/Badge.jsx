@@ -14,7 +14,7 @@ export default function Badge({ tone = 'neutral', children, className = '' }) {
   const { bg, fg } = TONES[tone] ?? TONES.neutral;
   return (
     <span
-      className={`inline-flex items-center text-[10.5px] font-bold rounded-lg px-2.5 py-1 ${className}`}
+      className={`inline-flex items-center text-[11px] font-bold rounded-lg px-2.5 py-1 ${className}`}
       style={{ background: bg, color: fg }}
     >
       {children}

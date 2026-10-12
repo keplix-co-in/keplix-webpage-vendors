@@ -90,17 +90,20 @@ export default function OnboardTimingsPage() {
       footer={<StepActions backHref="/onboarding" nextLabel="Done" onNext={done} />}
     >
       <FieldLabel required>Set business hours</FieldLabel>
-      <div className="flex items-center gap-3 sm:gap-[18px] flex-wrap">
+      {/* Phones: 3-column grid so both selects fit one row at 320px. */}
+      <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 sm:flex sm:gap-[18px]">
         <TimeSelect
           ariaLabel="Opening time"
           value={timings.openTime}
           onChange={setTime('openTime')}
+          className="max-sm:w-full"
         />
         <span className="text-[13.5px] text-[var(--color-muted)]">To</span>
         <TimeSelect
           ariaLabel="Closing time"
           value={timings.closeTime}
           onChange={setTime('closeTime')}
+          className="max-sm:w-full"
         />
       </div>
       {errors.hours && <FieldError>{errors.hours}</FieldError>}

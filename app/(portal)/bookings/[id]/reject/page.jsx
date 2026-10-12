@@ -95,7 +95,7 @@ export default function RejectOrderPage() {
     <div className="max-w-[640px]">
       <Card padded={false} className="overflow-hidden">
         <div
-          className="px-6 py-[18px] text-white"
+          className="px-4 sm:px-6 py-[18px] text-white"
           style={{ background: 'var(--color-danger)' }}
         >
           <div className="text-[16px] font-bold">Decline this request?</div>
@@ -104,7 +104,7 @@ export default function RejectOrderPage() {
           </div>
         </div>
 
-        <div className="px-6 py-6">
+        <div className="px-4 sm:px-6 py-5 sm:py-6">
           <div
             className="rounded-[var(--radius-small)] p-4 mb-6"
             style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-line)' }}
@@ -173,7 +173,7 @@ export default function RejectOrderPage() {
           />
         </div>
 
-        <div className="px-6 pb-6 flex gap-3 justify-end flex-wrap">
+        <div className="px-4 sm:px-6 pb-5 sm:pb-6 flex flex-col-reverse sm:flex-row gap-3 sm:justify-end sm:flex-wrap [&>*]:w-full sm:[&>*]:w-auto">
           <Button variant="outline" size="md" onClick={() => router.back()}>
             Cancel
           </Button>

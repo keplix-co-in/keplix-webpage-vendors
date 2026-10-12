@@ -54,7 +54,7 @@ export default function Modal({ open, onClose, title, headerTone, children, foot
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="cursor-pointer opacity-70 hover:opacity-100 p-2 -m-2"
+              className="cursor-pointer opacity-70 hover:opacity-100 p-2.5 -m-2.5"
             >
               <X size={18} />
             </button>

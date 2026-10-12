@@ -23,7 +23,7 @@ export default function OnboardingShell({
         {pill && (
           <Link
             href={pill.href}
-            className="whitespace-nowrap bg-white text-[var(--color-ink-body)] text-[12.5px] font-bold rounded-[var(--radius-pill)] px-[18px] py-[9px]"
+            className="whitespace-nowrap bg-white text-[var(--color-ink-body)] text-[12.5px] font-bold rounded-[var(--radius-pill)] px-[18px] min-h-10 inline-flex items-center ml-auto"
             style={{ border: '1px solid var(--color-line)' }}
           >
             {pill.label}

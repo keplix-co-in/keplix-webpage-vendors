@@ -6,7 +6,7 @@ import BrandLockup from '@/components/shell/BrandLockup';
 export default function EntryLoader() {
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center gap-4"
+      className="min-h-dvh flex flex-col items-center justify-center gap-4"
       style={{ background: 'var(--color-canvas)' }}
       role="status"
       aria-live="polite"

@@ -90,7 +90,7 @@ export default function EarningsPage() {
             }
           >
             <div
-              className="text-[10.5px] tracking-[1px] font-bold mb-2"
+              className="text-[11px] tracking-[1px] font-bold mb-2"
               style={{
                 color: stat.feature
                   ? 'rgba(255,255,255,.75)'
@@ -154,12 +154,14 @@ export default function EarningsPage() {
               <Link
                 key={row.id}
                 href={`/earnings/${row.id}`}
-                className="px-[22px] py-4 flex items-center gap-4 flex-wrap"
+                // Phones: amount column on the right with the badge under it, so the
+                // customer and service text get the full remaining width.
+                className="px-4 sm:px-[22px] py-4 grid grid-cols-[minmax(0,1fr)_auto] gap-x-3 gap-y-1.5 items-start sm:flex sm:items-center sm:gap-4"
                 style={{ borderTop: '1px solid var(--color-divider)' }}
               >
                 <div className="flex-1 min-w-0">
-                  <div className="text-[13.5px] font-bold truncate">{row.customer ?? 'Customer'}</div>
-                  <div className="text-[12px] text-[var(--color-muted)] truncate">
+                  <div className="text-[13.5px] font-bold [overflow-wrap:anywhere] sm:truncate">{row.customer ?? 'Customer'}</div>
+                  <div className="text-[12px] text-[var(--color-muted)] line-clamp-2 sm:truncate">
                     {row.service ?? 'Service'} · {formatDate(row.at)}
                   </div>
                 </div>
@@ -171,7 +173,9 @@ export default function EarningsPage() {
                     </div>
                   )}
                 </div>
-                <Badge tone={row.paid ? 'success' : 'warning'}>{row.paid ? 'Paid' : 'Pending'}</Badge>
+                <div className="col-start-2 justify-self-end">
+                  <Badge tone={row.paid ? 'success' : 'warning'}>{row.paid ? 'Paid' : 'Pending'}</Badge>
+                </div>
               </Link>
             ))
           )}

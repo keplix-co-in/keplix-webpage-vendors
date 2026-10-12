@@ -69,7 +69,9 @@ export default function SetBreaksPage() {
       }
     >
       <FieldLabel>Breaks</FieldLabel>
-      <div className="flex items-center gap-3 sm:gap-[18px] flex-wrap">
+      {/* Phones: a 3-column grid so both selects share the row; fixed-width
+          selects with "To" between them wrapped at 320px. */}
+      <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 sm:flex sm:gap-[18px]">
         <TimeSelect
           ariaLabel="Break starts"
           value={start}
@@ -78,6 +80,7 @@ export default function SetBreaksPage() {
             setError(null);
           }}
           highlighted
+          className="max-sm:w-full"
         />
         <span className="text-[13.5px] text-[var(--color-muted)]">To</span>
         <TimeSelect
@@ -88,6 +91,7 @@ export default function SetBreaksPage() {
             setError(null);
           }}
           highlighted
+          className="max-sm:w-full"
         />
       </div>
       {error && <FieldError>{error}</FieldError>}

@@ -90,7 +90,7 @@ export default function SupportChatPage() {
                 }}
               >
                 <div className="text-[13px] leading-[1.55]">{message.text}</div>
-                <div className="text-[10.5px] mt-1" style={{ color: 'rgba(255,255,255,.7)' }}>
+                <div className="text-[11px] mt-1" style={{ color: 'rgba(255,255,255,.7)' }}>
                   {formatTime(message.at)}
                 </div>
               </div>
@@ -107,7 +107,7 @@ export default function SupportChatPage() {
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
             placeholder="Write a note…"
-            className="flex-1 rounded-[var(--radius-pill)] px-4 py-3 text-[13.5px] outline-none"
+            className="flex-1 min-w-0 rounded-[var(--radius-pill)] px-4 py-3 text-base sm:text-[13.5px] outline-none"
             style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-line)' }}
           />
           <button

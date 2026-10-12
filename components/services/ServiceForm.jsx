@@ -183,7 +183,7 @@ export default function ServiceForm({ service }) {
               className="hidden"
               onChange={(e) => pickImage(e.target.files?.[0])}
             />
-            <Button type="button" variant="outline" size="sm" onClick={() => fileRef.current?.click()}>
+            <Button type="button" variant="outline" size="md" onClick={() => fileRef.current?.click()}>
               Change Photo
             </Button>
             <p className="text-[11.5px] text-[var(--color-disabled)] mt-2">JPG, PNG or WebP.</p>
@@ -289,7 +289,8 @@ export default function ServiceForm({ service }) {
         />
       </Card>
 
-      <div className="flex gap-3 flex-wrap">
+      {/* Phones: full-width stacked buttons; a wrapped "Delete" sat alone on the right. */}
+      <div className="flex flex-col sm:flex-row gap-3 sm:flex-wrap [&>*]:w-full sm:[&>*]:w-auto">
         <Button type="submit" loading={busy}>
           {isEdit ? 'Save changes' : 'Create Service'}
         </Button>
@@ -300,7 +301,7 @@ export default function ServiceForm({ service }) {
           <Button
             type="button"
             variant="danger"
-            className="ml-auto"
+            className="sm:ml-auto mt-2 sm:mt-0"
             onClick={() => setConfirmDelete(true)}
           >
             Delete service

@@ -17,7 +17,9 @@ const VARIANTS = {
 const SIZES = {
   lg: 'px-6 py-4 text-[15px]',
   md: 'px-5 py-3 text-[13.5px]',
-  sm: 'px-4 py-2 text-[12.5px]',
+  // max-sm:min-h-10: on phones even small buttons (Accept, Decline, Start job)
+  // get a 40px touch height; py-2 alone made them 37px.
+  sm: 'px-4 py-2 max-sm:min-h-10 text-[12.5px]',
 };
 
 export default function Button({

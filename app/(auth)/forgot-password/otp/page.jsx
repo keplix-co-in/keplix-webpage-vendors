@@ -78,7 +78,8 @@ export default function ForgotPasswordOtpPage() {
             <button
               type="button"
               onClick={resend}
-              className="text-[var(--color-primary)] font-bold cursor-pointer"
+              // 40px tap target; the bare 12.5px text was ~18px tall.
+              className="inline-flex items-center min-h-10 px-2 -mx-2 text-[var(--color-primary)] font-bold cursor-pointer"
             >
               Resend
             </button>

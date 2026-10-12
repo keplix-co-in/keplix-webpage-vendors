@@ -88,7 +88,7 @@ export function PhotoWell({
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
-        className="text-[12.5px] font-bold text-[var(--color-primary)] cursor-pointer inline-flex items-center gap-2"
+        className="min-h-10 text-[12.5px] font-bold text-[var(--color-primary)] cursor-pointer inline-flex items-center gap-2"
       >
         <Upload size={14} />
         {label}
@@ -98,7 +98,7 @@ export function PhotoWell({
         <button
           type="button"
           onClick={() => onChange(null)}
-          className="text-[12.5px] font-bold text-[var(--color-danger)] cursor-pointer"
+          className="min-h-10 inline-flex items-center text-[12.5px] font-bold text-[var(--color-danger)] cursor-pointer"
         >
           Remove
         </button>
@@ -107,12 +107,16 @@ export function PhotoWell({
   );
 }
 
-/** Shop images: 120×86 tiles plus a dashed add tile. */
+/**
+ * Shop images: 120×86 tiles plus a dashed add tile. On phones the tiles fill a
+ * two-column grid: two fixed 120px tiles plus the gap didn't fit a 320px card,
+ * which left one column of tiles and dead space beside it.
+ */
 export function PhotoGrid({ photos = [], onAdd, onRemove, onError }) {
   const inputRef = useRef(null);
 
   return (
-    <div className="flex gap-3 flex-wrap">
+    <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
       <input
         ref={inputRef}
         type="file"
@@ -134,7 +138,7 @@ export function PhotoGrid({ photos = [], onAdd, onRemove, onError }) {
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
-        className="w-[120px] h-[86px] rounded-[14px] flex items-center justify-center text-[20px] text-[var(--color-disabled)] cursor-pointer"
+        className="w-full aspect-[120/86] sm:w-[120px] sm:h-[86px] sm:aspect-auto rounded-[14px] flex items-center justify-center text-[20px] text-[var(--color-disabled)] cursor-pointer"
         style={{ border: '2px dashed var(--color-line)' }}
         aria-label="Add workshop image"
       >
@@ -149,20 +153,20 @@ function PhotoTile({ file, onRemove }) {
 
   return (
     <div
-      className="relative w-[120px] h-[86px] rounded-[14px] overflow-hidden flex items-center justify-center text-[11.5px] text-[var(--color-disabled)]"
+      className="relative w-full aspect-[120/86] sm:w-[120px] sm:h-[86px] sm:aspect-auto rounded-[14px] overflow-hidden flex items-center justify-center text-[11.5px] text-[var(--color-disabled)]"
       style={{ background: 'var(--color-divider)' }}
     >
       {preview ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={preview} alt={file.name} className="w-full h-full object-cover" />
       ) : (
-        file.name
+        <span className="px-2 truncate max-w-full">{file.name}</span>
       )}
       <button
         type="button"
         onClick={onRemove}
         aria-label={`Remove ${file.name}`}
-        className="absolute top-1.5 right-1.5 w-[22px] h-[22px] rounded-full flex items-center justify-center cursor-pointer"
+        className="absolute top-1.5 right-1.5 w-[22px] h-[22px] rounded-full flex items-center justify-center cursor-pointer after:absolute after:-inset-2.5 after:content-['']"
         style={{ background: 'rgba(17,24,39,.55)' }}
       >
         <X size={12} color="#fff" />

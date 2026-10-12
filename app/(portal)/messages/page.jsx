@@ -267,7 +267,7 @@ function Messages() {
                   {message.text}
                 </div>
                 <div
-                  className="text-[10.5px] mt-1"
+                  className="text-[11px] mt-1"
                   style={{ color: mine ? 'rgba(255,255,255,.7)' : 'var(--color-disabled)' }}
                 >
                   {formatTime(message.at)}

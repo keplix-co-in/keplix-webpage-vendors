@@ -104,7 +104,7 @@ export default function ServicesPage() {
             <Card key={service.id} className="flex flex-col gap-3">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <div className="text-[10.5px] font-bold tracking-[1px] text-[var(--color-disabled)] uppercase mb-1.5">
+                  <div className="text-[11px] font-bold tracking-[1px] text-[var(--color-disabled)] uppercase mb-1.5">
                     {service.category}
                   </div>
                   <div className="text-[15px] font-bold truncate">{service.name}</div>
@@ -112,7 +112,7 @@ export default function ServicesPage() {
                 <Link
                   href={`/services/${service.id}/edit`}
                   aria-label={`Edit ${service.name}`}
-                  className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+                  className="relative w-8 h-8 rounded-full flex items-center justify-center shrink-0 after:absolute after:-inset-1 after:content-['']"
                   style={{ border: '1px solid var(--color-line)' }}
                 >
                   <Pencil size={14} color="var(--color-ink-body)" />

@@ -134,7 +134,7 @@ export default function PortalNav({ badges = {}, open = false, onClose = () => {
         <div className="kx-scroll flex-1 overflow-y-auto p-3 flex flex-col min-w-0">
           {NAV_GROUPS.map((group) => (
             <div key={group.label} className="mb-[18px]">
-              <div className="text-[10px] font-bold tracking-[1px] text-[var(--color-disabled)] px-2.5 pb-2 whitespace-nowrap">
+              <div className="text-[11px] font-bold tracking-[1px] text-[var(--color-disabled)] px-2.5 pb-2 whitespace-nowrap">
                 {group.label}
               </div>
 
@@ -161,7 +161,7 @@ export default function PortalNav({ badges = {}, open = false, onClose = () => {
                     <span className="flex-1">{label}</span>
                     {badge > 0 && (
                       <span
-                        className="text-[10px] font-bold text-white rounded-[var(--radius-pill)] px-1.5 py-px"
+                        className="text-[11px] font-bold text-white rounded-[var(--radius-pill)] px-1.5 py-px"
                         style={{ background: 'var(--color-danger-light)' }}
                       >
                         {badge}
@@ -180,7 +180,7 @@ export default function PortalNav({ badges = {}, open = false, onClose = () => {
           <button
             type="button"
             onClick={signOut}
-            className="w-full flex items-center gap-2.5 px-2.5 py-[9px] rounded-[10px] text-[13.5px] font-bold cursor-pointer"
+            className="w-full flex items-center gap-2.5 px-2.5 py-[11px] lg:py-[9px] rounded-[10px] text-[13.5px] font-bold cursor-pointer"
             style={{ color: 'var(--color-danger)' }}
           >
             <span className="w-[18px] flex items-center justify-center">

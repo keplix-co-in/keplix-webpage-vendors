@@ -185,7 +185,7 @@ export default function DashboardPage() {
             boxShadow: 'var(--shadow-feature)',
           }}
         >
-          <div className="text-[10.5px] tracking-[1px] font-bold opacity-80 mb-2">TOTAL EARNINGS</div>
+          <div className="text-[11px] tracking-[1px] font-bold opacity-80 mb-2">TOTAL EARNINGS</div>
           <div className="text-[26px] sm:text-[30px] font-bold tracking-[-1px] leading-none">
             {/* No `?? 0`: formatMoney renders "—" when there is no figure yet.
                 WHY: "₹0" while loading, or after a failed call, read as a real
@@ -220,11 +220,11 @@ export default function DashboardPage() {
         <div className="min-w-0">
           <Card className="mb-5" padded={false}>
             <div
-              className="px-[22px] py-[18px] flex justify-between items-center gap-3"
+              className="px-4 sm:px-[22px] py-[18px] flex flex-wrap justify-between items-center gap-x-3 gap-y-1"
               style={{ borderBottom: '1px solid var(--color-divider)' }}
             >
-              <div className="text-[15px] font-bold">Today&apos;s schedule</div>
-              <Link href="/bookings" className="text-[12.5px] font-bold text-[var(--color-primary)]">
+              <div className="text-[15px] font-bold whitespace-nowrap">Today&apos;s schedule</div>
+              <Link href="/bookings" className="inline-flex items-center min-h-10 whitespace-nowrap text-[12.5px] font-bold text-[var(--color-primary)]">
                 View all bookings →
               </Link>
             </div>
@@ -251,11 +251,14 @@ export default function DashboardPage() {
                   <Link
                     key={job.id}
                     href={`/bookings/${job.id}`}
-                    className="px-[22px] py-4 flex items-center gap-4 flex-wrap"
+                    // Phones: two lines (time + service/customer, then price + badge
+                    // under the text). On one line at 320px the price and badge left
+                    // the service column 2–25px wide.
+                    className="px-4 sm:px-[22px] py-4 grid grid-cols-[64px_minmax(0,1fr)] gap-x-3 gap-y-2 items-center sm:flex sm:gap-4"
                     style={{ borderBottom: '1px solid var(--color-canvas)' }}
                   >
-                    <div className="w-[72px] text-center shrink-0">
-                      <div className="text-[13.5px] font-bold">{formatSlotTime(job.time)}</div>
+                    <div className="sm:w-[72px] text-center shrink-0">
+                      <div className="text-[13px] sm:text-[13.5px] font-bold whitespace-nowrap">{formatSlotTime(job.time)}</div>
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="text-[13.5px] font-bold truncate">{job.serviceName}</div>
@@ -264,8 +267,10 @@ export default function DashboardPage() {
                         {job.customerPhone ? ` · ${job.customerPhone}` : ''}
                       </div>
                     </div>
-                    <div className="text-[13.5px] font-bold">{formatMoney(job.price)}</div>
-                    <Badge tone={badge.tone}>{badge.label}</Badge>
+                    <div className="col-start-2 flex items-center gap-2.5 sm:contents">
+                      <div className="text-[13.5px] font-bold">{formatMoney(job.price)}</div>
+                      <Badge tone={badge.tone}>{badge.label}</Badge>
+                    </div>
                   </Link>
                 );
               })

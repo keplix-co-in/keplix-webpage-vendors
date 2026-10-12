@@ -58,7 +58,7 @@ export default function Input({
             type="button"
             onClick={() => setRevealed((v) => !v)}
             aria-label={revealed ? 'Hide password' : 'Show password'}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--color-disabled)] cursor-pointer"
+            className="absolute right-1.5 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center text-[var(--color-disabled)] cursor-pointer" // 40px tap target; the bare icon was ~18px
           >
             {revealed ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>

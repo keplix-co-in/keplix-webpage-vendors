@@ -51,7 +51,7 @@ export default function OtpInput({ value = '', onChange, length = 6, error = fal
   };
 
   return (
-    <div className="flex gap-2.5 w-full">
+    <div className="flex gap-1.5 sm:gap-2.5 w-full">
       {Array.from({ length }).map((_, index) => {
         const digit = digits[index].trim();
         const borderColor = error

@@ -61,7 +61,7 @@ export default function UploadField({
             type="button"
             onClick={() => onChange(null)}
             aria-label={`Remove ${filename}`}
-            className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center cursor-pointer"
+            className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center cursor-pointer relative after:absolute after:-inset-2.5 after:content-['']"
             style={{ background: 'rgba(255,255,255,.22)' }}
           >
             <X size={13} color="#fff" />

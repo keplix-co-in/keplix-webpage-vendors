@@ -84,7 +84,7 @@ export default function OnboardingHubPage() {
           <BrandLockup label="Partner portal" onDark />
           <Link
             href="/sign-in"
-            className="whitespace-nowrap text-white text-[12.5px] font-bold rounded-[var(--radius-pill)] px-[18px] py-[9px]"
+            className="whitespace-nowrap text-white text-[12.5px] font-bold rounded-[var(--radius-pill)] px-[18px] min-h-10 inline-flex items-center ml-auto"
             style={{ border: '1px solid rgba(255,255,255,.35)' }}
           >
             Save &amp; exit
@@ -180,7 +180,7 @@ export default function OnboardingHubPage() {
               type="button"
               onClick={register}
               disabled={!allComplete || busy}
-              className="text-[14px] font-bold rounded-[var(--radius-pill)] px-[38px] py-3.5"
+              className="w-full sm:w-auto text-[14px] font-bold rounded-[var(--radius-pill)] px-[38px] py-3.5"
               style={
                 allComplete && !busy
                   ? { background: 'var(--color-primary)', color: '#fff', cursor: 'pointer' }

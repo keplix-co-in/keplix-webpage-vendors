@@ -27,7 +27,9 @@ export default function AuthShell({ title, subtitle, children, footer }) {
 
         <h1 className="text-[24px] sm:text-[28px] font-bold tracking-[-0.6px]">{title}</h1>
         {subtitle && (
-          <p className="text-[13.5px] text-[var(--color-muted)] mt-[7px] mb-7 leading-[1.55]">
+          // overflow-wrap: the OTP steps put the email address in here, and a long
+          // one is a single unbreakable word that widened the page at 320px.
+          <p className="text-[13.5px] text-[var(--color-muted)] mt-[7px] mb-7 leading-[1.55] [overflow-wrap:anywhere]">
             {subtitle}
           </p>
         )}

@@ -157,7 +157,7 @@ function CompletionForm() {
                 type="button"
                 onClick={() => removeImage(index)}
                 aria-label="Remove photo"
-                className="absolute top-1 right-1 w-5 h-5 rounded-full flex items-center justify-center cursor-pointer"
+                className="absolute top-1 right-1 w-5 h-5 rounded-full flex items-center justify-center cursor-pointer after:absolute after:-inset-2.5 after:content-['']"
                 style={{ background: 'rgba(17,24,39,.6)' }}
               >
                 <X size={11} color="#fff" />
@@ -202,7 +202,7 @@ function CompletionForm() {
         />
       </Card>
 
-      <div className="flex gap-3 flex-wrap">
+      <div className="flex flex-col-reverse sm:flex-row gap-3 sm:flex-wrap [&>*]:w-full sm:[&>*]:w-auto">
         <Button variant="outline" onClick={() => router.back()}>
           Back
         </Button>

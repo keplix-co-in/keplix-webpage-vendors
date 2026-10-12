@@ -203,7 +203,7 @@ export default function ScreenIndexPage() {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search screens…"
                 aria-label="Search screens"
-                className="w-full rounded-[var(--radius-field)] pl-10 pr-10 py-2.5 text-[13.5px] outline-none"
+                className="w-full rounded-[var(--radius-field)] pl-10 pr-10 py-2.5 text-base sm:text-[13.5px] outline-none"
                 style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-line)' }}
               />
               {query && (
@@ -224,7 +224,7 @@ export default function ScreenIndexPage() {
                 value={sampleId}
                 onChange={(e) => setSampleId(e.target.value)}
                 aria-label="Sample id for dynamic routes"
-                className="w-[76px] rounded-[var(--radius-well)] px-3 py-2 text-[13px] outline-none"
+                className="w-[76px] rounded-[var(--radius-well)] px-3 py-2 text-base sm:text-[13px] outline-none"
                 style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-line)' }}
               />
             </label>

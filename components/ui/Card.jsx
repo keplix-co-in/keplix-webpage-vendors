@@ -33,7 +33,7 @@ export function CardHeader({ title, action, subtitle }) {
 export function Kicker({ children, className = '' }) {
   return (
     <div
-      className={`text-[10.5px] font-bold tracking-[1px] text-[var(--color-disabled)] uppercase ${className}`}
+      className={`text-[11px] font-bold tracking-[1px] text-[var(--color-disabled)] uppercase ${className}`}
     >
       {children}
     </div>

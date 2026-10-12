@@ -36,7 +36,7 @@ export default function ServiceSetupPage() {
       {services.map((service, index) => (
         <div
           key={`${service.name}-${index}`}
-          className="rounded-[var(--radius-field)] p-[18px] mb-3 flex items-center gap-3.5 flex-wrap"
+          className="rounded-[var(--radius-field)] p-3.5 sm:p-[18px] mb-3 flex items-center gap-3 sm:gap-3.5"
           style={{ border: '1px solid var(--color-line)' }}
         >
           <div
@@ -48,9 +48,10 @@ export default function ServiceSetupPage() {
 
           <Link
             href={`/onboarding/services?edit=${index}`}
-            className="flex-1 min-w-[180px]"
+            // min-w-0, not 180px: that pushed "remove" onto its own line on phones.
+            className="flex-1 min-w-0"
           >
-            <div className="text-[14.5px] font-bold text-[var(--color-ink)]">{service.name}</div>
+            <div className="text-[14.5px] font-bold text-[var(--color-ink)] [overflow-wrap:anywhere]">{service.name}</div>
             <div className="text-[12px] text-[var(--color-disabled)] mt-0.5">
               {service.category} · {formatMoney(service.price)} · {service.duration}
             </div>
@@ -59,7 +60,7 @@ export default function ServiceSetupPage() {
           <button
             type="button"
             onClick={() => remove(index)}
-            className="text-[12.5px] font-bold text-[var(--color-danger)] cursor-pointer"
+            className="shrink-0 min-h-10 px-2 -mr-2 text-[12.5px] font-bold text-[var(--color-danger)] cursor-pointer"
           >
             remove
           </button>

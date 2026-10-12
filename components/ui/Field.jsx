@@ -78,7 +78,7 @@ export function Chip({ active = false, children, className = '', ...props }) {
     <button
       type="button"
       className={[
-        'rounded-[var(--radius-pill)] px-4 py-2 text-[12.5px] font-bold border cursor-pointer whitespace-nowrap max-w-full truncate', // a long service-name chip must not widen its row
+        'rounded-[var(--radius-pill)] px-4 py-2 max-sm:min-h-10 text-[12.5px] font-bold border cursor-pointer whitespace-nowrap max-w-full truncate', // truncate: a long service-name chip must not widen its row; min-h-10: touch size on phones
         active
           ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)]'
           : 'bg-white text-[var(--color-ink-body)] border-[var(--color-line)]',
@@ -99,7 +99,7 @@ export function Toggle({ checked, onChange, label }) {
       aria-checked={checked}
       aria-label={label}
       onClick={() => onChange(!checked)}
-      className="relative w-[44px] h-[24px] rounded-[var(--radius-pill)] cursor-pointer transition-colors shrink-0"
+      className="relative w-[44px] h-[24px] rounded-[var(--radius-pill)] cursor-pointer transition-colors shrink-0 after:absolute after:-inset-y-2.5 after:inset-x-0 after:content-['']" // invisible ::after: ~44px tall touch area
       style={{ background: checked ? 'var(--color-success)' : 'var(--color-line-strong)' }}
     >
       <span

@@ -29,15 +29,16 @@ export const toMinutes = (time) => {
   return (hour + offset) * 60 + Number(minutes);
 };
 
-export default function TimeSelect({ value, onChange, highlighted = false, ariaLabel }) {
+export default function TimeSelect({ value, onChange, highlighted = false, ariaLabel, className = '' }) {
   return (
     <select
       aria-label={ariaLabel}
       value={value || ''}
       onChange={(e) => onChange(e.target.value)}
       // Narrower on phones so "from – to" fits on one line in a 375px card;
-      // two 160px selects used to wrap and leave "to" dangling.
-      className="rounded-[var(--radius-pill)] px-2.5 sm:px-[26px] py-[13px] text-[15px] sm:text-[16px] font-bold text-center outline-none cursor-pointer w-[116px] sm:w-auto sm:min-w-[160px]"
+      // two 160px selects used to wrap and leave "to" dangling. Always 16px:
+      // iOS Safari zooms in on a focused <select> with smaller text.
+      className={`rounded-[var(--radius-pill)] px-2.5 sm:px-[26px] py-[13px] text-base font-bold text-center outline-none cursor-pointer w-[116px] sm:w-auto sm:min-w-[160px] ${className}`}
       style={
         highlighted
           ? {

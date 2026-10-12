@@ -213,7 +213,7 @@ function CloseWalkInForm() {
           <div className="mt-5 pt-4" style={{ borderTop: '1px solid var(--color-divider)' }}>
             {job.services.map((service) => (
               <div key={service.id} className="flex justify-between gap-3 py-1.5">
-                <span className="text-[12.5px] text-[var(--color-muted)] truncate">
+                <span className="text-[12.5px] text-[var(--color-muted)] min-w-0 [overflow-wrap:anywhere]">
                   {service.name}
                 </span>
                 <span className="text-[12.5px] font-semibold shrink-0">
@@ -225,7 +225,7 @@ function CloseWalkInForm() {
         )}
       </Card>
 
-      <div className="flex gap-3 flex-wrap">
+      <div className="flex flex-col-reverse sm:flex-row gap-3 sm:flex-wrap [&>*]:w-full sm:[&>*]:w-auto">
         <Button variant="outline" type="button" onClick={() => router.back()}>
           Back
         </Button>

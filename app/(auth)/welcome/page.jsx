@@ -108,7 +108,7 @@ export default function WelcomePage() {
       )}
 
       <div
-        className="min-h-screen grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]"
+        className="min-h-dvh grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]"
         style={{ background: 'var(--color-surface)' }}
         aria-hidden={pending || undefined}
       >
@@ -128,7 +128,7 @@ export default function WelcomePage() {
               </span>
             </div>
 
-            <h1 className="text-[36px] sm:text-[42px] font-bold tracking-[-1.2px] leading-[1.08] text-[var(--color-ink)]">
+            <h1 className="text-[30px] sm:text-[42px] font-bold tracking-[-1.2px] leading-[1.08] text-[var(--color-ink)]">
               Run your workshop from anywhere
             </h1>
             <p className="text-[15.5px] text-[var(--color-ink-body)] leading-[1.6] mt-4">

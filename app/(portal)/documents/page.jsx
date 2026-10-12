@@ -241,7 +241,7 @@ export default function DocumentsPage() {
           <select
             value={newDoc.type}
             onChange={(e) => setNewDoc({ ...newDoc, type: e.target.value })}
-            className="w-full rounded-[var(--radius-field)] px-4 py-3 text-[13.5px] mb-3 outline-none cursor-pointer"
+            className="w-full rounded-[var(--radius-field)] px-4 py-3 text-base sm:text-[13.5px] mb-3 outline-none cursor-pointer"
             style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-line)' }}
           >
             <option value="bank_proof">Bank proof</option>

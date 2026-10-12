@@ -135,7 +135,7 @@ export default function WalkInDetailPage() {
                 className="flex items-center justify-between gap-3 py-2.5"
                 style={{ borderBottom: '1px solid var(--color-divider)' }}
               >
-                <span className="text-[13px] truncate">{service.name}</span>
+                <span className="text-[13px] min-w-0 [overflow-wrap:anywhere]">{service.name}</span>
                 <span className="text-[13px] font-semibold shrink-0">
                   {service.price != null ? formatMoney(service.price) : '—'}
                 </span>
