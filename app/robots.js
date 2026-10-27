@@ -9,7 +9,7 @@ import { PUBLIC_PATHS, publicSiteUrl } from '@/lib/siteUrl';
  * `/sign-up/otp` — that one is disallowed explicitly. Crawlers apply the most
  * specific matching rule, so the narrower Disallow wins over the wider Allow.
  *
- * The `Sitemap:` and `Host:` lines are emitted only when NEXT_PUBLIC_SITE_URL
+ * The `Sitemap:` line is emitted only when NEXT_PUBLIC_SITE_URL
  * is set (production, https://partner.keplix.co.in). A preview or local build
  * does not know its public origin, and a wrong absolute URL is worse than none.
  *
@@ -43,6 +43,9 @@ export default function robots() {
         disallow: ['/', '/sign-up/otp'],
       },
     ],
-    ...(site && { sitemap: `${site}/sitemap.xml`, host: site }),
+    // No `host`: it is a Yandex-only directive. Search Console flags it as
+    // "Rule ignored by Googlebot" (2026-10-23), and the canonical URLs already
+    // name the preferred origin.
+    ...(site && { sitemap: `${site}/sitemap.xml` }),
   };
 }
