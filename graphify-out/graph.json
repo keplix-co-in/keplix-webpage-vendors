@@ -11,7 +11,7 @@
       "_origin": "ast",
       "id": "api_auth",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "auth.js"
     },
     {
@@ -22,7 +22,7 @@
       "_origin": "ast",
       "id": "api_auth_authapi",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "authapi"
     },
     {
@@ -76,8 +76,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "api_customers",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "customers.js"
     },
     {
@@ -87,8 +87,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "api_customers_reviewsapi",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "reviewsapi"
     },
     {
@@ -98,8 +98,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "api_customers_feedbackapi",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "feedbackapi"
     },
     {
@@ -109,8 +109,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "api_customers_chatapi",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "chatapi"
     },
     {
@@ -120,8 +120,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "api_customers_notificationsapi",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "notificationsapi"
     },
     {
@@ -131,8 +131,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "api_money",
-      "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community": 7,
+      "community_name": "(portal)/documents/page.jsx",
       "norm_label": "money.js"
     },
     {
@@ -142,8 +142,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "api_money_paymentsapi",
-      "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community": 7,
+      "community_name": "(portal)/documents/page.jsx",
       "norm_label": "paymentsapi"
     },
     {
@@ -253,7 +253,7 @@
       "_origin": "ast",
       "id": "app_auth_components_otpstep",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "otpstep.jsx"
     },
     {
@@ -264,7 +264,7 @@
       "_origin": "ast",
       "id": "app_auth_components_otpstep_otpstep",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "otpstep()"
     },
     {
@@ -275,7 +275,7 @@
       "_origin": "ast",
       "id": "app_auth_lib_stepstore",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "stepstore.js"
     },
     {
@@ -286,7 +286,7 @@
       "_origin": "ast",
       "id": "app_auth_lib_stepstore_stepstore",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "stepstore"
     },
     {
@@ -297,7 +297,7 @@
       "_origin": "ast",
       "id": "app_auth_lib_stepstore_usestepvalue",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "usestepvalue()"
     },
     {
@@ -308,7 +308,7 @@
       "_origin": "ast",
       "id": "app_auth_lib_stepstore_useresendcountdown",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "useresendcountdown()"
     },
     {
@@ -373,8 +373,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_auth_error",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "(auth)/error.js"
     },
     {
@@ -384,8 +384,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_auth_error_autherror",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "autherror()"
     },
     {
@@ -429,7 +429,7 @@
       "_origin": "ast",
       "id": "app_auth_forgot_password_otp_page",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "forgot-password/otp/page.jsx"
     },
     {
@@ -440,7 +440,7 @@
       "_origin": "ast",
       "id": "app_auth_forgot_password_otp_page_forgotpasswordotppage",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "forgotpasswordotppage()"
     },
     {
@@ -450,8 +450,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_auth_forgot_password_page",
-      "community": 3,
-      "community_name": "validation.js",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "forgot-password/page.jsx"
     },
     {
@@ -461,8 +461,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_auth_forgot_password_page_schema",
-      "community": 3,
-      "community_name": "validation.js",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "schema"
     },
     {
@@ -472,8 +472,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_auth_forgot_password_page_forgotpasswordpage",
-      "community": 3,
-      "community_name": "validation.js",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "forgotpasswordpage()"
     },
     {
@@ -516,8 +516,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_auth_reset_password_page",
-      "community": 3,
-      "community_name": "validation.js",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "reset-password/page.jsx"
     },
     {
@@ -527,8 +527,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_auth_reset_password_page_resetpasswordpage",
-      "community": 3,
-      "community_name": "validation.js",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "resetpasswordpage()"
     },
     {
@@ -572,7 +572,7 @@
       "_origin": "ast",
       "id": "app_auth_sign_in_page",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "sign-in/page.jsx"
     },
     {
@@ -583,7 +583,7 @@
       "_origin": "ast",
       "id": "app_auth_sign_in_page_schema",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "schema"
     },
     {
@@ -594,7 +594,7 @@
       "_origin": "ast",
       "id": "app_auth_sign_in_page_signinpage",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "signinpage()"
     },
     {
@@ -605,7 +605,7 @@
       "_origin": "ast",
       "id": "app_auth_sign_in_page_signinform",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "signinform()"
     },
     {
@@ -682,7 +682,7 @@
       "_origin": "ast",
       "id": "app_auth_sign_up_otp_page",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "sign-up/otp/page.jsx"
     },
     {
@@ -693,7 +693,7 @@
       "_origin": "ast",
       "id": "app_auth_sign_up_otp_page_signupotppage",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "signupotppage()"
     },
     {
@@ -704,7 +704,7 @@
       "_origin": "ast",
       "id": "app_auth_sign_up_page",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "sign-up/page.jsx"
     },
     {
@@ -715,7 +715,7 @@
       "_origin": "ast",
       "id": "app_auth_sign_up_page_schema",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "schema"
     },
     {
@@ -726,7 +726,7 @@
       "_origin": "ast",
       "id": "app_auth_sign_up_page_signuppage",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "signuppage()"
     },
     {
@@ -891,7 +891,7 @@
       "_origin": "ast",
       "id": "app_auth_welcome_page",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "(auth)/welcome/page.jsx"
     },
     {
@@ -902,7 +902,7 @@
       "_origin": "ast",
       "id": "app_auth_welcome_page_points",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "points"
     },
     {
@@ -913,7 +913,7 @@
       "_origin": "ast",
       "id": "app_auth_welcome_page_steps",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "steps"
     },
     {
@@ -924,7 +924,7 @@
       "_origin": "ast",
       "id": "app_auth_welcome_page_howitworks",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "howitworks()"
     },
     {
@@ -935,7 +935,7 @@
       "_origin": "ast",
       "id": "app_auth_welcome_page_welcomepage",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "welcomepage()"
     },
     {
@@ -1000,8 +1000,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_onboarding_error",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "(onboarding)/error.js"
     },
     {
@@ -1011,8 +1011,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_onboarding_error_onboardingerror",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "onboardingerror()"
     },
     {
@@ -1363,8 +1363,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_onboarding_onboarding_welcome_page",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "onboarding/welcome/page.jsx"
     },
     {
@@ -1374,8 +1374,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_onboarding_onboarding_welcome_page_checklist",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "checklist"
     },
     {
@@ -1385,8 +1385,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_onboarding_onboarding_welcome_page_onboardingwelcomepage",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "onboardingwelcomepage()"
     },
     {
@@ -1462,8 +1462,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_bookings_id_completion_page",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "completion/page.jsx"
     },
     {
@@ -1473,8 +1473,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_portal_bookings_id_completion_page_schema",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "schema"
     },
     {
@@ -1484,8 +1484,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "app_portal_bookings_id_completion_page_draftkey",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "draftkey()"
     },
     {
@@ -1495,8 +1495,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "app_portal_bookings_id_completion_page_completionpage",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "completionpage()"
     },
     {
@@ -1506,8 +1506,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "app_portal_bookings_id_completion_page_completionform",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "completionform()"
     },
     {
@@ -1880,8 +1880,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_portal_error_portalerror",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "portalerror()"
     },
     {
@@ -2023,8 +2023,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_notifications_page",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "notifications/page.jsx"
     },
     {
@@ -2034,8 +2034,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "app_portal_notifications_page_look",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "look"
     },
     {
@@ -2045,8 +2045,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "app_portal_notifications_page_rules",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "rules"
     },
     {
@@ -2056,8 +2056,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "app_portal_notifications_page_lookfor",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "lookfor()"
     },
     {
@@ -2067,8 +2067,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "app_portal_notifications_page_notificationspage",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "notificationspage()"
     },
     {
@@ -2078,8 +2078,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_profile_page",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "profile/page.jsx"
     },
     {
@@ -2089,8 +2089,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_portal_profile_page_fields",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "fields"
     },
     {
@@ -2100,8 +2100,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_portal_profile_page_photo_types",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "photo_types"
     },
     {
@@ -2111,8 +2111,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "app_portal_profile_page_schema",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "schema"
     },
     {
@@ -2122,8 +2122,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "app_portal_profile_page_profilepage",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "profilepage()"
     },
     {
@@ -2133,8 +2133,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_reviews_page",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "reviews/page.jsx"
     },
     {
@@ -2144,8 +2144,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_portal_reviews_page_schema",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "schema"
     },
     {
@@ -2155,8 +2155,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_portal_reviews_page_reviewspage",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "reviewspage()"
     },
     {
@@ -2166,8 +2166,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_services_id_edit_page",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 11,
+      "community_name": "ServiceForm.jsx",
       "norm_label": "edit/page.jsx"
     },
     {
@@ -2177,8 +2177,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_portal_services_id_edit_page_editservicepage",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 11,
+      "community_name": "ServiceForm.jsx",
       "norm_label": "editservicepage()"
     },
     {
@@ -2221,8 +2221,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_portal_services_page_servicespage",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 0,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "servicespage()"
     },
     {
@@ -2243,8 +2243,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_portal_support_chat_page_supportchatpage",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 0,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "supportchatpage()"
     },
     {
@@ -2353,8 +2353,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_walk_in_id_close_page",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "close/page.jsx"
     },
     {
@@ -2364,8 +2364,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_portal_walk_in_id_close_page_payment_modes",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "payment_modes"
     },
     {
@@ -2375,8 +2375,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "app_portal_walk_in_id_close_page_payment_mode_values",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "payment_mode_values"
     },
     {
@@ -2386,8 +2386,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "app_portal_walk_in_id_close_page_schema",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "schema"
     },
     {
@@ -2397,8 +2397,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "app_portal_walk_in_id_close_page_draftkey",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "draftkey()"
     },
     {
@@ -2408,8 +2408,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "app_portal_walk_in_id_close_page_closewalkinpage",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "closewalkinpage()"
     },
     {
@@ -2419,8 +2419,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "app_portal_walk_in_id_close_page_closewalkinform",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "closewalkinform()"
     },
     {
@@ -2518,8 +2518,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_walk_in_new_page",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "walk-in/new/page.jsx"
     },
     {
@@ -2529,8 +2529,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_portal_walk_in_new_page_schema",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "schema"
     },
     {
@@ -2540,8 +2540,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "app_portal_walk_in_new_page_newwalkinpage",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "newwalkinpage()"
     },
     {
@@ -2552,7 +2552,7 @@
       "_origin": "ast",
       "id": "app_entryrouter",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "_entryrouter.jsx"
     },
     {
@@ -2563,7 +2563,7 @@
       "_origin": "ast",
       "id": "app_entryrouter_entryrouter",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "entryrouter()"
     },
     {
@@ -2705,8 +2705,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_error",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "app/error.js"
     },
     {
@@ -2716,8 +2716,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_error_apperror",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "apperror()"
     },
     {
@@ -2793,8 +2793,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_loading",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "app/loading.js"
     },
     {
@@ -2804,8 +2804,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_loading_loading",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "loading()"
     },
     {
@@ -2837,8 +2837,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_not_found",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "app/not-found.js"
     },
     {
@@ -2848,8 +2848,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "app_not_found_metadata",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "metadata"
     },
     {
@@ -2859,8 +2859,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_not_found_notfound",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "notfound()"
     },
     {
@@ -2926,7 +2926,7 @@
       "_origin": "ast",
       "id": "app_page",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "page.js"
     },
     {
@@ -2937,7 +2937,7 @@
       "_origin": "ast",
       "id": "app_page_metadata",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "metadata"
     },
     {
@@ -2948,7 +2948,7 @@
       "_origin": "ast",
       "id": "app_page_home",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "home()"
     },
     {
@@ -2985,10 +2985,21 @@
       "norm_label": "robots.js"
     },
     {
+      "label": "PUBLIC_ASSETS",
+      "file_type": "code",
+      "source_file": "keplix-webpage-vendors/app/robots.js",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "app_robots_public_assets",
+      "community": 12,
+      "community_name": "app/layout.js",
+      "norm_label": "public_assets"
+    },
+    {
       "label": "robots()",
       "file_type": "code",
       "source_file": "keplix-webpage-vendors/app/robots.js",
-      "source_location": "L16",
+      "source_location": "L36",
       "_origin": "ast",
       "id": "app_robots_robots",
       "community": 12,
@@ -3080,7 +3091,7 @@
       "_origin": "ast",
       "id": "components_auth_authshell",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "authshell.jsx"
     },
     {
@@ -3091,7 +3102,7 @@
       "_origin": "ast",
       "id": "components_auth_authshell_authshell",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "authshell()"
     },
     {
@@ -3102,7 +3113,7 @@
       "_origin": "ast",
       "id": "components_auth_authshell_ordivider",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "ordivider()"
     },
     {
@@ -3113,7 +3124,7 @@
       "_origin": "ast",
       "id": "components_auth_entryloader",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "entryloader.jsx"
     },
     {
@@ -3124,7 +3135,7 @@
       "_origin": "ast",
       "id": "components_auth_entryloader_entryloader",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "entryloader()"
     },
     {
@@ -3135,29 +3146,29 @@
       "_origin": "ast",
       "id": "components_auth_googlebutton",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "googlebutton.jsx"
     },
     {
       "label": "isGoogleConfigured",
       "file_type": "code",
       "source_file": "keplix-webpage-vendors/components/auth/GoogleButton.jsx",
-      "source_location": "L19",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "components_auth_googlebutton_isgoogleconfigured",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "isgoogleconfigured"
     },
     {
       "label": "GoogleButton()",
       "file_type": "code",
       "source_file": "keplix-webpage-vendors/components/auth/GoogleButton.jsx",
-      "source_location": "L21",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "components_auth_googlebutton_googlebutton",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "googlebutton()"
     },
     {
@@ -3168,7 +3179,7 @@
       "_origin": "ast",
       "id": "components_auth_usesessionredirect",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "usesessionredirect.js"
     },
     {
@@ -3179,7 +3190,7 @@
       "_origin": "ast",
       "id": "components_auth_usesessionredirect_usesessionredirect",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "usesessionredirect()"
     },
     {
@@ -3190,7 +3201,7 @@
       "_origin": "ast",
       "id": "components_auth_usesigninflow",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "usesigninflow.js"
     },
     {
@@ -3201,7 +3212,7 @@
       "_origin": "ast",
       "id": "components_auth_usesigninflow_usesigninflow",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "usesigninflow()"
     },
     {
@@ -3860,8 +3871,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_shell_brandlockup",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "brandlockup.jsx"
     },
     {
@@ -3871,8 +3882,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "components_shell_brandlockup_brandlockup",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "brandlockup()"
     },
     {
@@ -3904,8 +3915,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_shell_portalnav",
-      "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "portalnav.jsx"
     },
     {
@@ -3915,8 +3926,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "components_shell_portalnav_nav_groups",
-      "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "nav_groups"
     },
     {
@@ -3937,8 +3948,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_shell_routefallback",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "routefallback.jsx"
     },
     {
@@ -3948,8 +3959,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "components_shell_routefallback_fullpagestate",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "fullpagestate()"
     },
     {
@@ -3959,8 +3970,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "components_shell_routefallback_fullpageloading",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "fullpageloading()"
     },
     {
@@ -3970,8 +3981,8 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "components_shell_routefallback_retrybutton",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "retrybutton()"
     },
     {
@@ -3981,8 +3992,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "components_shell_routefallback_homebutton",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "homebutton()"
     },
     {
@@ -3992,8 +4003,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "components_shell_routefallback_logboundaryerror",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "RouteFallback.jsx",
       "norm_label": "logboundaryerror()"
     },
     {
@@ -4135,8 +4146,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "components_ui_card_cardheader",
-      "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "cardheader()"
     },
     {
@@ -4157,8 +4168,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "components_ui_card_emptystate",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 0,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "emptystate()"
     },
     {
@@ -4168,8 +4179,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "components_ui_card_errorstate",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 0,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "errorstate()"
     },
     {
@@ -4201,8 +4212,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_ui_field",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "field.jsx"
     },
     {
@@ -4212,8 +4223,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "components_ui_field_select",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "select()"
     },
     {
@@ -4223,8 +4234,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "components_ui_field_textarea",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "textarea()"
     },
     {
@@ -4301,7 +4312,7 @@
       "_origin": "ast",
       "id": "components_ui_otpinput",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "otpinput.jsx"
     },
     {
@@ -4312,7 +4323,7 @@
       "_origin": "ast",
       "id": "components_ui_otpinput_otpinput",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "otpinput()"
     },
     {
@@ -4322,8 +4333,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_ui_starrating",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "starrating.jsx"
     },
     {
@@ -4333,8 +4344,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "components_ui_starrating_starrating",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "starrating()"
     },
     {
@@ -4488,7 +4499,7 @@
       "_origin": "ast",
       "id": "context_authcontext_landingroutefor",
       "community": 3,
-      "community_name": "validation.js",
+      "community_name": "sign-up/page.jsx",
       "norm_label": "landingroutefor()"
     },
     {
@@ -4883,8 +4894,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_entities",
-      "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "entities.js"
     },
     {
@@ -4894,8 +4905,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "lib_entities_num",
-      "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "num()"
     },
     {
@@ -4905,8 +4916,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "lib_entities_customernameof",
-      "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "customernameof()"
     },
     {
@@ -4927,8 +4938,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "lib_entities_toearningrow",
-      "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "toearningrow()"
     },
     {
@@ -4960,8 +4971,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "lib_entities_tonotification",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "tonotification()"
     },
     {
@@ -5048,8 +5059,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "lib_format_formattime",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 0,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "formattime()"
     },
     {
@@ -5213,8 +5224,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "lib_queries_unwrap",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "unwrap()"
     },
     {
@@ -5268,8 +5279,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "lib_queries_useservices",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 0,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "useservices()"
     },
     {
@@ -6544,8 +6555,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "shared_utils_duration",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "duration.js"
     },
     {
@@ -6555,8 +6566,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "shared_utils_duration_formatduration",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "formatduration()"
     },
     {
@@ -6566,8 +6577,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "shared_utils_duration_totaldurationminutes",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "totaldurationminutes()"
     },
     {
@@ -6654,8 +6665,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "shared_utils_rating",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "rating.js"
     },
     {
@@ -6665,8 +6676,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "shared_utils_rating_no_rating_label",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "no_rating_label"
     },
     {
@@ -6676,8 +6687,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "shared_utils_rating_hasrating",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "hasrating()"
     },
     {
@@ -6687,8 +6698,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "shared_utils_rating_formatrating",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "formatrating()"
     },
     {
@@ -6698,8 +6709,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "shared_utils_rating_rationale_10",
-      "community": 10,
-      "community_name": "reviews/page.jsx",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "note: the customer app has its own copy of this file (separate codebase)."
     },
     {
@@ -6709,8 +6720,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "shared_utils_validation",
-      "community": 3,
-      "community_name": "validation.js",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "validation.js"
     },
     {
@@ -6720,8 +6731,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "shared_utils_validation_patterns",
-      "community": 3,
-      "community_name": "validation.js",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "patterns"
     },
     {
@@ -6731,8 +6742,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "shared_utils_validation_normalizeindianmobile",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Card.jsx",
       "norm_label": "normalizeindianmobile()"
     },
     {
@@ -6742,8 +6753,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "shared_utils_validation_isblank",
-      "community": 3,
-      "community_name": "validation.js",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "isblank()"
     },
     {
@@ -6775,8 +6786,8 @@
       "source_location": "L176",
       "_origin": "ast",
       "id": "shared_utils_validation_password_rules",
-      "community": 3,
-      "community_name": "validation.js",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "password_rules"
     },
     {
@@ -6786,8 +6797,8 @@
       "source_location": "L187",
       "_origin": "ast",
       "id": "shared_utils_validation_passworderrors",
-      "community": 3,
-      "community_name": "validation.js",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "passworderrors()"
     },
     {
@@ -6797,8 +6808,8 @@
       "source_location": "L189",
       "_origin": "ast",
       "id": "shared_utils_validation_rulepassword",
-      "community": 3,
-      "community_name": "validation.js",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "rulepassword()"
     },
     {
@@ -21849,7 +21860,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/app/robots.js",
-      "source_location": "L16",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_robots",
+      "target": "app_robots_public_assets",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/app/robots.js",
+      "source_location": "L36",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_robots",
@@ -21877,6 +21899,18 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_robots",
+      "target": "lib_siteurl_public_paths",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/app/robots.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_robots",
       "target": "lib_siteurl_publicsiteurl",
       "confidence_score": 1.0
     },
@@ -21886,7 +21920,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "keplix-webpage-vendors/app/robots.js",
-      "source_location": "L17",
+      "source_location": "L37",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_robots_robots",
@@ -22140,7 +22174,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/components/auth/GoogleButton.jsx",
-      "source_location": "L21",
+      "source_location": "L25",
       "weight": 1.0,
       "_origin": "ast",
       "source": "components_auth_googlebutton",
@@ -22151,7 +22185,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/components/auth/GoogleButton.jsx",
-      "source_location": "L19",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
       "source": "components_auth_googlebutton",
@@ -28427,5 +28461,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "29e95d08a1f231c01f4b1c3cd7e83123c7691eea"
+  "built_at_commit": "69d1a2ffc0489a852a2fc3f5bc338d5cfbd58feb"
 }
