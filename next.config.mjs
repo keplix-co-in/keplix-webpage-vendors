@@ -7,6 +7,8 @@
  *     (script + the One Tap/button iframe it injects)
  *   - https://nominatim.openstreetmap.org     -> components/onboarding/MapPicker.jsx
  *     (reverse geocode / search fetches)
+ *   - https://keplix.co.in/status.json         -> components/shell/MaintenanceGate.jsx
+ *     (maintenance switch, shared with the main site)
  *   - https://{s}.tile.openstreetmap.org      -> components/onboarding/MapPicker.jsx
  *     (Leaflet raster tiles; {s} expands to a/b/c subdomains)
  *   - https://res.cloudinary.com              -> vendor/booking images served by the backend
@@ -52,7 +54,7 @@ const csp = [
   "style-src 'self' 'unsafe-inline' https://accounts.google.com",
   "img-src 'self' data: blob: https://res.cloudinary.com https://*.tile.openstreetmap.org",
   "font-src 'self' data:",
-  `connect-src 'self' https://accounts.google.com https://nominatim.openstreetmap.org${apiOrigins.length ? ` ${apiOrigins.join(' ')}` : ''}`,
+  `connect-src 'self' https://accounts.google.com https://nominatim.openstreetmap.org https://keplix.co.in${apiOrigins.length ? ` ${apiOrigins.join(' ')}` : ''}`,
   // Google Identity Services renders its button/One Tap prompt in an iframe.
   "frame-src 'self' https://accounts.google.com",
   "worker-src 'self' blob:",

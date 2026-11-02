@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "app/providers.jsx": {
-    "mtime": 1789700848.9795132,
-    "ast_hash": "5ac4dc9eb0d4fe104606b7e87cabc6ad",
+    "mtime": 1793594870.3116891,
+    "ast_hash": "49b997c04a4d79c0d0149c56c6fc4e27",
     "semantic_hash": ""
   },
   "app/robots.js": {
@@ -625,8 +625,8 @@
     "semantic_hash": ""
   },
   "lib/api.js": {
-    "mtime": 1789965939.0923617,
-    "ast_hash": "68e2dfd77203fbe746503b51bedcb06d",
+    "mtime": 1793594870.3126903,
+    "ast_hash": "e32eda59ab5b877f821a5c29a23ae719",
     "semantic_hash": ""
   },
   "lib/apiConfig.js": {
@@ -705,8 +705,8 @@
     "semantic_hash": ""
   },
   "next.config.mjs": {
-    "mtime": 1790409207.942851,
-    "ast_hash": "1ac1e6e36da701250c30629207987d1c",
+    "mtime": 1793594888.4080517,
+    "ast_hash": "0d25f7f46508969ab765537f620cf684",
     "semantic_hash": ""
   },
   "package.json": {
@@ -862,6 +862,21 @@
   "public/assets/alert_beep.mp3": {
     "mtime": 1790409161.584668,
     "ast_hash": "759189a088b4fd09ab808a19bdaae045",
+    "semantic_hash": ""
+  },
+  "components/shell/MaintenanceGate.jsx": {
+    "mtime": 1793594954.4067712,
+    "ast_hash": "2349ab2f780cd0c13a4e6010e45b3d82",
+    "semantic_hash": ""
+  },
+  "lib/__tests__/maintenance.test.mjs": {
+    "mtime": 1793594851.1018496,
+    "ast_hash": "209aaea72ddad6b90cab2065d9f6b833",
+    "semantic_hash": ""
+  },
+  "lib/maintenance.js": {
+    "mtime": 1793594851.0758283,
+    "ast_hash": "67f8a56f9008c916eb9a88e403133b3c",
     "semantic_hash": ""
   }
 }

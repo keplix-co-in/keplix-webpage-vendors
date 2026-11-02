@@ -80,6 +80,15 @@ notice and the preview flag is compiled out, so it cannot be switched on.
   completion, receipt) are intentionally absent — they need a specific job, so
   they are reached through the flow that picks one.
 
+## Maintenance mode
+
+`components/shell/MaintenanceGate.jsx` wraps the portal (in `app/providers.jsx`, inside `AuthProvider`). It shows a full "We'll be right back" page when either of these is true:
+
+1. `https://keplix.co.in/status.json` has `"maintenance": true`. That file is the shared switch and lives in `keplix-website/public/status.json`. Set `NEXT_PUBLIC_STATUS_URL` to override the URL.
+2. The backend answers `503` with `code: "MAINTENANCE"` (`MAINTENANCE_MODE=true`). `lib/api.js` reports this through `lib/maintenance.js` and returns `{ success: false, status: 503, isMaintenance: true }`.
+
+It checks on load and whenever the tab becomes visible, and Retry checks again. Nobody is logged out. It fails open: fetch or CORS errors (including on preview deployments) mean "off". `next.config.mjs` allows `https://keplix.co.in` in CSP `connect-src`. Run the test with `node --test lib/__tests__/maintenance.test.mjs`. The full guide is in `docs/maintenance-and-updates/2-maintenance-website.pdf`.
+
 ## Deploying
 
 Vercel, like `kepix-admin` and `keplix-website`; intended origin

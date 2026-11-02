@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from '@/context/AuthContext';
 import { ToastProvider } from '@/components/ui/Toast';
+import MaintenanceGate from '@/components/shell/MaintenanceGate';
 
 export default function Providers({ children }) {
   // Created in state so the client is not shared between users during SSR.
@@ -25,7 +26,9 @@ export default function Providers({ children }) {
   return (
     <QueryClientProvider client={queryClient}>
       <ToastProvider>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <MaintenanceGate>{children}</MaintenanceGate>
+        </AuthProvider>
       </ToastProvider>
     </QueryClientProvider>
   );

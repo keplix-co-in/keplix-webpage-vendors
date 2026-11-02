@@ -32,7 +32,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "api_bookings",
-      "community": 0,
+      "community": 7,
       "community_name": "(portal)/layout.jsx",
       "norm_label": "bookings.js"
     },
@@ -43,7 +43,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "api_bookings_bookingsapi",
-      "community": 0,
+      "community": 7,
       "community_name": "(portal)/layout.jsx",
       "norm_label": "bookingsapi"
     },
@@ -54,7 +54,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "api_bookings_walkinsapi",
-      "community": 0,
+      "community": 7,
       "community_name": "(portal)/layout.jsx",
       "norm_label": "walkinsapi"
     },
@@ -65,8 +65,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "api_bookings_inspectionapi",
-      "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community": 5,
+      "community_name": "InspectionSheet.jsx",
       "norm_label": "inspectionapi"
     },
     {
@@ -76,8 +76,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "api_customers",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "customers.js"
     },
     {
@@ -87,8 +87,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "api_customers_reviewsapi",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "reviewsapi"
     },
     {
@@ -98,8 +98,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "api_customers_feedbackapi",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "feedbackapi"
     },
     {
@@ -109,8 +109,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "api_customers_chatapi",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "chatapi"
     },
     {
@@ -120,8 +120,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "api_customers_notificationsapi",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "notificationsapi"
     },
     {
@@ -132,7 +132,7 @@
       "_origin": "ast",
       "id": "api_money",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "money.js"
     },
     {
@@ -143,7 +143,7 @@
       "_origin": "ast",
       "id": "api_money_paymentsapi",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "paymentsapi"
     },
     {
@@ -154,7 +154,7 @@
       "_origin": "ast",
       "id": "api_services",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "api/services.js"
     },
     {
@@ -165,7 +165,7 @@
       "_origin": "ast",
       "id": "api_services_buildserviceform",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "buildserviceform()"
     },
     {
@@ -176,7 +176,7 @@
       "_origin": "ast",
       "id": "api_services_normalize",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "normalize()"
     },
     {
@@ -187,7 +187,7 @@
       "_origin": "ast",
       "id": "api_services_servicesapi",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "servicesapi"
     },
     {
@@ -198,7 +198,7 @@
       "_origin": "ast",
       "id": "api_vendor",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "vendor.js"
     },
     {
@@ -209,7 +209,7 @@
       "_origin": "ast",
       "id": "api_vendor_vendorapi",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "vendorapi"
     },
     {
@@ -220,7 +220,7 @@
       "_origin": "ast",
       "id": "api_vendor_documentsapi",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "documentsapi"
     },
     {
@@ -373,8 +373,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_auth_error",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "(auth)/error.js"
     },
     {
@@ -384,8 +384,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_auth_error_autherror",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "autherror()"
     },
     {
@@ -516,8 +516,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_auth_reset_password_page",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "reset-password/page.jsx"
     },
     {
@@ -527,8 +527,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_auth_reset_password_page_resetpasswordpage",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "resetpasswordpage()"
     },
     {
@@ -1000,8 +1000,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_onboarding_error",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "(onboarding)/error.js"
     },
     {
@@ -1011,8 +1011,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_onboarding_error_onboardingerror",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "onboardingerror()"
     },
     {
@@ -1440,8 +1440,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_bookings_id_completed_page",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "completed/page.jsx"
     },
     {
@@ -1451,8 +1451,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_portal_bookings_id_completed_page_jobcompletedpage",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "jobcompletedpage()"
     },
     {
@@ -1462,8 +1462,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_bookings_id_completion_page",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "completion/page.jsx"
     },
     {
@@ -1473,8 +1473,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_portal_bookings_id_completion_page_schema",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "schema"
     },
     {
@@ -1484,8 +1484,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "app_portal_bookings_id_completion_page_draftkey",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "draftkey()"
     },
     {
@@ -1495,8 +1495,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "app_portal_bookings_id_completion_page_completionpage",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "completionpage()"
     },
     {
@@ -1506,8 +1506,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "app_portal_bookings_id_completion_page_completionform",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "completionform()"
     },
     {
@@ -1518,7 +1518,7 @@
       "_origin": "ast",
       "id": "app_portal_bookings_id_inspection_page",
       "community": 5,
-      "community_name": "usePortalHeader",
+      "community_name": "InspectionSheet.jsx",
       "norm_label": "bookings/[id]/inspection/page.jsx"
     },
     {
@@ -1529,7 +1529,7 @@
       "_origin": "ast",
       "id": "app_portal_bookings_id_inspection_page_bookinginspectionpage",
       "community": 5,
-      "community_name": "usePortalHeader",
+      "community_name": "InspectionSheet.jsx",
       "norm_label": "bookinginspectionpage()"
     },
     {
@@ -1540,7 +1540,7 @@
       "_origin": "ast",
       "id": "app_portal_bookings_id_page",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "bookings/[id]/page.jsx"
     },
     {
@@ -1551,7 +1551,7 @@
       "_origin": "ast",
       "id": "app_portal_bookings_id_page_row",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "row()"
     },
     {
@@ -1562,7 +1562,7 @@
       "_origin": "ast",
       "id": "app_portal_bookings_id_page_bookingdetailpage",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "bookingdetailpage()"
     },
     {
@@ -1573,7 +1573,7 @@
       "_origin": "ast",
       "id": "app_portal_bookings_id_reject_page",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "reject/page.jsx"
     },
     {
@@ -1584,7 +1584,7 @@
       "_origin": "ast",
       "id": "app_portal_bookings_id_reject_page_schema",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "schema"
     },
     {
@@ -1595,7 +1595,7 @@
       "_origin": "ast",
       "id": "app_portal_bookings_id_reject_page_rejectorderpage",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "rejectorderpage()"
     },
     {
@@ -1605,8 +1605,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_bookings_id_rejected_page",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "rejected/page.jsx"
     },
     {
@@ -1616,8 +1616,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_portal_bookings_id_rejected_page_rejectionsentpage",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "rejectionsentpage()"
     },
     {
@@ -1628,7 +1628,7 @@
       "_origin": "ast",
       "id": "app_portal_bookings_page",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "bookings/page.jsx"
     },
     {
@@ -1639,7 +1639,7 @@
       "_origin": "ast",
       "id": "app_portal_bookings_page_walk_in_params",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "walk_in_params"
     },
     {
@@ -1650,7 +1650,7 @@
       "_origin": "ast",
       "id": "app_portal_bookings_page_builddays",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "builddays()"
     },
     {
@@ -1661,7 +1661,7 @@
       "_origin": "ast",
       "id": "app_portal_bookings_page_bookingspage",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "bookingspage()"
     },
     {
@@ -1672,7 +1672,7 @@
       "_origin": "ast",
       "id": "app_portal_dashboard_page",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "dashboard/page.jsx"
     },
     {
@@ -1683,7 +1683,7 @@
       "_origin": "ast",
       "id": "app_portal_dashboard_page_live_walk_ins",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "live_walk_ins"
     },
     {
@@ -1694,7 +1694,7 @@
       "_origin": "ast",
       "id": "app_portal_dashboard_page_closed_statuses",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "closed_statuses"
     },
     {
@@ -1705,7 +1705,7 @@
       "_origin": "ast",
       "id": "app_portal_dashboard_page_greeting",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "greeting()"
     },
     {
@@ -1716,7 +1716,7 @@
       "_origin": "ast",
       "id": "app_portal_dashboard_page_dashboardpage",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "dashboardpage()"
     },
     {
@@ -1726,8 +1726,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_documents_page",
-      "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community": 0,
+      "community_name": "usePortalHeader",
       "norm_label": "(portal)/documents/page.jsx"
     },
     {
@@ -1737,8 +1737,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_portal_documents_page_schema",
-      "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community": 0,
+      "community_name": "usePortalHeader",
       "norm_label": "schema"
     },
     {
@@ -1748,8 +1748,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "app_portal_documents_page_locked_types",
-      "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community": 0,
+      "community_name": "usePortalHeader",
       "norm_label": "locked_types"
     },
     {
@@ -1759,8 +1759,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_portal_documents_page_doc_labels",
-      "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community": 0,
+      "community_name": "usePortalHeader",
       "norm_label": "doc_labels"
     },
     {
@@ -1770,8 +1770,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "app_portal_documents_page_doclabel",
-      "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community": 0,
+      "community_name": "usePortalHeader",
       "norm_label": "doclabel()"
     },
     {
@@ -1781,8 +1781,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "app_portal_documents_page_isverified",
-      "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community": 0,
+      "community_name": "usePortalHeader",
       "norm_label": "isverified()"
     },
     {
@@ -1792,8 +1792,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "app_portal_documents_page_documentspage",
-      "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community": 0,
+      "community_name": "usePortalHeader",
       "norm_label": "documentspage()"
     },
     {
@@ -1804,7 +1804,7 @@
       "_origin": "ast",
       "id": "app_portal_earnings_id_page",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "earnings/[id]/page.jsx"
     },
     {
@@ -1815,7 +1815,7 @@
       "_origin": "ast",
       "id": "app_portal_earnings_id_page_method_labels",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "method_labels"
     },
     {
@@ -1826,7 +1826,7 @@
       "_origin": "ast",
       "id": "app_portal_earnings_id_page_receiptpage",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "receiptpage()"
     },
     {
@@ -1837,7 +1837,7 @@
       "_origin": "ast",
       "id": "app_portal_earnings_page",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "earnings/page.jsx"
     },
     {
@@ -1848,7 +1848,7 @@
       "_origin": "ast",
       "id": "app_portal_earnings_page_tabs",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "tabs"
     },
     {
@@ -1859,7 +1859,7 @@
       "_origin": "ast",
       "id": "app_portal_earnings_page_earningspage",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "earningspage()"
     },
     {
@@ -1870,7 +1870,7 @@
       "_origin": "ast",
       "id": "app_portal_error",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "(portal)/error.js"
     },
     {
@@ -1880,8 +1880,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_portal_error_portalerror",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "portalerror()"
     },
     {
@@ -1891,7 +1891,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_layout",
-      "community": 0,
+      "community": 7,
       "community_name": "(portal)/layout.jsx",
       "norm_label": "(portal)/layout.jsx"
     },
@@ -1902,7 +1902,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_portal_layout_headercontext",
-      "community": 0,
+      "community": 7,
       "community_name": "(portal)/layout.jsx",
       "norm_label": "headercontext"
     },
@@ -1913,7 +1913,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_portal_layout_useportalheader",
-      "community": 5,
+      "community": 0,
       "community_name": "usePortalHeader",
       "norm_label": "useportalheader()"
     },
@@ -1924,7 +1924,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "app_portal_layout_portallayout",
-      "community": 0,
+      "community": 7,
       "community_name": "(portal)/layout.jsx",
       "norm_label": "portallayout()"
     },
@@ -2002,7 +2002,7 @@
       "_origin": "ast",
       "id": "app_portal_not_found",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "(portal)/not-found.js"
     },
     {
@@ -2013,7 +2013,7 @@
       "_origin": "ast",
       "id": "app_portal_not_found_portalnotfound",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "portalnotfound()"
     },
     {
@@ -2023,8 +2023,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_notifications_page",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "notifications/page.jsx"
     },
     {
@@ -2034,8 +2034,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "app_portal_notifications_page_look",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "look"
     },
     {
@@ -2045,8 +2045,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "app_portal_notifications_page_rules",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "rules"
     },
     {
@@ -2056,8 +2056,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "app_portal_notifications_page_lookfor",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "lookfor()"
     },
     {
@@ -2067,8 +2067,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "app_portal_notifications_page_notificationspage",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "notificationspage()"
     },
     {
@@ -2078,8 +2078,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_profile_page",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "profile/page.jsx"
     },
     {
@@ -2089,8 +2089,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_portal_profile_page_fields",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "fields"
     },
     {
@@ -2100,8 +2100,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_portal_profile_page_photo_types",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "photo_types"
     },
     {
@@ -2111,8 +2111,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "app_portal_profile_page_schema",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "schema"
     },
     {
@@ -2122,8 +2122,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "app_portal_profile_page_profilepage",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "profilepage()"
     },
     {
@@ -2133,8 +2133,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_reviews_page",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "reviews/page.jsx",
       "norm_label": "reviews/page.jsx"
     },
     {
@@ -2144,8 +2144,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_portal_reviews_page_schema",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "reviews/page.jsx",
       "norm_label": "schema"
     },
     {
@@ -2155,8 +2155,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_portal_reviews_page_reviewspage",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "reviews/page.jsx",
       "norm_label": "reviewspage()"
     },
     {
@@ -2166,8 +2166,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_services_id_edit_page",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "edit/page.jsx"
     },
     {
@@ -2177,8 +2177,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_portal_services_id_edit_page_editservicepage",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "editservicepage()"
     },
     {
@@ -2188,8 +2188,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_services_new_page",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "services/new/page.jsx"
     },
     {
@@ -2199,8 +2199,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "app_portal_services_new_page_newservicepage",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "newservicepage()"
     },
     {
@@ -2211,7 +2211,7 @@
       "_origin": "ast",
       "id": "app_portal_services_page",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "(portal)/services/page.jsx"
     },
     {
@@ -2222,7 +2222,7 @@
       "_origin": "ast",
       "id": "app_portal_services_page_servicespage",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "servicespage()"
     },
     {
@@ -2233,7 +2233,7 @@
       "_origin": "ast",
       "id": "app_portal_support_chat_page",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "chat/page.jsx"
     },
     {
@@ -2243,8 +2243,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_portal_support_chat_page_supportchatpage",
-      "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "supportchatpage()"
     },
     {
@@ -2254,8 +2254,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_support_page",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "support/page.jsx"
     },
     {
@@ -2265,8 +2265,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_portal_support_page_supportpage",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "supportpage()"
     },
     {
@@ -2277,7 +2277,7 @@
       "_origin": "ast",
       "id": "app_portal_timings_page",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "(portal)/timings/page.jsx"
     },
     {
@@ -2288,7 +2288,7 @@
       "_origin": "ast",
       "id": "app_portal_timings_page_days",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "days"
     },
     {
@@ -2299,7 +2299,7 @@
       "_origin": "ast",
       "id": "app_portal_timings_page_parsejsonlist",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "parsejsonlist()"
     },
     {
@@ -2310,7 +2310,7 @@
       "_origin": "ast",
       "id": "app_portal_timings_page_splitrange",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "splitrange()"
     },
     {
@@ -2321,7 +2321,7 @@
       "_origin": "ast",
       "id": "app_portal_timings_page_tobreak",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "tobreak()"
     },
     {
@@ -2332,7 +2332,7 @@
       "_origin": "ast",
       "id": "app_portal_timings_page_validatetimings",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "validatetimings()"
     },
     {
@@ -2343,7 +2343,7 @@
       "_origin": "ast",
       "id": "app_portal_timings_page_timingspage",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "timingspage()"
     },
     {
@@ -2353,8 +2353,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_walk_in_id_close_page",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "close/page.jsx"
     },
     {
@@ -2364,8 +2364,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_portal_walk_in_id_close_page_payment_modes",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "payment_modes"
     },
     {
@@ -2375,8 +2375,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "app_portal_walk_in_id_close_page_payment_mode_values",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "payment_mode_values"
     },
     {
@@ -2386,8 +2386,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "app_portal_walk_in_id_close_page_schema",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "schema"
     },
     {
@@ -2397,8 +2397,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "app_portal_walk_in_id_close_page_draftkey",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "draftkey()"
     },
     {
@@ -2408,8 +2408,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "app_portal_walk_in_id_close_page_closewalkinpage",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "closewalkinpage()"
     },
     {
@@ -2419,8 +2419,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "app_portal_walk_in_id_close_page_closewalkinform",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "closewalkinform()"
     },
     {
@@ -2430,8 +2430,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_portal_walk_in_id_closed_page",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "closed/page.jsx"
     },
     {
@@ -2441,8 +2441,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_portal_walk_in_id_closed_page_walkinclosedpage",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "walkinclosedpage()"
     },
     {
@@ -2453,7 +2453,7 @@
       "_origin": "ast",
       "id": "app_portal_walk_in_id_inspection_page",
       "community": 5,
-      "community_name": "usePortalHeader",
+      "community_name": "InspectionSheet.jsx",
       "norm_label": "walk-in/[id]/inspection/page.jsx"
     },
     {
@@ -2464,7 +2464,7 @@
       "_origin": "ast",
       "id": "app_portal_walk_in_id_inspection_page_walkininspectionpage",
       "community": 5,
-      "community_name": "usePortalHeader",
+      "community_name": "InspectionSheet.jsx",
       "norm_label": "walkininspectionpage()"
     },
     {
@@ -2475,7 +2475,7 @@
       "_origin": "ast",
       "id": "app_portal_walk_in_id_inspection_page_walkininspection",
       "community": 5,
-      "community_name": "usePortalHeader",
+      "community_name": "InspectionSheet.jsx",
       "norm_label": "walkininspection()"
     },
     {
@@ -2486,7 +2486,7 @@
       "_origin": "ast",
       "id": "app_portal_walk_in_id_page",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "walk-in/[id]/page.jsx"
     },
     {
@@ -2497,7 +2497,7 @@
       "_origin": "ast",
       "id": "app_portal_walk_in_id_page_row",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "row()"
     },
     {
@@ -2508,7 +2508,7 @@
       "_origin": "ast",
       "id": "app_portal_walk_in_id_page_walkindetailpage",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "walkindetailpage()"
     },
     {
@@ -2519,7 +2519,7 @@
       "_origin": "ast",
       "id": "app_portal_walk_in_new_page",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "walk-in/new/page.jsx"
     },
     {
@@ -2530,7 +2530,7 @@
       "_origin": "ast",
       "id": "app_portal_walk_in_new_page_schema",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "schema"
     },
     {
@@ -2541,7 +2541,7 @@
       "_origin": "ast",
       "id": "app_portal_walk_in_new_page_newwalkinpage",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "newwalkinpage()"
     },
     {
@@ -2705,8 +2705,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_error",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "app/error.js"
     },
     {
@@ -2716,8 +2716,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_error_apperror",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "apperror()"
     },
     {
@@ -2750,7 +2750,7 @@
       "_origin": "ast",
       "id": "app_layout",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "app/layout.js"
     },
     {
@@ -2761,7 +2761,7 @@
       "_origin": "ast",
       "id": "app_layout_dmsans",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "dmsans"
     },
     {
@@ -2772,7 +2772,7 @@
       "_origin": "ast",
       "id": "app_layout_metadata",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "metadata"
     },
     {
@@ -2783,7 +2783,7 @@
       "_origin": "ast",
       "id": "app_layout_rootlayout",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "rootlayout()"
     },
     {
@@ -2793,8 +2793,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_loading",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "app/loading.js"
     },
     {
@@ -2804,8 +2804,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_loading_loading",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "loading()"
     },
     {
@@ -2837,8 +2837,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_not_found",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "app/not-found.js"
     },
     {
@@ -2848,8 +2848,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "app_not_found_metadata",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "metadata"
     },
     {
@@ -2859,8 +2859,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_not_found_notfound",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "notfound()"
     },
     {
@@ -2959,18 +2959,18 @@
       "_origin": "ast",
       "id": "app_providers",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "providers.jsx"
     },
     {
       "label": "Providers()",
       "file_type": "code",
       "source_file": "keplix-webpage-vendors/app/providers.jsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "_origin": "ast",
       "id": "app_providers_providers",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "providers()"
     },
     {
@@ -2981,7 +2981,7 @@
       "_origin": "ast",
       "id": "app_robots",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "robots.js"
     },
     {
@@ -2992,7 +2992,7 @@
       "_origin": "ast",
       "id": "app_robots_public_assets",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "public_assets"
     },
     {
@@ -3003,7 +3003,7 @@
       "_origin": "ast",
       "id": "app_robots_robots",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "robots()"
     },
     {
@@ -3014,7 +3014,7 @@
       "_origin": "ast",
       "id": "app_sitemap",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "sitemap.js"
     },
     {
@@ -3025,7 +3025,7 @@
       "_origin": "ast",
       "id": "app_sitemap_sitemap",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "sitemap()"
     },
     {
@@ -3222,8 +3222,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_bookings_confirmationpanel",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "confirmationpanel.jsx"
     },
     {
@@ -3233,8 +3233,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "components_bookings_confirmationpanel_tones",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "tones"
     },
     {
@@ -3244,8 +3244,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "components_bookings_confirmationpanel_confirmationpanel",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "confirmationpanel()"
     },
     {
@@ -3255,8 +3255,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "components_bookings_confirmationpanel_confirmationaction",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "confirmationaction()"
     },
     {
@@ -3267,7 +3267,7 @@
       "_origin": "ast",
       "id": "components_bookings_inspectionsheet",
       "community": 5,
-      "community_name": "usePortalHeader",
+      "community_name": "InspectionSheet.jsx",
       "norm_label": "inspectionsheet.jsx"
     },
     {
@@ -3278,7 +3278,7 @@
       "_origin": "ast",
       "id": "components_bookings_inspectionsheet_inspectionsheet",
       "community": 5,
-      "community_name": "usePortalHeader",
+      "community_name": "InspectionSheet.jsx",
       "norm_label": "inspectionsheet()"
     },
     {
@@ -3289,7 +3289,7 @@
       "_origin": "ast",
       "id": "components_bookings_jobtimeline",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "jobtimeline.jsx"
     },
     {
@@ -3300,7 +3300,7 @@
       "_origin": "ast",
       "id": "components_bookings_jobtimeline_buildtimeline",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "buildtimeline()"
     },
     {
@@ -3311,7 +3311,7 @@
       "_origin": "ast",
       "id": "components_bookings_jobtimeline_jobtimeline",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "jobtimeline()"
     },
     {
@@ -3322,7 +3322,7 @@
       "_origin": "ast",
       "id": "components_bookings_bookingfields",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "bookingfields.js"
     },
     {
@@ -3333,7 +3333,7 @@
       "_origin": "ast",
       "id": "components_bookings_bookingfields_readbooking",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "readbooking()"
     },
     {
@@ -3344,7 +3344,7 @@
       "_origin": "ast",
       "id": "components_bookings_bookingfields_readwalkin",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "readwalkin()"
     },
     {
@@ -3355,7 +3355,7 @@
       "_origin": "ast",
       "id": "components_bookings_bookingfields_booking_tabs",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "booking_tabs"
     },
     {
@@ -3366,7 +3366,7 @@
       "_origin": "ast",
       "id": "components_bookings_bookingfields_all_booking_statuses",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "all_booking_statuses"
     },
     {
@@ -3377,7 +3377,7 @@
       "_origin": "ast",
       "id": "components_bookings_bookingfields_any_booking",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "any_booking"
     },
     {
@@ -3388,7 +3388,7 @@
       "_origin": "ast",
       "id": "components_bookings_bookingfields_dashboard_bookings",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "dashboard_bookings"
     },
     {
@@ -3399,7 +3399,7 @@
       "_origin": "ast",
       "id": "components_bookings_bookingfields_datekey",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "datekey()"
     },
     {
@@ -3410,7 +3410,7 @@
       "_origin": "ast",
       "id": "components_bookings_bookingfields_todaykey",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "todaykey()"
     },
     {
@@ -3421,7 +3421,7 @@
       "_origin": "ast",
       "id": "components_bookings_bookingfields_timetominutes",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "timetominutes()"
     },
     {
@@ -3432,7 +3432,7 @@
       "_origin": "ast",
       "id": "components_bookings_bookingfields_formatslottime",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "formatslottime()"
     },
     {
@@ -3443,7 +3443,7 @@
       "_origin": "ast",
       "id": "components_bookings_bookingfields_slotlabel",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "slotlabel()"
     },
     {
@@ -3454,7 +3454,7 @@
       "_origin": "ast",
       "id": "components_bookings_bookingfields_pricelabel",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "pricelabel()"
     },
     {
@@ -3465,7 +3465,7 @@
       "_origin": "ast",
       "id": "components_bookings_bookingfields_bookingbadge",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "bookingbadge()"
     },
     {
@@ -3476,7 +3476,7 @@
       "_origin": "ast",
       "id": "components_bookings_usetabbedbookings",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "usetabbedbookings.js"
     },
     {
@@ -3487,7 +3487,7 @@
       "_origin": "ast",
       "id": "components_bookings_usetabbedbookings_usetabbedbookings",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "usetabbedbookings()"
     },
     {
@@ -3575,7 +3575,7 @@
       "_origin": "ast",
       "id": "components_onboarding_mappicker",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "mappicker.jsx"
     },
     {
@@ -3586,7 +3586,7 @@
       "_origin": "ast",
       "id": "components_onboarding_mappicker_default_center",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "default_center"
     },
     {
@@ -3597,7 +3597,7 @@
       "_origin": "ast",
       "id": "components_onboarding_mappicker_toaddress",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "toaddress()"
     },
     {
@@ -3608,7 +3608,7 @@
       "_origin": "ast",
       "id": "components_onboarding_mappicker_mappicker",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "mappicker()"
     },
     {
@@ -3783,8 +3783,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_services_serviceform",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "serviceform.jsx"
     },
     {
@@ -3794,8 +3794,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "components_services_serviceform_segment_ids",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "segment_ids"
     },
     {
@@ -3805,8 +3805,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "components_services_serviceform_category_names",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "category_names"
     },
     {
@@ -3816,8 +3816,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "components_services_serviceform_schema",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "schema"
     },
     {
@@ -3827,8 +3827,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "components_services_serviceform_serviceform",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "serviceform()"
     },
     {
@@ -3887,14 +3887,36 @@
       "norm_label": "brandlockup()"
     },
     {
+      "label": "MaintenanceGate.jsx",
+      "file_type": "code",
+      "source_file": "keplix-webpage-vendors/components/shell/MaintenanceGate.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_shell_maintenancegate",
+      "community": 12,
+      "community_name": "maintenance.js",
+      "norm_label": "maintenancegate.jsx"
+    },
+    {
+      "label": "MaintenanceGate()",
+      "file_type": "code",
+      "source_file": "keplix-webpage-vendors/components/shell/MaintenanceGate.jsx",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "components_shell_maintenancegate_maintenancegate",
+      "community": 12,
+      "community_name": "maintenance.js",
+      "norm_label": "maintenancegate()"
+    },
+    {
       "label": "PortalHeader.jsx",
       "file_type": "code",
       "source_file": "keplix-webpage-vendors/components/shell/PortalHeader.jsx",
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_shell_portalheader",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "portalheader.jsx"
     },
     {
@@ -3904,8 +3926,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "components_shell_portalheader_portalheader",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "portalheader()"
     },
     {
@@ -3937,8 +3959,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "components_shell_portalnav_portalnav",
-      "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "portalnav()"
     },
     {
@@ -3948,8 +3970,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_shell_routefallback",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "routefallback.jsx"
     },
     {
@@ -3959,8 +3981,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "components_shell_routefallback_fullpagestate",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "fullpagestate()"
     },
     {
@@ -3970,8 +3992,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "components_shell_routefallback_fullpageloading",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "fullpageloading()"
     },
     {
@@ -3981,8 +4003,8 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "components_shell_routefallback_retrybutton",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "retrybutton()"
     },
     {
@@ -3992,8 +4014,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "components_shell_routefallback_homebutton",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "homebutton()"
     },
     {
@@ -4003,8 +4025,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "components_shell_routefallback_logboundaryerror",
-      "community": 10,
-      "community_name": "RouteFallback.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "logboundaryerror()"
     },
     {
@@ -4014,8 +4036,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_ui_avatar",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 10,
+      "community_name": "reviews/page.jsx",
       "norm_label": "avatar.jsx"
     },
     {
@@ -4025,8 +4047,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "components_ui_avatar_avatar",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 10,
+      "community_name": "reviews/page.jsx",
       "norm_label": "avatar()"
     },
     {
@@ -4037,7 +4059,7 @@
       "_origin": "ast",
       "id": "components_ui_badge",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "badge.jsx"
     },
     {
@@ -4048,7 +4070,7 @@
       "_origin": "ast",
       "id": "components_ui_badge_tones",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "tones"
     },
     {
@@ -4059,7 +4081,7 @@
       "_origin": "ast",
       "id": "components_ui_badge_badge",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "badge()"
     },
     {
@@ -4070,7 +4092,7 @@
       "_origin": "ast",
       "id": "components_ui_badge_statustone",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "statustone()"
     },
     {
@@ -4081,7 +4103,7 @@
       "_origin": "ast",
       "id": "components_ui_button",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "button.jsx"
     },
     {
@@ -4092,7 +4114,7 @@
       "_origin": "ast",
       "id": "components_ui_button_variants",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "variants"
     },
     {
@@ -4103,7 +4125,7 @@
       "_origin": "ast",
       "id": "components_ui_button_sizes",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "sizes"
     },
     {
@@ -4114,7 +4136,7 @@
       "_origin": "ast",
       "id": "components_ui_button_button",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "button()"
     },
     {
@@ -4125,7 +4147,7 @@
       "_origin": "ast",
       "id": "components_ui_card",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "card.jsx"
     },
     {
@@ -4136,7 +4158,7 @@
       "_origin": "ast",
       "id": "components_ui_card_card",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "card()"
     },
     {
@@ -4146,8 +4168,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "components_ui_card_cardheader",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 0,
+      "community_name": "usePortalHeader",
       "norm_label": "cardheader()"
     },
     {
@@ -4158,7 +4180,7 @@
       "_origin": "ast",
       "id": "components_ui_card_kicker",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "kicker()"
     },
     {
@@ -4169,7 +4191,7 @@
       "_origin": "ast",
       "id": "components_ui_card_emptystate",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "emptystate()"
     },
     {
@@ -4180,7 +4202,7 @@
       "_origin": "ast",
       "id": "components_ui_card_errorstate",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "errorstate()"
     },
     {
@@ -4191,7 +4213,7 @@
       "_origin": "ast",
       "id": "components_ui_card_errornotice",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "errornotice()"
     },
     {
@@ -4202,7 +4224,7 @@
       "_origin": "ast",
       "id": "components_ui_card_rationale_60",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "why: \"no data\" and \"we could not load your data\" used to render identically \u2014"
     },
     {
@@ -4213,7 +4235,7 @@
       "_origin": "ast",
       "id": "components_ui_field",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "field.jsx"
     },
     {
@@ -4223,8 +4245,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "components_ui_field_select",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "select()"
     },
     {
@@ -4234,8 +4256,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "components_ui_field_textarea",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "textarea()"
     },
     {
@@ -4246,7 +4268,7 @@
       "_origin": "ast",
       "id": "components_ui_field_chip",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "chip()"
     },
     {
@@ -4256,8 +4278,8 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "components_ui_field_toggle",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "toggle()"
     },
     {
@@ -4289,8 +4311,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_ui_modal",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "modal.jsx"
     },
     {
@@ -4300,8 +4322,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "components_ui_modal_modal",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "modal()"
     },
     {
@@ -4333,8 +4355,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_ui_starrating",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "reviews/page.jsx",
       "norm_label": "starrating.jsx"
     },
     {
@@ -4344,8 +4366,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "components_ui_starrating_starrating",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "reviews/page.jsx",
       "norm_label": "starrating()"
     },
     {
@@ -4356,7 +4378,7 @@
       "_origin": "ast",
       "id": "components_ui_tilemoney",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "tilemoney.jsx"
     },
     {
@@ -4367,7 +4389,7 @@
       "_origin": "ast",
       "id": "components_ui_tilemoney_tilemoney",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "tilemoney()"
     },
     {
@@ -4411,7 +4433,7 @@
       "_origin": "ast",
       "id": "components_ui_toast_toastprovider",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "toastprovider()"
     },
     {
@@ -4521,7 +4543,7 @@
       "_origin": "ast",
       "id": "context_authcontext_useauth",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "useauth()"
     },
     {
@@ -4591,6 +4613,17 @@
       "norm_label": "paths"
     },
     {
+      "label": "maintenance.test.mjs",
+      "file_type": "code",
+      "source_file": "keplix-webpage-vendors/lib/__tests__/maintenance.test.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_tests_maintenance_test",
+      "community": 12,
+      "community_name": "maintenance.js",
+      "norm_label": "maintenance.test.mjs"
+    },
+    {
       "label": "alertSound.js",
       "file_type": "code",
       "source_file": "keplix-webpage-vendors/lib/alertSound.js",
@@ -4653,73 +4686,73 @@
       "_origin": "ast",
       "id": "lib_api",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "api.js"
     },
     {
       "label": "api",
       "file_type": "code",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L20",
+      "source_location": "L21",
       "_origin": "ast",
       "id": "lib_api_api",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "api"
     },
     {
       "label": "makeRefreshError()",
       "file_type": "code",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L44",
+      "source_location": "L45",
       "_origin": "ast",
       "id": "lib_api_makerefresherror",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "makerefresherror()"
     },
     {
       "label": "refreshAccessToken()",
       "file_type": "code",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L51",
+      "source_location": "L52",
       "_origin": "ast",
       "id": "lib_api_refreshaccesstoken",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "refreshaccesstoken()"
     },
     {
       "label": "CREDENTIAL_PATHS",
       "file_type": "code",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L93",
+      "source_location": "L94",
       "_origin": "ast",
       "id": "lib_api_credential_paths",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "credential_paths"
     },
     {
       "label": "sendUpload()",
       "file_type": "code",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L222",
+      "source_location": "L235",
       "_origin": "ast",
       "id": "lib_api_sendupload",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "sendupload()"
     },
     {
       "label": "uploadWithFetch()",
       "file_type": "code",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L266",
+      "source_location": "L279",
       "_origin": "ast",
       "id": "lib_api_uploadwithfetch",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "uploadwithfetch()"
     },
     {
@@ -4730,7 +4763,7 @@
       "_origin": "ast",
       "id": "lib_apiconfig",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "apiconfig.js"
     },
     {
@@ -4741,7 +4774,7 @@
       "_origin": "ast",
       "id": "lib_apiconfig_api_base_url",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "api_base_url"
     },
     {
@@ -4928,7 +4961,7 @@
       "_origin": "ast",
       "id": "lib_entities_isearningbooking",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "isearningbooking()"
     },
     {
@@ -4971,8 +5004,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "lib_entities_tonotification",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "tonotification()"
     },
     {
@@ -4983,7 +5016,7 @@
       "_origin": "ast",
       "id": "lib_format",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "format.js"
     },
     {
@@ -4994,7 +5027,7 @@
       "_origin": "ast",
       "id": "lib_format_inr",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "inr"
     },
     {
@@ -5005,7 +5038,7 @@
       "_origin": "ast",
       "id": "lib_format_inrprecise",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "inrprecise"
     },
     {
@@ -5016,7 +5049,7 @@
       "_origin": "ast",
       "id": "lib_format_formatmoney",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "formatmoney()"
     },
     {
@@ -5027,7 +5060,7 @@
       "_origin": "ast",
       "id": "lib_format_formatmoneycompact",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "formatmoneycompact()"
     },
     {
@@ -5038,7 +5071,7 @@
       "_origin": "ast",
       "id": "lib_format_parsedate",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "parsedate()"
     },
     {
@@ -5049,7 +5082,7 @@
       "_origin": "ast",
       "id": "lib_format_formatdate",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "formatdate()"
     },
     {
@@ -5059,8 +5092,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "lib_format_formattime",
-      "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community": 4,
+      "community_name": "messages/page.jsx",
       "norm_label": "formattime()"
     },
     {
@@ -5071,7 +5104,7 @@
       "_origin": "ast",
       "id": "lib_format_formatdatetime",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "formatdatetime()"
     },
     {
@@ -5082,7 +5115,7 @@
       "_origin": "ast",
       "id": "lib_format_formatrelativeday",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "formatrelativeday()"
     },
     {
@@ -5092,9 +5125,119 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "lib_format_initialsof",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 10,
+      "community_name": "reviews/page.jsx",
       "norm_label": "initialsof()"
+    },
+    {
+      "label": "maintenance.js",
+      "file_type": "code",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_maintenance",
+      "community": 12,
+      "community_name": "maintenance.js",
+      "norm_label": "maintenance.js"
+    },
+    {
+      "label": "STATUS_URL",
+      "file_type": "code",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "lib_maintenance_status_url",
+      "community": 12,
+      "community_name": "maintenance.js",
+      "norm_label": "status_url"
+    },
+    {
+      "label": "CLOSED_STATUS",
+      "file_type": "code",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "lib_maintenance_closed_status",
+      "community": 12,
+      "community_name": "maintenance.js",
+      "norm_label": "closed_status"
+    },
+    {
+      "label": "text()",
+      "file_type": "code",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "lib_maintenance_text",
+      "community": 12,
+      "community_name": "maintenance.js",
+      "norm_label": "text()"
+    },
+    {
+      "label": "normalizeStatus()",
+      "file_type": "code",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "lib_maintenance_normalizestatus",
+      "community": 12,
+      "community_name": "maintenance.js",
+      "norm_label": "normalizestatus()"
+    },
+    {
+      "label": "fetchMaintenanceStatus()",
+      "file_type": "code",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "lib_maintenance_fetchmaintenancestatus",
+      "community": 12,
+      "community_name": "maintenance.js",
+      "norm_label": "fetchmaintenancestatus()"
+    },
+    {
+      "label": "isBackendMaintenance()",
+      "file_type": "code",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "lib_maintenance_isbackendmaintenance",
+      "community": 12,
+      "community_name": "maintenance.js",
+      "norm_label": "isbackendmaintenance()"
+    },
+    {
+      "label": "listeners",
+      "file_type": "code",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "lib_maintenance_listeners",
+      "community": 12,
+      "community_name": "maintenance.js",
+      "norm_label": "listeners"
+    },
+    {
+      "label": "onBackendMaintenance()",
+      "file_type": "code",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L43",
+      "_origin": "ast",
+      "id": "lib_maintenance_onbackendmaintenance",
+      "community": 12,
+      "community_name": "maintenance.js",
+      "norm_label": "onbackendmaintenance()"
+    },
+    {
+      "label": "emitBackendMaintenance()",
+      "file_type": "code",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "lib_maintenance_emitbackendmaintenance",
+      "community": 12,
+      "community_name": "maintenance.js",
+      "norm_label": "emitbackendmaintenance()"
     },
     {
       "label": "nextTarget.js",
@@ -5103,8 +5246,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_nexttarget",
-      "community": 8,
-      "community_name": "AuthContext.jsx",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "nexttarget.js"
     },
     {
@@ -5114,8 +5257,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "lib_nexttarget_allowed_prefixes",
-      "community": 8,
-      "community_name": "AuthContext.jsx",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "allowed_prefixes"
     },
     {
@@ -5125,8 +5268,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "lib_nexttarget_issafenext",
-      "community": 8,
-      "community_name": "AuthContext.jsx",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "issafenext()"
     },
     {
@@ -5136,8 +5279,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "lib_nexttarget_remembernext",
-      "community": 8,
-      "community_name": "AuthContext.jsx",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "remembernext()"
     },
     {
@@ -5147,8 +5290,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "lib_nexttarget_consumenext",
-      "community": 8,
-      "community_name": "AuthContext.jsx",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "consumenext()"
     },
     {
@@ -5159,7 +5302,7 @@
       "_origin": "ast",
       "id": "lib_onboardingsubmit",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "onboardingsubmit.js"
     },
     {
@@ -5170,7 +5313,7 @@
       "_origin": "ast",
       "id": "lib_onboardingsubmit_formatdateforbackend",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "formatdateforbackend()"
     },
     {
@@ -5181,7 +5324,7 @@
       "_origin": "ast",
       "id": "lib_onboardingsubmit_parsedurationtominutes",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "parsedurationtominutes()"
     },
     {
@@ -5192,7 +5335,7 @@
       "_origin": "ast",
       "id": "lib_onboardingsubmit_uploaddocument",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "uploaddocument()"
     },
     {
@@ -5203,7 +5346,7 @@
       "_origin": "ast",
       "id": "lib_onboardingsubmit_submitonboarding",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "submitonboarding()"
     },
     {
@@ -5213,7 +5356,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_queries",
-      "community": 0,
+      "community": 7,
       "community_name": "(portal)/layout.jsx",
       "norm_label": "queries.js"
     },
@@ -5224,8 +5367,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "lib_queries_unwrap",
-      "community": 4,
-      "community_name": "messages/page.jsx",
+      "community": 7,
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "unwrap()"
     },
     {
@@ -5235,7 +5378,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "lib_queries_unwraporthrow",
-      "community": 0,
+      "community": 7,
       "community_name": "(portal)/layout.jsx",
       "norm_label": "unwraporthrow()"
     },
@@ -5247,7 +5390,7 @@
       "_origin": "ast",
       "id": "lib_queries_usebookings",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "usebookings()"
     },
     {
@@ -5258,7 +5401,7 @@
       "_origin": "ast",
       "id": "lib_queries_usewalkins",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "usewalkins()"
     },
     {
@@ -5269,7 +5412,7 @@
       "_origin": "ast",
       "id": "lib_queries_useearnings",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "useearnings()"
     },
     {
@@ -5279,8 +5422,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "lib_queries_useservices",
-      "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "useservices()"
     },
     {
@@ -5290,7 +5433,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "lib_queries_rationale_32",
-      "community": 0,
+      "community": 7,
       "community_name": "(portal)/layout.jsx",
       "norm_label": "why: the api layer resolves errors instead of throwing, so `unwrap` returned"
     },
@@ -5301,8 +5444,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_sessionexpiry",
-      "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community": 8,
+      "community_name": "AuthContext.jsx",
       "norm_label": "sessionexpiry.js"
     },
     {
@@ -5324,7 +5467,7 @@
       "_origin": "ast",
       "id": "lib_sessionexpiry_notifysessionexpired",
       "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community_name": "(portal)/layout.jsx",
       "norm_label": "notifysessionexpired()"
     },
     {
@@ -5335,7 +5478,7 @@
       "_origin": "ast",
       "id": "lib_siteurl",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "siteurl.js"
     },
     {
@@ -5346,7 +5489,7 @@
       "_origin": "ast",
       "id": "lib_siteurl_stripslash",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "stripslash()"
     },
     {
@@ -5357,7 +5500,7 @@
       "_origin": "ast",
       "id": "lib_siteurl_publicsiteurl",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "publicsiteurl()"
     },
     {
@@ -5368,7 +5511,7 @@
       "_origin": "ast",
       "id": "lib_siteurl_metadatabaseurl",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "metadatabaseurl()"
     },
     {
@@ -5379,7 +5522,7 @@
       "_origin": "ast",
       "id": "lib_siteurl_public_paths",
       "community": 12,
-      "community_name": "app/layout.js",
+      "community_name": "maintenance.js",
       "norm_label": "public_paths"
     },
     {
@@ -5521,8 +5664,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_tokenstore",
-      "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community": 8,
+      "community_name": "AuthContext.jsx",
       "norm_label": "tokenstore.js"
     },
     {
@@ -5532,8 +5675,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "lib_tokenstore_read",
-      "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community": 8,
+      "community_name": "AuthContext.jsx",
       "norm_label": "read()"
     },
     {
@@ -5543,8 +5686,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "lib_tokenstore_write",
-      "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community": 8,
+      "community_name": "AuthContext.jsx",
       "norm_label": "write()"
     },
     {
@@ -5554,8 +5697,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "lib_tokenstore_tokenstore",
-      "community": 7,
-      "community_name": "(portal)/documents/page.jsx",
+      "community": 8,
+      "community_name": "AuthContext.jsx",
       "norm_label": "tokenstore"
     },
     {
@@ -5672,7 +5815,7 @@
       "label": "apiOrigins",
       "file_type": "code",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L28",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "next_config_apiorigins",
       "community": 13,
@@ -5683,7 +5826,7 @@
       "label": "csp",
       "file_type": "code",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L44",
+      "source_location": "L46",
       "_origin": "ast",
       "id": "next_config_csp",
       "community": 13,
@@ -5694,7 +5837,7 @@
       "label": "nextConfig",
       "file_type": "code",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L72",
+      "source_location": "L74",
       "_origin": "ast",
       "id": "next_config_nextconfig",
       "community": 13,
@@ -5705,9 +5848,9 @@
       "label": "WHY: the portal handles vendor auth tokens and payout details;",
       "file_type": "rationale",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L89",
+      "source_location": "L91",
       "_origin": "ast",
-      "id": "next_config_rationale_89",
+      "id": "next_config_rationale_91",
       "community": 13,
       "community_name": "next.config.mjs",
       "norm_label": "why: the portal handles vendor auth tokens and payout details;"
@@ -5716,9 +5859,9 @@
       "label": "WHY: vendor-uploaded files are served/proxied by the app; stop",
       "file_type": "rationale",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L96",
+      "source_location": "L98",
       "_origin": "ast",
-      "id": "next_config_rationale_96",
+      "id": "next_config_rationale_98",
       "community": 13,
       "community_name": "next.config.mjs",
       "norm_label": "why: vendor-uploaded files are served/proxied by the app; stop"
@@ -5727,9 +5870,9 @@
       "label": "WHY: booking/vendor ids live in our URLs \u2014 send only the origin",
       "file_type": "rationale",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L102",
+      "source_location": "L104",
       "_origin": "ast",
-      "id": "next_config_rationale_102",
+      "id": "next_config_rationale_104",
       "community": 13,
       "community_name": "next.config.mjs",
       "norm_label": "why: booking/vendor ids live in our urls \u2014 send only the origin"
@@ -5738,9 +5881,9 @@
       "label": "WHY: camera=(self) because vendors photograph vehicles during",
       "file_type": "rationale",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L108",
+      "source_location": "L110",
       "_origin": "ast",
-      "id": "next_config_rationale_108",
+      "id": "next_config_rationale_110",
       "community": 13,
       "community_name": "next.config.mjs",
       "norm_label": "why: camera=(self) because vendors photograph vehicles during"
@@ -5749,9 +5892,9 @@
       "label": "WHY: legacy backstop for CSP frame-ancestors \u2014 blocks clickjacking",
       "file_type": "rationale",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L116",
+      "source_location": "L118",
       "_origin": "ast",
-      "id": "next_config_rationale_116",
+      "id": "next_config_rationale_118",
       "community": 13,
       "community_name": "next.config.mjs",
       "norm_label": "why: legacy backstop for csp frame-ancestors \u2014 blocks clickjacking"
@@ -5760,9 +5903,9 @@
       "label": "WHY: report-only on purpose. The allow-list above is derived from",
       "file_type": "rationale",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L127",
+      "source_location": "L129",
       "_origin": "ast",
-      "id": "next_config_rationale_127",
+      "id": "next_config_rationale_129",
       "community": 13,
       "community_name": "next.config.mjs",
       "norm_label": "why: report-only on purpose. the allow-list above is derived from"
@@ -6269,8 +6412,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "shared_constants_durations",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "durations.js"
     },
     {
@@ -6280,8 +6423,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "shared_constants_durations_durations",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "durations"
     },
     {
@@ -6291,8 +6434,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "shared_constants_durations_duration_map",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "duration_map"
     },
     {
@@ -6302,8 +6445,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "shared_constants_durations_durationlabelfor",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "durationlabelfor()"
     },
     {
@@ -6313,8 +6456,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "shared_constants_faqs",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "faqs.js"
     },
     {
@@ -6324,8 +6467,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "shared_constants_faqs_faqs",
-      "community": 5,
-      "community_name": "usePortalHeader",
+      "community": 2,
+      "community_name": "Button.jsx",
       "norm_label": "faqs"
     },
     {
@@ -6336,7 +6479,7 @@
       "_origin": "ast",
       "id": "shared_constants_inspection",
       "community": 5,
-      "community_name": "usePortalHeader",
+      "community_name": "InspectionSheet.jsx",
       "norm_label": "inspection.js"
     },
     {
@@ -6347,7 +6490,7 @@
       "_origin": "ast",
       "id": "shared_constants_inspection_component_icon",
       "community": 5,
-      "community_name": "usePortalHeader",
+      "community_name": "InspectionSheet.jsx",
       "norm_label": "component_icon"
     },
     {
@@ -6358,7 +6501,7 @@
       "_origin": "ast",
       "id": "shared_constants_inspection_fallback_icon",
       "community": 5,
-      "community_name": "usePortalHeader",
+      "community_name": "InspectionSheet.jsx",
       "norm_label": "fallback_icon"
     },
     {
@@ -6369,7 +6512,7 @@
       "_origin": "ast",
       "id": "shared_constants_inspection_iconfor",
       "community": 5,
-      "community_name": "usePortalHeader",
+      "community_name": "InspectionSheet.jsx",
       "norm_label": "iconfor()"
     },
     {
@@ -6380,7 +6523,7 @@
       "_origin": "ast",
       "id": "shared_constants_inspection_status_options",
       "community": 5,
-      "community_name": "usePortalHeader",
+      "community_name": "InspectionSheet.jsx",
       "norm_label": "status_options"
     },
     {
@@ -6391,7 +6534,7 @@
       "_origin": "ast",
       "id": "shared_constants_inspection_status_unselected",
       "community": 5,
-      "community_name": "usePortalHeader",
+      "community_name": "InspectionSheet.jsx",
       "norm_label": "status_unselected"
     },
     {
@@ -6402,7 +6545,7 @@
       "_origin": "ast",
       "id": "shared_constants_inspection_default_status",
       "community": 5,
-      "community_name": "usePortalHeader",
+      "community_name": "InspectionSheet.jsx",
       "norm_label": "default_status"
     },
     {
@@ -6413,7 +6556,7 @@
       "_origin": "ast",
       "id": "shared_constants_inspection_max_photos_per_item",
       "community": 5,
-      "community_name": "usePortalHeader",
+      "community_name": "InspectionSheet.jsx",
       "norm_label": "max_photos_per_item"
     },
     {
@@ -6424,7 +6567,7 @@
       "_origin": "ast",
       "id": "shared_constants_rejectreasons",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "rejectreasons.js"
     },
     {
@@ -6435,7 +6578,7 @@
       "_origin": "ast",
       "id": "shared_constants_rejectreasons_rejection_reasons",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "rejection_reasons"
     },
     {
@@ -6446,7 +6589,7 @@
       "_origin": "ast",
       "id": "shared_constants_rejectreasons_default_rejection_reason",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "default_rejection_reason"
     },
     {
@@ -6456,8 +6599,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "shared_constants_services",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "constants/services.js"
     },
     {
@@ -6467,8 +6610,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "shared_constants_services_service_categories",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "service_categories"
     },
     {
@@ -6478,8 +6621,8 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "shared_constants_services_getcategorybyid",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "getcategorybyid()"
     },
     {
@@ -6489,8 +6632,8 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "shared_constants_services_getcategorybyname",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "getcategorybyname()"
     },
     {
@@ -6500,8 +6643,8 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "shared_constants_services_getcategorynames",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "getcategorynames()"
     },
     {
@@ -6511,8 +6654,8 @@
       "source_location": "L134",
       "_origin": "ast",
       "id": "shared_constants_services_getcategoryids",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "getcategoryids()"
     },
     {
@@ -6522,8 +6665,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "shared_constants_vehiclesegments",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "vehiclesegments.js"
     },
     {
@@ -6533,8 +6676,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "shared_constants_vehiclesegments_vehicle_segments",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "vehicle_segments"
     },
     {
@@ -6544,8 +6687,8 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "shared_constants_vehiclesegments_getsegmentbyid",
-      "community": 11,
-      "community_name": "ServiceForm.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "getsegmentbyid()"
     },
     {
@@ -6556,7 +6699,7 @@
       "_origin": "ast",
       "id": "shared_utils_duration",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "duration.js"
     },
     {
@@ -6567,7 +6710,7 @@
       "_origin": "ast",
       "id": "shared_utils_duration_formatduration",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "formatduration()"
     },
     {
@@ -6578,7 +6721,7 @@
       "_origin": "ast",
       "id": "shared_utils_duration_totaldurationminutes",
       "community": 2,
-      "community_name": "Card.jsx",
+      "community_name": "Button.jsx",
       "norm_label": "totaldurationminutes()"
     },
     {
@@ -6589,7 +6732,7 @@
       "_origin": "ast",
       "id": "shared_utils_jobbuckets",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "jobbuckets.js"
     },
     {
@@ -6600,7 +6743,7 @@
       "_origin": "ast",
       "id": "shared_utils_jobbuckets_isongoingstatus",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "isongoingstatus()"
     },
     {
@@ -6611,7 +6754,7 @@
       "_origin": "ast",
       "id": "shared_utils_jobbuckets_bucketjobs",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "bucketjobs()"
     },
     {
@@ -6622,7 +6765,7 @@
       "_origin": "ast",
       "id": "shared_utils_overdue",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "overdue.js"
     },
     {
@@ -6633,7 +6776,7 @@
       "_origin": "ast",
       "id": "shared_utils_overdue_getjobdurationminutes",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "getjobdurationminutes()"
     },
     {
@@ -6644,7 +6787,7 @@
       "_origin": "ast",
       "id": "shared_utils_overdue_getjobstartedat",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "getjobstartedat()"
     },
     {
@@ -6655,7 +6798,7 @@
       "_origin": "ast",
       "id": "shared_utils_overdue_isjoboverdue",
       "community": 0,
-      "community_name": "(portal)/layout.jsx",
+      "community_name": "usePortalHeader",
       "norm_label": "isjoboverdue()"
     },
     {
@@ -6665,8 +6808,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "shared_utils_rating",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "reviews/page.jsx",
       "norm_label": "rating.js"
     },
     {
@@ -6676,8 +6819,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "shared_utils_rating_no_rating_label",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "reviews/page.jsx",
       "norm_label": "no_rating_label"
     },
     {
@@ -6687,8 +6830,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "shared_utils_rating_hasrating",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "reviews/page.jsx",
       "norm_label": "hasrating()"
     },
     {
@@ -6698,8 +6841,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "shared_utils_rating_formatrating",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "reviews/page.jsx",
       "norm_label": "formatrating()"
     },
     {
@@ -6709,8 +6852,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "shared_utils_rating_rationale_10",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 10,
+      "community_name": "reviews/page.jsx",
       "norm_label": "note: the customer app has its own copy of this file (separate codebase)."
     },
     {
@@ -6742,8 +6885,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "shared_utils_validation_normalizeindianmobile",
-      "community": 2,
-      "community_name": "Card.jsx",
+      "community": 1,
+      "community_name": "useToast",
       "norm_label": "normalizeindianmobile()"
     },
     {
@@ -6753,8 +6896,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "shared_utils_validation_isblank",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "isblank()"
     },
     {
@@ -6786,8 +6929,8 @@
       "source_location": "L176",
       "_origin": "ast",
       "id": "shared_utils_validation_password_rules",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "password_rules"
     },
     {
@@ -6797,8 +6940,8 @@
       "source_location": "L187",
       "_origin": "ast",
       "id": "shared_utils_validation_passworderrors",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "passworderrors()"
     },
     {
@@ -6808,8 +6951,8 @@
       "source_location": "L189",
       "_origin": "ast",
       "id": "shared_utils_validation_rulepassword",
-      "community": 1,
-      "community_name": "useToast",
+      "community": 3,
+      "community_name": "sign-up/page.jsx",
       "norm_label": "rulepassword()"
     },
     {
@@ -21801,11 +21944,35 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/app/providers.jsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_providers",
       "target": "app_providers_providers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/app/providers.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_providers",
+      "target": "components_shell_maintenancegate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/app/providers.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "app_providers",
+      "target": "components_shell_maintenancegate_maintenancegate",
       "confidence_score": 1.0
     },
     {
@@ -24341,6 +24508,101 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/components/shell/MaintenanceGate.jsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_shell_maintenancegate",
+      "target": "components_shell_maintenancegate_maintenancegate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/components/shell/MaintenanceGate.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_shell_maintenancegate",
+      "target": "components_ui_button",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/components/shell/MaintenanceGate.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_shell_maintenancegate",
+      "target": "components_ui_button_button",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/components/shell/MaintenanceGate.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_shell_maintenancegate",
+      "target": "lib_maintenance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/components/shell/MaintenanceGate.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_shell_maintenancegate",
+      "target": "lib_maintenance_fetchmaintenancestatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/components/shell/MaintenanceGate.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_shell_maintenancegate",
+      "target": "lib_maintenance_onbackendmaintenance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "keplix-webpage-vendors/components/shell/MaintenanceGate.jsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_shell_maintenancegate_maintenancegate",
+      "target": "lib_maintenance_fetchmaintenancestatus"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "keplix-webpage-vendors/components/shell/MaintenanceGate.jsx",
+      "source_location": "L46",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_shell_maintenancegate_maintenancegate",
+      "target": "lib_maintenance_onbackendmaintenance"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/components/shell/PortalHeader.jsx",
       "source_location": "L24",
       "weight": 1.0,
@@ -25517,6 +25779,90 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/__tests__/maintenance.test.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_tests_maintenance_test",
+      "target": "lib_maintenance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/__tests__/maintenance.test.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_tests_maintenance_test",
+      "target": "lib_maintenance_closed_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/__tests__/maintenance.test.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_tests_maintenance_test",
+      "target": "lib_maintenance_emitbackendmaintenance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/__tests__/maintenance.test.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_tests_maintenance_test",
+      "target": "lib_maintenance_fetchmaintenancestatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/__tests__/maintenance.test.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_tests_maintenance_test",
+      "target": "lib_maintenance_isbackendmaintenance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/__tests__/maintenance.test.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_tests_maintenance_test",
+      "target": "lib_maintenance_normalizestatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/__tests__/maintenance.test.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_tests_maintenance_test",
+      "target": "lib_maintenance_onbackendmaintenance",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/lib/alertSound.js",
@@ -25696,7 +26042,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L20",
+      "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_api",
@@ -25707,7 +26053,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L93",
+      "source_location": "L94",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_api",
@@ -25718,7 +26064,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L44",
+      "source_location": "L45",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_api",
@@ -25729,7 +26075,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L51",
+      "source_location": "L52",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_api",
@@ -25740,7 +26086,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L222",
+      "source_location": "L235",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_api",
@@ -25751,7 +26097,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L266",
+      "source_location": "L279",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_api",
@@ -25763,7 +26109,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_api",
@@ -25775,7 +26121,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_api",
@@ -25787,7 +26133,43 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L18",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_api",
+      "target": "lib_maintenance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/api.js",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_api",
+      "target": "lib_maintenance_emitbackendmaintenance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/api.js",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_api",
+      "target": "lib_maintenance_isbackendmaintenance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/api.js",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_api",
@@ -25799,7 +26181,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_api",
@@ -25811,7 +26193,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_api",
@@ -25823,7 +26205,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_api",
@@ -25835,7 +26217,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L56",
+      "source_location": "L57",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_api_refreshaccesstoken",
@@ -25847,7 +26229,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L281",
+      "source_location": "L294",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_api_uploadwithfetch",
@@ -25859,7 +26241,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L275",
+      "source_location": "L288",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_api_uploadwithfetch",
@@ -25872,7 +26254,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "keplix-webpage-vendors/lib/api.js",
-      "source_location": "L285",
+      "source_location": "L298",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_api_uploadwithfetch",
@@ -26411,6 +26793,141 @@
       "_origin": "ast",
       "source": "lib_format_formatrelativeday",
       "target": "lib_format_formatdate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_maintenance",
+      "target": "lib_maintenance_closed_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L48",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_maintenance",
+      "target": "lib_maintenance_emitbackendmaintenance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_maintenance",
+      "target": "lib_maintenance_fetchmaintenancestatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L38",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_maintenance",
+      "target": "lib_maintenance_isbackendmaintenance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_maintenance",
+      "target": "lib_maintenance_listeners",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_maintenance",
+      "target": "lib_maintenance_normalizestatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L43",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_maintenance",
+      "target": "lib_maintenance_onbackendmaintenance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_maintenance",
+      "target": "lib_maintenance_status_url",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_maintenance",
+      "target": "lib_maintenance_text",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_maintenance_emitbackendmaintenance",
+      "target": "lib_maintenance_text",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_maintenance_normalizestatus",
+      "target": "lib_maintenance_text",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "keplix-webpage-vendors/lib/maintenance.js",
+      "source_location": "L31",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_maintenance_fetchmaintenancestatus",
+      "target": "lib_maintenance_normalizestatus",
       "confidence_score": 1.0
     },
     {
@@ -27204,7 +27721,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L28",
+      "source_location": "L30",
       "weight": 1.0,
       "_origin": "ast",
       "source": "next_config",
@@ -27215,7 +27732,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L44",
+      "source_location": "L46",
       "weight": 1.0,
       "_origin": "ast",
       "source": "next_config",
@@ -27226,7 +27743,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L72",
+      "source_location": "L74",
       "weight": 1.0,
       "_origin": "ast",
       "source": "next_config",
@@ -27237,10 +27754,10 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L102",
+      "source_location": "L104",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "next_config_rationale_102",
+      "source": "next_config_rationale_104",
       "target": "next_config",
       "confidence_score": 1.0
     },
@@ -27248,10 +27765,10 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L108",
+      "source_location": "L110",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "next_config_rationale_108",
+      "source": "next_config_rationale_110",
       "target": "next_config",
       "confidence_score": 1.0
     },
@@ -27259,10 +27776,10 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L116",
+      "source_location": "L118",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "next_config_rationale_116",
+      "source": "next_config_rationale_118",
       "target": "next_config",
       "confidence_score": 1.0
     },
@@ -27270,10 +27787,10 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L127",
+      "source_location": "L129",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "next_config_rationale_127",
+      "source": "next_config_rationale_129",
       "target": "next_config",
       "confidence_score": 1.0
     },
@@ -27281,10 +27798,10 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L89",
+      "source_location": "L91",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "next_config_rationale_89",
+      "source": "next_config_rationale_91",
       "target": "next_config",
       "confidence_score": 1.0
     },
@@ -27292,10 +27809,10 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "keplix-webpage-vendors/next.config.mjs",
-      "source_location": "L96",
+      "source_location": "L98",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "next_config_rationale_96",
+      "source": "next_config_rationale_98",
       "target": "next_config",
       "confidence_score": 1.0
     },
@@ -28461,5 +28978,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "69d1a2ffc0489a852a2fc3f5bc338d5cfbd58feb"
+  "built_at_commit": "17e43bc14feed0476e9e1fe5c0ccdb5d5abc0f4c"
 }
