@@ -91,7 +91,9 @@ export default function ReceiptPage() {
 
           {row.fee != null && (
             <div className="flex items-center justify-between gap-4 py-1.5">
-              <span className="text-[13px] text-[var(--color-muted)]">Platform fee</span>
+              {/* Legacy bookings only: newer ones pay the vendor the full price
+                  and the customer pays Keplix's fee at checkout (row.fee null). */}
+              <span className="text-[13px] text-[var(--color-muted)]">Platform fee (older booking)</span>
               <span className="text-[13px]">−{formatMoney(row.fee, { precise: true })}</span>
             </div>
           )}

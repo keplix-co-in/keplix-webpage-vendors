@@ -49,7 +49,7 @@ export default function EarningsPage() {
   }, [rows, tab]);
 
   const stats = [
-    { label: 'LIFETIME', value: earnings?.total_earnings, note: 'Net of platform fees', feature: true },
+    { label: 'LIFETIME', value: earnings?.total_earnings, note: 'Your full service price', feature: true },
     { label: 'THIS WEEK', value: earnings?.week_earnings, note: 'Settled this week' },
     { label: 'THIS MONTH', value: earnings?.month_earnings, note: 'Settled this month' },
     { label: 'PENDING', value: earnings?.pending_earnings, note: 'Awaiting release', tint: true },

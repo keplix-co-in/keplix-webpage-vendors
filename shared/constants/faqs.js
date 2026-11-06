@@ -34,7 +34,7 @@ export const FAQS = [
     id: 6,
     question: 'How do payouts work?',
     answer:
-      'Keplix transfers your earnings (after platform fee) directly to your bank within 24–72 hours.',
+      'You receive your full service price. Keplix’s platform fee is paid by the customer at checkout. Keplix transfers your earnings directly to your bank within 24–72 hours.',
   },
   {
     id: 7,

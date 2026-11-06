@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Camera, ChevronRight, Clock } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -13,14 +13,25 @@ import { useToast } from '@/components/ui/Toast';
 import { useAuth } from '@/context/AuthContext';
 import { vendorAPI } from '@/api/vendor';
 import { normalizeIndianMobile, rules, validate } from '@/shared/utils/validation';
+import MapPicker from '@/components/onboarding/MapPicker';
+import {
+  addressFormFromProfile,
+  applyPickedAddress,
+  buildProfileUpdatePayload,
+  pinFromProfile,
+} from '@/lib/profileUpdate';
 
 const FIELDS = [
   { name: 'business_name', label: 'Shop name', required: true },
   { name: 'phone', label: 'Contact number', required: true },
-  { name: 'address', label: 'Street & area' },
+  // Structured address (the backend rebuilds the combined `address` from
+  // these), so a vendor fixing a wrong onboarding pin can correct it all here.
+  { name: 'street', label: 'Street / road' },
+  { name: 'area', label: 'Area / locality' },
   { name: 'city', label: 'City' },
   { name: 'state', label: 'State' },
   { name: 'pincode', label: 'Pincode' },
+  { name: 'landmark', label: 'Landmark (optional)' },
 ];
 
 // Same limits the backend enforces for images; checked here so a vendor is told
@@ -44,6 +55,8 @@ export default function ProfilePage() {
   const [seeded, setSeeded] = useState(null);
   const [busy, setBusy] = useState(false);
   const [errors, setErrors] = useState({});
+  // Shop map pin {lat, lng}; sent as latitude/longitude on save.
+  const [pin, setPin] = useState(null);
   // The workshop photo is the backend's `cover_image` — what onboarding's shop
   // photo is saved as, and what the app shows customers and on the vendor's tab.
   // {file, url}: the object URL is made when the file is chosen and released
@@ -87,16 +100,21 @@ export default function ProfilePage() {
   // object itself changes.
   if (vendorProfile && seeded !== vendorProfile) {
     setSeeded(vendorProfile);
+    setPin(pinFromProfile(vendorProfile));
     setForm({
       business_name: vendorProfile.business_name ?? '',
       phone: vendorProfile.phone ?? user?.phone ?? '',
-      address: vendorProfile.address ?? '',
-      city: vendorProfile.city ?? '',
-      state: vendorProfile.state ?? '',
-      pincode: vendorProfile.pincode ?? '',
+      ...addressFormFromProfile(vendorProfile),
       description: vendorProfile.description ?? '',
     });
   }
+
+  // Moving the pin fills in whatever address parts the lookup found; anything
+  // it could not resolve keeps what the vendor typed.
+  const onPick = useCallback((picked) => {
+    setPin({ lat: picked.lat, lng: picked.lng });
+    setForm((prev) => applyPickedAddress(prev, picked));
+  }, []);
 
   const setField = (key) => (event) => {
     setForm((prev) => ({ ...prev, [key]: event.target.value }));
@@ -113,7 +131,10 @@ export default function ProfilePage() {
     setBusy(true);
     // Stored in the same normalised form the backend uses everywhere else, so
     // this number matches the one on a walk-in or an OTP record.
-    const fields = { ...form, phone: normalizeIndianMobile(form.phone) ?? form.phone };
+    const fields = buildProfileUpdatePayload(
+      { ...form, phone: normalizeIndianMobile(form.phone) ?? form.phone },
+      pin
+    );
 
     let result;
     if (photo) {
@@ -195,6 +216,16 @@ export default function ProfilePage() {
 
       <Card className="mb-5">
         <CardHeader title="Shop details" />
+        {/* Remount when the saved profile changes so the map re-centres on it
+            (MapPicker only reads `value` when it first mounts). */}
+        <p className="text-[12.5px] text-[var(--color-muted)] mb-3">
+          Move the map so the pin sits on your shop — customers use it to find you.
+        </p>
+        <MapPicker
+          key={seeded ? `${seeded.latitude ?? ''},${seeded.longitude ?? ''}` : 'none'}
+          value={pin ? { lat: pin.lat, lng: pin.lng, label: vendorProfile?.address ?? '' } : null}
+          onPick={onPick}
+        />
         <div className="grid grid-cols-2 gap-4 max-[880px]:grid-cols-[minmax(0,1fr)]">
           {FIELDS.map((field) => (
             <Input
