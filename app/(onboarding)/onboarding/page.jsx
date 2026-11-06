@@ -65,13 +65,16 @@ export default function OnboardingHubPage() {
     }
 
     if (result.partialFailure) {
-      const missed = [...result.failedServices, ...result.failedDocuments, ...result.failedPhotos];
+      // KYC document failures abort submitOnboarding, so only services and
+      // extra photos can be partial here.
+      const missed = [...result.failedServices, ...result.failedPhotos];
       toast.info(`Registered, but these could not be saved: ${missed.join(', ')}`);
     }
 
-    // The profile response carries the completed flag the landing rule reads,
-    // so the session has to learn about it or the vendor is sent straight back
-    // to this hub on the next sign-in check.
+    // The backend sets onboarding_completed when the (required) PAN upload
+    // lands, and submitOnboarding fails if it didn't — so it is true here. The
+    // session has to learn about it or the vendor is sent straight back to
+    // this hub on the next sign-in check.
     if (user) setUser({ ...user, onboarding_completed: true });
     clear();
     router.replace('/onboarding/success');

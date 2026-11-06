@@ -15,6 +15,14 @@ import { vendorAPI, documentsAPI } from '@/api/vendor';
 import { unwrap } from '@/lib/queries';
 import { formatDate } from '@/lib/format';
 import { rules, validate } from '@/shared/utils/validation';
+import {
+  needsPayoutOtp,
+  payoutErrorCode,
+  PAYOUT_HOLD_NOTICE,
+  PAYOUT_OTP_REQUIRED,
+} from '@/lib/payoutChange';
+import { usePayoutOtp } from '@/components/payout/usePayoutOtp';
+import PayoutOtpModal from '@/components/payout/PayoutOtpModal';
 
 // Format rules only — whether enough was filled in is the bank-or-UPI check in
 // savePayout, which cannot be expressed per-field.
@@ -28,11 +36,18 @@ const SCHEMA = {
 
 // PAN and the trade licence are locked once Keplix has verified them — changing
 // a verified identity document has to go through support, not a self-serve edit.
-const LOCKED_TYPES = ['pan', 'trade_licence', 'trade_license'];
+// 'pan' stays for documents uploaded before the type was aligned to 'pan_card'.
+const LOCKED_TYPES = ['pan', 'pan_card', 'trade_licence', 'trade_license'];
+
+// Private document URLs are signed and expire after 10 minutes, so they must
+// not be served from cache: refetch whenever the page opens, and refresh
+// before the links go stale while it stays open.
+const SIGNED_URL_REFRESH_MS = 8 * 60 * 1000;
 
 // document_type is stored as a short code ("pan"), so a raw render read "Pan".
 const DOC_LABELS = {
   pan: 'PAN card',
+  pan_card: 'PAN card',
   gstin: 'GSTIN certificate',
   trade_licence: 'Trade licence',
   trade_license: 'Trade licence',
@@ -54,12 +69,17 @@ export default function DocumentsPage() {
   const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
   const [newDoc, setNewDoc] = useState({ file: null, type: 'bank_proof' });
+  const payoutOtp = usePayoutOtp();
 
   usePortalHeader('My documents', 'Payout details you can edit, and the documents we verified');
 
   const { data: documents = [] } = useQuery({
     queryKey: ['documents'],
     queryFn: async () => unwrap(await documentsAPI.getDocuments(), 'documents'),
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: 'always',
+    refetchInterval: SIGNED_URL_REFRESH_MS,
   });
 
   // Seeded during render rather than in an effect, so the form does not flash
@@ -102,16 +122,41 @@ export default function DocumentsPage() {
       return;
     }
 
+    const onSuccess = (changedPayout) => {
+      queryClient.invalidateQueries({ queryKey: ['vendor-profile'] });
+      // A-023: the server holds payouts for 24h after a payout account change.
+      toast.success(
+        changedPayout ? `Payout details updated. ${PAYOUT_HOLD_NOTICE}` : 'Payout details updated'
+      );
+    };
+    const onFailure = (result) =>
+      toast.error(result?.error || 'Could not save your payout details');
+
+    // A-023: changing payout details that already exist needs an emailed OTP;
+    // the backend rejects the PUT with 403 PAYOUT_OTP_REQUIRED otherwise.
+    const startOtp = () =>
+      payoutOtp.start({
+        submit: (otp) => vendorAPI.updateProfile({ ...payout, payout_otp: otp }),
+        onSuccess: () => onSuccess(true),
+        onFailure,
+      });
+
+    if (needsPayoutOtp(vendorProfile, payout)) {
+      setBusy(true);
+      await startOtp();
+      setBusy(false);
+      return;
+    }
+
     setBusy(true);
     const result = await vendorAPI.updateProfile(payout);
     setBusy(false);
 
-    if (result?.success) {
-      queryClient.invalidateQueries({ queryKey: ['vendor-profile'] });
-      toast.success('Payout details updated');
-    } else {
-      toast.error(result?.error || 'Could not save your payout details');
-    }
+    if (result?.success) onSuccess(false);
+    // The cached profile can be stale (e.g. details changed from the app), so
+    // the server may still ask for the code — fall into the OTP flow then.
+    else if (payoutErrorCode(result) === PAYOUT_OTP_REQUIRED) await startOtp();
+    else onFailure(result);
   };
 
   const upload = async () => {
@@ -188,6 +233,8 @@ export default function DocumentsPage() {
           Save payout details
         </Button>
       </form>
+      {/* Outside the form so Enter in the code boxes can't resubmit it. */}
+      <PayoutOtpModal {...payoutOtp.modalProps} />
 
       <div className="min-w-0">
         <Card className="mb-5">
@@ -246,7 +293,8 @@ export default function DocumentsPage() {
           >
             <option value="bank_proof">Bank proof</option>
             <option value="gstin">GSTIN certificate</option>
-            <option value="pan">PAN card</option>
+            {/* pan_card is the type the backend and vendor app use; 'pan' was web-only. */}
+            <option value="pan_card">PAN card</option>
             <option value="trade_licence">Trade licence</option>
           </select>
 

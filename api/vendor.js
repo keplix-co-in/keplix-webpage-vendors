@@ -4,6 +4,9 @@ export const vendorAPI = {
   getVendorProfile: () => api.get('/accounts/vendor/profile'),
   createVendorProfile: (data) => api.post('/accounts/vendor/profile', data),
   updateProfile: (data) => api.put('/accounts/vendor/profile', data),
+  // A-023: emails the step-up code a profile write must carry as `payout_otp`
+  // when it changes existing bank/UPI details. See lib/payoutChange.js.
+  requestPayoutOtp: () => api.post('/accounts/vendor/profile/payout-otp'),
 
   createVendorProfileWithImage: (formData) =>
     uploadWithFetch('POST', '/accounts/vendor/profile', formData),
