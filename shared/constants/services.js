@@ -112,28 +112,5 @@ export const SERVICE_CATEGORIES = [
   }
 ];
 
-// Get category by ID
-export const getCategoryById = (id) => {
-  return SERVICE_CATEGORIES.find(cat => cat.id === id);
-};
-
-// Get category by name
-export const getCategoryByName = (name) => {
-  return SERVICE_CATEGORIES.find(cat => 
-    cat.name.toLowerCase() === name.toLowerCase() || 
-    cat.label.toLowerCase() === name.toLowerCase()
-  );
-};
-
-// Get all category names
-export const getCategoryNames = () => {
-  return SERVICE_CATEGORIES.map(cat => cat.name);
-};
-
-// Get all category IDs
-export const getCategoryIds = () => {
-  return SERVICE_CATEGORIES.map(cat => cat.id);
-};
-
 // Export default
 export default SERVICE_CATEGORIES;

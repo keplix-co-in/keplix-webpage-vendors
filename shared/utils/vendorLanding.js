@@ -86,32 +86,4 @@ export const resolveVendorLanding = (user, isNewUser = false) => {
   return { ok: true, route: VENDOR_LANDING.HOME };
 };
 
-/**
- * Dev-only wrapper that logs exactly what the rule was given and what it chose.
- *
- * The routing itself has been traced end to end and is correct, so when the
- * landing screen is wrong the cause is always the INPUT -- almost always
- * `isNewUser`, which the backend sets true only on the single request that
- * creates the account. Guessing at that from the outside is slow; this prints
- * it. Stripped from release builds by the __DEV__ guard.
- */
-export const resolveVendorLandingDebug = (user, isNewUser = false) => {
-  const landing = resolveVendorLanding(user, isNewUser);
-
-  // Web port of the mobile rule: __DEV__ is a React Native global that does not
-  // exist in the browser bundle.
-  if (process.env.NODE_ENV !== 'production') {
-    console.log('[VendorLanding] decision', {
-      isNewUser,
-      role: user?.role,
-      phone: user?.phone ?? user?.phone_number ?? null,
-      onboarding_completed: user?.onboarding_completed,
-      business_name: user?.business_name,
-      chosenRoute: landing.route ?? `REJECTED: ${landing.errorTitle}`,
-    });
-  }
-
-  return landing;
-};
-
 export default resolveVendorLanding;

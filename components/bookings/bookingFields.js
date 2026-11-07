@@ -1,4 +1,3 @@
-import { formatRelativeDay, formatMoney } from '@/lib/format';
 
 /**
  * One place that knows the shape of a booking row from
@@ -122,13 +121,6 @@ export const formatSlotTime = (value) => {
   const hours = Math.floor(total / 60);
   return `${hours % 12 === 0 ? 12 : hours % 12}:${String(total % 60).padStart(2, '0')} ${hours >= 12 ? 'PM' : 'AM'}`;
 };
-
-export const slotLabel = (booking) => {
-  const { time, date } = booking;
-  return { time: formatSlotTime(time), date: date ? formatRelativeDay(date) : '' };
-};
-
-export const priceLabel = (booking) => formatMoney(booking.price);
 
 /** Label and badge tone for a booking, from the two status columns together. */
 export const bookingBadge = (booking) => {

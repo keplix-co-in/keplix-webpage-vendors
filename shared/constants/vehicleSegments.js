@@ -40,6 +40,4 @@ export const VEHICLE_SEGMENTS = [
   },
 ];
 
-export const getSegmentById = (id) => VEHICLE_SEGMENTS.find((s) => s.id === id);
-
 export default VEHICLE_SEGMENTS;

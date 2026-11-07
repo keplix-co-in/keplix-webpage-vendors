@@ -9,19 +9,6 @@ export const reviewsAPI = {
 };
 
 /**
- * Vendor-to-Keplix feedback. Routes moved to `/vendor/feedback` and
- * `/vendor/feedback/create` (previously unprefixed `/vendor/` and
- * `/vendor/create`, which collided with sibling routers) and the backend now
- * validates the body as `{ title, message, category }`, rejecting anything
- * else instead of 500ing.
- */
-export const feedbackAPI = {
-  getFeedback: (params = {}) => api.get('/interactions/api/vendor/feedback', { params }),
-  createFeedback: ({ title, message, category }) =>
-    api.post('/interactions/api/vendor/feedback/create', { title, message, category }),
-};
-
-/**
  * Chat uses the vendor conversation routes in routes/vendor/interactions.js.
  * The mobile client still calls an older `/interactions/chat/:customerId` path
  * that is not mounted for vendors; these are the routes the backend actually

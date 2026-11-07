@@ -4,6 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { authAPI } from '@/api/auth';
+import { supabase } from '@/lib/supabase';
 import { tokenStore } from '@/lib/tokenStore';
 import { onSessionExpired } from '@/lib/sessionExpiry';
 import { closeSocket } from '@/lib/socket';
@@ -79,6 +80,9 @@ export function AuthProvider({ children }) {
     // must go with it — otherwise the shell's still-mounted listener kept a
     // connection authenticated as the signed-out vendor.
     closeSocket();
+    // Also drop the persisted Supabase session, or restore-on-load would pick
+    // a dead/unsynced session back up and 401 on every reload.
+    supabase.auth.signOut({ scope: 'local' }).catch(() => {});
     tokenStore.clearAll();
     // WHY: the query cache outlives the session. Without this, a second vendor
     // signing in on the same tab was served the previous vendor's cached
@@ -104,13 +108,13 @@ export function AuthProvider({ children }) {
       return;
     }
 
-    // Blacklists the token server-side; a failure here should still log the
+    // Ends the Supabase session server-side; a failure here should still log the
     // vendor out locally rather than trapping them in the portal.
     try {
       // Drop this browser's push subscription while the token is still valid, so
       // the next person to use it is not sent this vendor's booking alerts.
       await disableWebPush();
-      await authAPI.logout(tokenStore.getRefreshToken());
+      await authAPI.logout();
     } finally {
       clearSession();
       router.replace('/sign-in');
@@ -134,6 +138,13 @@ export function AuthProvider({ children }) {
         return;
       }
 
+      // The Supabase session can survive without the mirrored token (partial
+      // storage clear); pick it back up instead of showing sign-in.
+      if (!tokenStore.getAccessToken()) {
+        const { data } = await supabase.auth.getSession().catch(() => ({ data: null }));
+        if (cancelled) return;
+        if (data?.session?.access_token) tokenStore.setAccessToken(data.session.access_token);
+      }
       if (!tokenStore.getAccessToken()) {
         setLoading(false);
         return;
@@ -196,6 +207,9 @@ export function AuthProvider({ children }) {
       const landing = resolveVendorLanding(signedInUser, isNewUser);
 
       if (!landing.ok) {
+        // Refused (e.g. a customer account): end the Supabase session too, or
+        // it would be silently restored on the next page load.
+        supabase.auth.signOut({ scope: 'local' }).catch(() => {});
         tokenStore.clearAll();
         setUser(null);
         return landing;

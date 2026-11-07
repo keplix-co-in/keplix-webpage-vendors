@@ -1,7 +1,7 @@
 {
   "api/auth.js": {
-    "mtime": 1790409184.2500024,
-    "ast_hash": "eac4e2d778cc6f8c791abc50feaf8590",
+    "mtime": 1794061003.2644794,
+    "ast_hash": "909176dea0ceea7eb2cb7b710fa8d64d",
     "semantic_hash": ""
   },
   "api/bookings.js": {
@@ -10,8 +10,8 @@
     "semantic_hash": ""
   },
   "api/customers.js": {
-    "mtime": 1790577208.4901528,
-    "ast_hash": "18421ead43282f35655eef2341854d1b",
+    "mtime": 1794043606.224228,
+    "ast_hash": "7864b09240ceb27e2b86235703078fe6",
     "semantic_hash": ""
   },
   "api/money.js": {
@@ -480,8 +480,8 @@
     "semantic_hash": ""
   },
   "components/bookings/bookingFields.js": {
-    "mtime": 1789803796.1650372,
-    "ast_hash": "972d69f1f80082ba8588c5ad7c1f5ffb",
+    "mtime": 1794043620.9904356,
+    "ast_hash": "9f9af08adadedd8002a6c08e1e7cf40f",
     "semantic_hash": ""
   },
   "components/bookings/useTabbedBookings.js": {
@@ -605,8 +605,8 @@
     "semantic_hash": ""
   },
   "context/AuthContext.jsx": {
-    "mtime": 1790409207.941364,
-    "ast_hash": "8850870b3396c2203567762fec8e2291",
+    "mtime": 1794043644.0231912,
+    "ast_hash": "d98370852a737cbda31fd0f8ebb3d8ac",
     "semantic_hash": ""
   },
   "eslint.config.mjs": {
@@ -625,8 +625,8 @@
     "semantic_hash": ""
   },
   "lib/api.js": {
-    "mtime": 1793941437.65601,
-    "ast_hash": "9d87244668d7bf671a69e38a5e0a00c3",
+    "mtime": 1793983416.303768,
+    "ast_hash": "c419e0204f66b5c6c95ba0cfef7a2bae",
     "semantic_hash": ""
   },
   "lib/apiConfig.js": {
@@ -690,8 +690,8 @@
     "semantic_hash": ""
   },
   "lib/tokenStore.js": {
-    "mtime": 1789700699.5342803,
-    "ast_hash": "48ea4715a09bfc154e5d185f163d5913",
+    "mtime": 1794043644.0231912,
+    "ast_hash": "d364098b7501fe4937c59679d985af5a",
     "semantic_hash": ""
   },
   "lib/useVendorSocket.js": {
@@ -705,13 +705,13 @@
     "semantic_hash": ""
   },
   "next.config.mjs": {
-    "mtime": 1793594888.4080517,
-    "ast_hash": "0d25f7f46508969ab765537f620cf684",
+    "mtime": 1794061163.013024,
+    "ast_hash": "a73d17ce77772a5229adfa51e32bcc4d",
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1790316755.767865,
-    "ast_hash": "cc455931385af7e083cdc462c8a4c636",
+    "mtime": 1794060748.4861188,
+    "ast_hash": "4171ccc2c10917da80340f7fc93bcee3",
     "semantic_hash": ""
   },
   "postcss.config.mjs": {
@@ -750,13 +750,13 @@
     "semantic_hash": ""
   },
   "shared/constants/services.js": {
-    "mtime": 1789700661.0100343,
-    "ast_hash": "6563cc03acc54a7fe7c3deae8b9d81b7",
+    "mtime": 1794043606.2252295,
+    "ast_hash": "567aa06913708fd7636ca01c5ca1282a",
     "semantic_hash": ""
   },
   "shared/constants/vehicleSegments.js": {
-    "mtime": 1789700661.0115688,
-    "ast_hash": "adc1057a7b70d0220c850710cc1228bd",
+    "mtime": 1794043606.2252295,
+    "ast_hash": "0923ee275d5eff2ac3d61582e026dbb0",
     "semantic_hash": ""
   },
   "shared/utils/duration.js": {
@@ -785,8 +785,8 @@
     "semantic_hash": ""
   },
   "shared/utils/vendorLanding.js": {
-    "mtime": 1789700669.5463998,
-    "ast_hash": "691afaccbcec133b1a799486b236345c",
+    "mtime": 1794043606.2262282,
+    "ast_hash": "b5366ff38f92518720387aff28612651",
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
@@ -795,8 +795,8 @@
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1789700542.4963875,
-    "ast_hash": "01e8142356e15c3404e0d84c48187cd0",
+    "mtime": 1794061170.4778936,
+    "ast_hash": "c98dbebb744eadc1acc4b9f58bfe0f42",
     "semantic_hash": ""
   },
   "README.md": {
@@ -912,6 +912,41 @@
   "lib/profileUpdate.js": {
     "mtime": 1793962480.9119809,
     "ast_hash": "63ff35644e85c8468b164ad343436022",
+    "semantic_hash": ""
+  },
+  "lib/supabase.js": {
+    "mtime": 1793983324.9297585,
+    "ast_hash": "74d4230993b07e4c278788bf91698711",
+    "semantic_hash": ""
+  },
+  "lib/__tests__/apiRefresh.test.mjs": {
+    "mtime": 1794061097.1460824,
+    "ast_hash": "7c3d4ca3a37eadffa6f6d402663a5d10",
+    "semantic_hash": ""
+  },
+  "lib/__tests__/authApi.test.mjs": {
+    "mtime": 1794061084.816783,
+    "ast_hash": "58e7f140a4c67c3bab3b5796246dd00c",
+    "semantic_hash": ""
+  },
+  "lib/__tests__/helpers/hooks.mjs": {
+    "mtime": 1794061109.5381563,
+    "ast_hash": "7c9d6c40f394f6353de249b1d3a1e9a1",
+    "semantic_hash": ""
+  },
+  "lib/__tests__/helpers/mockApi.mjs": {
+    "mtime": 1794061025.6280768,
+    "ast_hash": "b39897d5507b118427d860f86ac3f8b3",
+    "semantic_hash": ""
+  },
+  "lib/__tests__/helpers/mockSupabase.mjs": {
+    "mtime": 1794061025.4849088,
+    "ast_hash": "93af81d0e0131bd0501676d69bc51497",
+    "semantic_hash": ""
+  },
+  "lib/__tests__/nextTarget.test.mjs": {
+    "mtime": 1794061098.5425231,
+    "ast_hash": "3e0d2136e1de95d142a082a1a8af157e",
     "semantic_hash": ""
   }
 }

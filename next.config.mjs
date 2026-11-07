@@ -41,12 +41,32 @@ const apiOrigins = (() => {
   }
 })();
 
+// Supabase Auth origin (lib/supabase.js) built from the same env var the client
+// uses, so pointing the portal at another Supabase project cannot silently
+// break sign-in under the enforcing CSP. Falls back to the current project when
+// the var is absent (tooling that loads this file without an env file).
+const SUPABASE_FALLBACK = 'https://ruvtpvypjgqzfqfdjguz.supabase.co';
+const supabaseOrigins = (() => {
+  let parsed;
+  try {
+    parsed = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL || SUPABASE_FALLBACK);
+  } catch {
+    parsed = new URL(SUPABASE_FALLBACK);
+  }
+  // wss: covers supabase-js Realtime, which opens a WebSocket on the same host
+  // if it is ever used; connect-src treats ws(s) as a separate scheme.
+  return [parsed.origin, `${parsed.protocol === 'https:' ? 'wss:' : 'ws:'}//${parsed.host}`];
+})();
+
 const isProd = process.env.NODE_ENV === 'production';
 
 const csp = [
   "default-src 'self'",
   // 'unsafe-inline': Next injects inline bootstrap/flight scripts on every
-  // page and we are not passing a nonce through yet. 'unsafe-eval' is added
+  // page and we are not passing a nonce through yet. FUTURE WORK: move to a
+  // per-request nonce (generated in proxy.js, read via headers() in
+  // app/layout.js) plus 'strict-dynamic', then drop 'unsafe-inline' here —
+  // that is what turns this CSP into a real XSS barrier for scripts. 'unsafe-eval' is added
   // only outside production because the dev compiler/React Refresh needs it.
   `script-src 'self' 'unsafe-inline' ${isProd ? '' : "'unsafe-eval' "}https://accounts.google.com`,
   // Tailwind/Next inject style tags; leaflet's CSS is bundled and served from 'self'.
@@ -54,7 +74,7 @@ const csp = [
   "style-src 'self' 'unsafe-inline' https://accounts.google.com",
   "img-src 'self' data: blob: https://res.cloudinary.com https://*.tile.openstreetmap.org",
   "font-src 'self' data:",
-  `connect-src 'self' https://accounts.google.com https://nominatim.openstreetmap.org https://keplix.co.in${apiOrigins.length ? ` ${apiOrigins.join(' ')}` : ''}`,
+  `connect-src 'self' https://accounts.google.com ${supabaseOrigins.join(' ')} https://nominatim.openstreetmap.org https://keplix.co.in${apiOrigins.length ? ` ${apiOrigins.join(' ')}` : ''}`,
   // Google Identity Services renders its button/One Tap prompt in an iframe.
   "frame-src 'self' https://accounts.google.com",
   "worker-src 'self' blob:",
@@ -126,17 +146,23 @@ const nextConfig = {
             value: 'csp="/api/csp-report"',
           },
           {
-            // WHY: report-only on purpose. The allow-list above is derived from
-            // a static read of the code, so a missed third-party (an analytics
-            // snippet, a new payment widget) would silently break a vendor
-            // mid-onboarding if enforced today.
-            //
-            // TO PROMOTE TO ENFORCING: exercise the real flows — sign-in with
-            // Google, onboarding (map picker + photo/document uploads),
-            // bookings with live socket updates — in a browser and confirm the
-            // console logs no "Report Only" CSP violations. Then rename this
-            // key to 'Content-Security-Policy' (keeping the report-only header
-            // for one release is fine) and re-test the same flows.
+            // WHY: ENFORCING since 2026-11 (security review). It was report-only
+            // first because the allow-list is derived from a static read of the
+            // code. Before promotion the origin list was re-grepped against
+            // app/, components/, lib/, shared/ and public/sw.js (no new
+            // third-party origins) and the portal built with it. Per the
+            // original promotion checklist, still exercise Google sign-in,
+            // onboarding (map picker + uploads) and live bookings (socket) in a
+            // browser after deploy and watch for CSP console errors and
+            // /api/csp-report hits; rollback = rename this key back to
+            // 'Content-Security-Policy-Report-Only'.
+            key: 'Content-Security-Policy',
+            value: csp,
+          },
+          {
+            // Kept for one release alongside the enforcing header (as the
+            // checklist suggested) so violations keep reporting to
+            // /api/csp-report. Remove once the enforcing header has a clean run.
             key: 'Content-Security-Policy-Report-Only',
             value: csp,
           },
