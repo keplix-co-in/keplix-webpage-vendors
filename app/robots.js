@@ -24,6 +24,11 @@ import { PUBLIC_PATHS, publicSiteUrl } from '@/lib/siteUrl';
  * None of these expose vendor data, and the portal pages stay disallowed.
  */
 const PUBLIC_ASSETS = [
+  // `/$` = the homepage only (the `$` anchors the match, so no portal route
+  // under `/` is opened). Google reads the favicon and the site name from the
+  // homepage; with `/` blocked it showed a generic globe instead of the Keplix
+  // logo in results (2026-11-13). `/` itself only redirects, no vendor data.
+  '/$',
   '/sitemap.xml',
   '/_next/static/',
   '/_next/image',

@@ -10,16 +10,43 @@ import EntryRouter from './_EntryRouter';
  * onboarding step), which is only knowable on the client. A blanket server
  * redirect would push them through /welcome and lose that.
  *
- * noindex: there is nothing to index here — every visitor is redirected — and
- * `/welcome` is the canonical public entry point instead.
+ * Indexable with a canonical to `/welcome` (changed from noindex 2026-11-13):
+ * Google takes the favicon and the site name shown in results from the
+ * homepage, so a noindex/blocked `/` made it show a generic globe. The
+ * canonical still sends ranking signals to `/welcome`, the real entry page.
  */
 export const metadata = {
-  title: 'Keplix Partner',
+  title: 'Keplix Partner — Workshop & Garage Management Portal',
   description:
     'Sign in to the Keplix Partner portal to manage your workshop bookings, walk-ins and earnings.',
-  robots: { index: false, follow: true },
+  alternates: { canonical: '/welcome' },
+  robots: { index: true, follow: true },
+};
+
+// WebSite markup on the homepage is what Google reads for the site name in
+// results ("Keplix Partner" rather than just "Keplix"). Static data only.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Keplix Partner',
+  alternateName: ['Keplix Partner Portal', 'Keplix for Workshops'],
+  url: 'https://partner.keplix.co.in/',
+  publisher: {
+    '@type': 'Organization',
+    name: 'Keplix',
+    url: 'https://keplix.co.in',
+    logo: 'https://partner.keplix.co.in/icon.png',
+  },
 };
 
 export default function Home() {
-  return <EntryRouter />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <EntryRouter />
+    </>
+  );
 }

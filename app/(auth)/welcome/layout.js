@@ -46,7 +46,13 @@ const jsonLd = {
   inLanguage: 'en-IN',
   description,
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' },
-  publisher: { '@type': 'Organization', name: 'Keplix', url: 'https://keplix.co.in' },
+  image: 'https://partner.keplix.co.in/icon.png',
+  publisher: {
+    '@type': 'Organization',
+    name: 'Keplix',
+    url: 'https://keplix.co.in',
+    logo: 'https://partner.keplix.co.in/icon.png',
+  },
 };
 
 export default function WelcomeLayout({ children }) {
