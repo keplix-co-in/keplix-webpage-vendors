@@ -7,6 +7,7 @@ import OnboardingShell, { StepActions } from '@/components/onboarding/Onboarding
 import { useDraft } from '@/components/onboarding/DraftProvider';
 import { useToast } from '@/components/ui/Toast';
 import { formatMoney } from '@/lib/format';
+import { servicePriceLabel } from '@/lib/servicePricing';
 
 export default function ServiceSetupPage() {
   const router = useRouter();
@@ -53,7 +54,9 @@ export default function ServiceSetupPage() {
           >
             <div className="text-[14.5px] font-bold text-[var(--color-ink)] [overflow-wrap:anywhere]">{service.name}</div>
             <div className="text-[12px] text-[var(--color-disabled)] mt-0.5">
-              {service.category} · {formatMoney(service.price)} · {service.duration}
+              {service.category} ·{' '}
+              {servicePriceLabel({ ...service, pricing_type: service.pricing?.pricing_type }, formatMoney)}{' '}
+              · {service.duration}
             </div>
           </Link>
 

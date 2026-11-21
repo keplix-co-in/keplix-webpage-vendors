@@ -14,6 +14,7 @@ import { useServices } from '@/lib/queries';
 import { servicesAPI } from '@/api/services';
 import { SERVICE_CATEGORIES } from '@/shared/constants/services';
 import { formatMoney } from '@/lib/format';
+import { servicePriceLabel } from '@/lib/servicePricing';
 import { formatDuration } from '@/shared/utils/duration';
 
 export default function ServicesPage() {
@@ -127,7 +128,7 @@ export default function ServicesPage() {
 
               <div className="flex items-center justify-between gap-3 pt-1 flex-wrap">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-[17px] font-bold">{formatMoney(service.price)}</span>
+                  <span className="text-[17px] font-bold">{servicePriceLabel(service, formatMoney)}</span>
                   {formatDuration(service.duration) && (
                     <span className="text-[12px] text-[var(--color-muted)]">
                       · {formatDuration(service.duration)}

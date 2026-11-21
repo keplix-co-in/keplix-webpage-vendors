@@ -12,9 +12,12 @@ import { useToast } from '@/components/ui/Toast';
 import { useAuth } from '@/context/AuthContext';
 import { bookingsAPI } from '@/api/bookings';
 import { rules, validate } from '@/shared/utils/validation';
+import { BILL_NOT_ISSUED_MESSAGE, completionFailureKind } from '@/lib/completionFailure';
 
-// A booking's amount was fixed and paid when the customer booked, so there is
-// nothing to collect here — only the record of what was done.
+// A legacy booking's amount was fixed and paid when the customer booked, so
+// there is nothing to collect here — only the record of what was done. A
+// pricing v2 booking is paid against its final bill, which is issued in the
+// vendor app before this screen can complete it (see completionFailure.js).
 const SCHEMA = {
   notes: [rules.maxLength(2000, 'Notes')],
 };
@@ -45,6 +48,9 @@ function CompletionForm() {
   const [images, setImages] = useState([]);
   const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
+  // Shown inline as well as in a toast: the vendor has to leave for the app,
+  // so the reason must still be on screen after the toast fades.
+  const [billBlocked, setBillBlocked] = useState(false);
 
   usePortalHeader('Service completion', 'Photos, notes and the final bill');
 
@@ -91,6 +97,10 @@ function CompletionForm() {
     if (!isValid) return;
 
     setBusy(true);
+    // Review fix (2026-11-21): a retry starts clean. Before, once shown, the
+    // "issue the bill first" warning stayed on screen even when the next
+    // attempt failed for a different reason (network, wrong status).
+    setBillBlocked(false);
 
     // Rebuilt per attempt: a FormData consumed by a failed request cannot be
     // safely resent.
@@ -113,11 +123,27 @@ function CompletionForm() {
       return;
     }
 
+    const failure = completionFailureKind(result);
+
+    // Pricing v2: a booking with an itemised quote can only be completed after
+    // its final bill is issued, and bills are issued in the Partner app (the
+    // web has no bill screens). Checked before the generic 409 below, which
+    // would otherwise send the vendor to the health sheet in a loop.
+    if (failure === 'bill_not_issued') {
+      try {
+        sessionStorage.setItem(draftKey(id), notes);
+      } catch {
+        // Losing the draft is better than losing the flow.
+      }
+      setBillBlocked(true);
+      toast.error(BILL_NOT_ISSUED_MESSAGE);
+      return;
+    }
+
     // The mandatory-inspection gate rejected this because no health sheet
     // exists. Recoverable, not an error: nothing was persisted, so the vendor
     // fills the sheet and comes straight back to finish.
-    const code = result?.code ?? result?.details?.code;
-    if (code === 'HEALTH_SHEET_REQUIRED' || result?.status === 409) {
+    if (failure === 'health_sheet') {
       try {
         sessionStorage.setItem(draftKey(id), notes);
       } catch {
@@ -201,6 +227,20 @@ function CompletionForm() {
           rows={5}
         />
       </Card>
+
+      {billBlocked && (
+        <p
+          role="alert"
+          className="rounded-[var(--radius-field)] px-4 py-3 mb-5 text-[13px] font-bold leading-[1.5]"
+          style={{
+            background: 'var(--color-warning-tint)',
+            border: '1px solid var(--color-warning-border)',
+            color: 'var(--color-warning-text)',
+          }}
+        >
+          {BILL_NOT_ISSUED_MESSAGE}
+        </p>
+      )}
 
       <div className="flex flex-col-reverse sm:flex-row gap-3 sm:flex-wrap [&>*]:w-full sm:[&>*]:w-auto">
         <Button variant="outline" onClick={() => router.back()}>
