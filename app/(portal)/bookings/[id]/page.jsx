@@ -11,7 +11,8 @@ import Button from '@/components/ui/Button';
 import { useToast } from '@/components/ui/Toast';
 import { useAuth } from '@/context/AuthContext';
 import { useBookings } from '@/lib/queries';
-import { bookingsAPI, inspectionAPI } from '@/api/bookings';
+import { bookingsAPI, billAPI, inspectionAPI } from '@/api/bookings';
+import { PAY_METHODS, canMarkPaid, billStatusText } from '@/lib/markPaid';
 import JobTimeline from '@/components/bookings/JobTimeline';
 import {
   ANY_BOOKING,
@@ -44,6 +45,7 @@ export default function BookingDetailPage() {
   // The list never reports early-start requests, so this only remembers the one
   // made in this visit; the backend rejects a duplicate on its own.
   const [earlyRequested, setEarlyRequested] = useState(false);
+  const [payMethod, setPayMethod] = useState('cash');
 
   // ANY_BOOKING, not the default: with no status filter the backend hides every
   // booking dated before today, so a running or finished job would read as
@@ -68,6 +70,17 @@ export default function BookingDetailPage() {
     queryKey: ['booking-health-sheet', id],
     enabled: Boolean(booking),
     queryFn: async () => Boolean((await inspectionAPI.getBookingHealthSheet(id))?.success),
+  });
+
+  // Pay-the-garage: customers pay the garage directly, so the vendor records it here.
+  // The backend decides when this is allowed (can.mark_paid).
+  const { data: pricing = null } = useQuery({
+    queryKey: ['booking-pricing', id],
+    enabled: Boolean(booking),
+    queryFn: async () => {
+      const res = await billAPI.getPricing(id);
+      return res?.success ? res.data : null;
+    },
   });
 
   if (isLoading) {
@@ -114,6 +127,20 @@ export default function BookingDetailPage() {
       toast.success('Early start requested — the job stays booked until the customer agrees.');
     } else {
       toast.error(result?.error || 'Could not request an early start.');
+    }
+  };
+
+  const markPaid = async () => {
+    if (busy) return; // double-click guard
+    setBusy(true);
+    const result = await billAPI.markPaid(booking.id, payMethod);
+    setBusy(false);
+    if (result?.success) {
+      queryClient.invalidateQueries({ queryKey: ['booking-pricing', id] });
+      refresh();
+      toast.success('Marked as paid.');
+    } else {
+      toast.error(result?.error || 'Could not mark this bill as paid.');
     }
   };
 
@@ -164,6 +191,35 @@ export default function BookingDetailPage() {
           <CardHeader title="Job timeline" />
           <JobTimeline booking={{ ...booking, hasHealthSheet }} />
         </Card>
+
+        {pricing?.bill && (
+          <Card className="mb-5">
+            <CardHeader title="Bill" />
+            <Row label="Bill number" value={pricing.bill.number} />
+            <Row label="Total" value={formatMoney(pricing.bill.total)} />
+            <Row label="Status" value={billStatusText(pricing)} />
+            {canMarkPaid(pricing) && (
+              <div className="mt-4 flex flex-col gap-2.5">
+                <label className="text-[12.5px] text-[var(--color-muted)]" htmlFor="pay-method">
+                  How did the customer pay you?
+                </label>
+                <select
+                  id="pay-method"
+                  value={payMethod}
+                  onChange={(e) => setPayMethod(e.target.value)}
+                  className="rounded-xl border border-[var(--color-line-strong)] bg-white px-3 py-3 text-[13.5px]"
+                >
+                  {PAY_METHODS.map((m) => (
+                    <option key={m.value} value={m.value}>{m.label}</option>
+                  ))}
+                </select>
+                <Button fullWidth loading={busy} onClick={markPaid}>
+                  Mark as paid
+                </Button>
+              </div>
+            )}
+          </Card>
+        )}
 
         <Card>
           <CardHeader title="Actions" />

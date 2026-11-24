@@ -32,9 +32,9 @@ export const FAQS = [
   },
   {
     id: 6,
-    question: 'How do payouts work?',
+    question: 'How do I get paid?',
     answer:
-      'You receive your full service price. Keplix’s platform fee is paid by the customer at checkout. Keplix transfers your earnings directly to your bank within 24–72 hours.',
+      'Customers pay you directly at the garage, by cash or to your UPI. Keplix does not take a cut of your jobs. Mark the bill as paid once you have been paid. Your Keplix subscription is the only thing you pay to Keplix.',
   },
   {
     id: 7,
@@ -44,7 +44,7 @@ export const FAQS = [
   {
     id: 8,
     question: 'How do I check my earnings?',
-    answer: 'Go to Earnings to view total income, pending payouts, and download statements.',
+    answer: 'Go to Earnings to view your completed jobs and amounts.',
   },
   {
     id: 9,

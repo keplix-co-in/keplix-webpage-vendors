@@ -60,6 +60,13 @@ export const walkInsAPI = {
   resendWalkInJobNotification: (id) => api.post(`/service_api/vendor/walk-in-jobs/${id}/notify`),
 };
 
+// Pay-the-garage: customers pay the garage directly, the vendor records it.
+export const billAPI = {
+  getPricing: (bookingId) => api.get(`/service_api/vendor/bookings/${bookingId}/pricing`),
+  markPaid: (bookingId, method) =>
+    api.post(`/service_api/vendor/bookings/${bookingId}/final-bill/mark-paid`, { method }),
+};
+
 export const inspectionAPI = {
   getHealthComponents: () => api.get('/service_api/vendor/health-components'),
   submitHealthSheet: (formData) =>
