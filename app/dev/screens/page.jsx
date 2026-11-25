@@ -100,6 +100,8 @@ const GROUPS = [
       { path: '/profile', name: 'Business Profile', desc: 'Shop details' },
       { path: '/documents', name: 'My Documents', desc: 'Payout fields and verified documents' },
       { path: '/timings', name: 'Timings & Holidays', desc: 'Hours, breaks, closures' },
+      { path: '/subscription', name: 'Subscription', desc: 'Current plan and payment history' },
+      { path: '/subscription/plans', name: 'Keplix Partner plan', desc: 'Single Rs 999/month plan, Razorpay checkout' },
       { path: '/support', name: 'Support & FAQs', desc: 'The ten real FAQ entries' },
       { path: '/support/chat', name: 'Support Chat', desc: 'Local notes plus email' },
     ],

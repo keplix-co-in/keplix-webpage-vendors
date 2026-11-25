@@ -68,15 +68,15 @@ const csp = [
   // app/layout.js) plus 'strict-dynamic', then drop 'unsafe-inline' here —
   // that is what turns this CSP into a real XSS barrier for scripts. 'unsafe-eval' is added
   // only outside production because the dev compiler/React Refresh needs it.
-  `script-src 'self' 'unsafe-inline' ${isProd ? '' : "'unsafe-eval' "}https://accounts.google.com`,
+  `script-src 'self' 'unsafe-inline' ${isProd ? '' : "'unsafe-eval' "}https://accounts.google.com https://checkout.razorpay.com`,
   // Tailwind/Next inject style tags; leaflet's CSS is bundled and served from 'self'.
   // accounts.google.com: the Google button loads /gsi/style from there.
   "style-src 'self' 'unsafe-inline' https://accounts.google.com",
-  "img-src 'self' data: blob: https://res.cloudinary.com https://*.tile.openstreetmap.org",
+  "img-src 'self' data: blob: https://*.razorpay.com https://res.cloudinary.com https://*.tile.openstreetmap.org",
   "font-src 'self' data:",
-  `connect-src 'self' https://accounts.google.com ${supabaseOrigins.join(' ')} https://nominatim.openstreetmap.org https://keplix.co.in${apiOrigins.length ? ` ${apiOrigins.join(' ')}` : ''}`,
+  `connect-src 'self' https://accounts.google.com ${supabaseOrigins.join(' ')} https://nominatim.openstreetmap.org https://keplix.co.in https://api.razorpay.com https://lumberjack.razorpay.com${apiOrigins.length ? ` ${apiOrigins.join(' ')}` : ''}`,
   // Google Identity Services renders its button/One Tap prompt in an iframe.
-  "frame-src 'self' https://accounts.google.com",
+  "frame-src 'self' https://accounts.google.com https://api.razorpay.com https://checkout.razorpay.com",
   "worker-src 'self' blob:",
   "form-action 'self'",
   // Nobody may frame the portal (the modern equivalent of X-Frame-Options).

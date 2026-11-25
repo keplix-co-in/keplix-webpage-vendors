@@ -16,6 +16,13 @@ import { SERVICE_CATEGORIES } from '@/shared/constants/services';
 import { VEHICLE_SEGMENTS } from '@/shared/constants/vehicleSegments';
 import { DURATIONS, DURATION_MAP, durationLabelFor } from '@/shared/constants/durations';
 import { rules, validate } from '@/shared/utils/validation';
+import PricingSection from '@/components/services/pricing/PricingSection';
+import {
+  buildPricingPayload,
+  initialPricingState,
+  shownSegments,
+  validatePricing,
+} from '@/lib/servicePricing';
 
 const SEGMENT_IDS = VEHICLE_SEGMENTS.map((s) => s.id);
 const CATEGORY_NAMES = SERVICE_CATEGORIES.map((c) => c.name);
@@ -25,11 +32,8 @@ const CATEGORY_NAMES = SERVICE_CATEGORIES.map((c) => c.name);
 const SCHEMA = {
   name: [rules.required('Service name'), rules.maxLength(120, 'Service name')],
   description: [rules.maxLength(2000, 'Description')],
-  price: [
-    rules.required('Price'),
-    rules.positiveNumber('Price'),
-    rules.maxAmount(100000, 'Price'),
-  ],
+  // Price is no longer one field: the pricing section (lib/servicePricing.js)
+  // validates the type, the labour/part lines and the inspection fee.
   duration: [(value) => (DURATIONS.includes(value) ? null : 'Choose how long this takes.')],
   category: [(value) => (CATEGORY_NAMES.includes(value) ? null : 'Choose a category.')],
   segment: [
@@ -57,20 +61,16 @@ export default function ServiceForm({ service }) {
   // snake_case name found nothing, so editing never pre-selected the segment
   // and always showed the service's base price.
   const existingSegments = service?.segmentPrices ?? [];
+  const [pricing, setPricing] = useState(() => initialPricingState(service));
+  const [pricingErrors, setPricingErrors] = useState({});
 
   const [form, setForm] = useState({
     name: service?.name ?? '',
     description: service?.description ?? '',
     category: service?.category ?? SERVICE_CATEGORIES[0]?.name ?? '',
-    segment: existingSegments[0]?.segment ?? VEHICLE_SEGMENTS[0].id,
+    segment: pricing.kept_segments[0] ?? existingSegments[0]?.segment ?? VEHICLE_SEGMENTS[0].id,
     vehicle_note: service?.vehicle_note ?? '',
     duration: durationLabelFor(service?.duration) ?? DURATIONS[0],
-    price:
-      existingSegments[0]?.price != null
-        ? String(Number(existingSegments[0].price))
-        : service?.price != null
-          ? String(Number(service.price))
-          : '',
   });
   const [imageFile, setImageFile] = useState(null);
   const [preview, setPreview] = useState(service?.image_url ?? null);
@@ -94,30 +94,44 @@ export default function ServiceForm({ service }) {
     setErrors((prev) => (prev[key] ? { ...prev, [key]: undefined } : prev));
   };
 
+  // The picked car type plus every car type the service already prices. A
+  // service made in the app can price several; leaving any out would delete
+  // its price on save, so they all stay unless the vendor removes one.
+  const segmentIds = shownSegments(pricing, form.segment);
+  const segmentSections = segmentIds.map((id) => ({
+    id,
+    name: VEHICLE_SEGMENTS.find((s) => s.id === id)?.name ?? id,
+    removable: id !== form.segment,
+  }));
+
+  const removeSegment = (id) =>
+    setPricing((prev) => ({ ...prev, kept_segments: prev.kept_segments.filter((s) => s !== id) }));
+
+  const changePricing = (next) => {
+    setPricing(next);
+    setPricingErrors({});
+  };
+
   const submit = async (event) => {
     event.preventDefault();
 
     const { errors: nextErrors, isValid } = validate(form, SCHEMA);
+    const priced = validatePricing(pricing, { segments: segmentIds });
     setErrors(nextErrors);
-    if (!isValid) return;
+    setPricingErrors(priced.errors);
+    if (!priced.isValid) toast.error('Please check the price section.');
+    if (!isValid || !priced.isValid) return;
 
     const payload = {
       name: form.name.trim(),
       description: form.description.trim(),
       category: form.category,
       duration: DURATION_MAP[form.duration],
-      price: Number(form.price),
       is_active: service?.is_active ?? true,
       vehicle_note: form.vehicle_note.trim() || undefined,
-      // The form edits one segment, but a service made in the app can price
-      // several. Sending only the edited one would replace the list and silently
-      // delete the rest, so the others are carried through unchanged.
-      segment_prices: [
-        ...existingSegments
-          .filter((entry) => entry.segment !== form.segment)
-          .map((entry) => ({ segment: entry.segment, price: Number(entry.price) })),
-        { segment: form.segment, price: Number(form.price) },
-      ],
+      // v2 fields plus the legacy price / segment_prices (base total and each
+      // car type's total), so this also saves against a not-yet-upgraded backend.
+      ...buildPricingPayload(pricing, { segments: segmentIds }),
     };
 
     setBusy(true);
@@ -264,8 +278,8 @@ export default function ServiceForm({ service }) {
         />
       </Card>
 
-      <Card className="mb-6">
-        <Kicker className="mb-4">Time &amp; price</Kicker>
+      <Card className="mb-5">
+        <Kicker className="mb-4">Time</Kicker>
         <Select
           label="Duration"
           name="duration"
@@ -274,18 +288,18 @@ export default function ServiceForm({ service }) {
           value={form.duration}
           onChange={(e) => setField('duration', e.target.value)}
           error={errors.duration}
-          className="mb-4"
         />
-        <Input
-          label="Price (₹)"
-          name="price"
-          type="number"
-          min="0"
-          required
-          placeholder="Eg: 899"
-          value={form.price}
-          onChange={(e) => setField('price', e.target.value)}
-          error={errors.price}
+      </Card>
+
+      <Card className="mb-6">
+        <Kicker className="mb-4">Price</Kicker>
+        <PricingSection
+          value={pricing}
+          onChange={changePricing}
+          errors={pricingErrors}
+          segments={segmentSections}
+          onRemoveSegment={removeSegment}
+          showBreakdownBanner={isEdit && service?.breakdown_confirmed === false}
         />
       </Card>
 

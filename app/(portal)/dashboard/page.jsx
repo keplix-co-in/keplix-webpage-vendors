@@ -168,7 +168,7 @@ export default function DashboardPage() {
               {buckets.awaitingDecision.length === 1 ? '' : 's'} awaiting your decision
             </div>
             <div className="text-[12.5px] text-[var(--color-muted)]">
-              Accept or decline so the customer can pay and the slot gets locked in.
+              Accept or decline so the customer knows and the slot gets locked in.
             </div>
           </div>
           <Link href="/bookings">
@@ -333,10 +333,10 @@ export default function DashboardPage() {
               style={{ background: 'var(--color-warning-tint)', border: '1px solid var(--color-warning-tint-strong)' }}
             >
               <div className="text-[13.5px] font-bold text-[var(--color-warning-dark)] mb-1.5">
-                {formatMoney(earnings.pending_earnings)} payout processing
+                {formatMoney(earnings.pending_earnings)} awaiting payment from customers
               </div>
               <div className="text-[12px] text-[var(--color-warning-text)] leading-[1.5]">
-                Released to your saved payout account after the service is confirmed.
+                Collect this from the customer at the garage and mark the bill as paid.
               </div>
             </div>
           )}

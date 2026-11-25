@@ -48,11 +48,13 @@ export default function EarningsPage() {
     return rows.filter((row) => (tab === 'Paid out' ? row.paid : !row.paid));
   }, [rows, tab]);
 
+  // 2026-11: customers now pay the garage directly, so these tiles only count the
+  // old online payments made before that change. Kept, not deleted; labels say so.
   const stats = [
-    { label: 'LIFETIME', value: earnings?.total_earnings, note: 'Your full service price', feature: true },
-    { label: 'THIS WEEK', value: earnings?.week_earnings, note: 'Settled this week' },
-    { label: 'THIS MONTH', value: earnings?.month_earnings, note: 'Settled this month' },
-    { label: 'PENDING', value: earnings?.pending_earnings, note: 'Awaiting release', tint: true },
+    { label: 'OLD ONLINE PAYMENTS: ALL TIME', value: earnings?.total_earnings, note: 'Old online payments, full service price', feature: true },
+    { label: 'OLD ONLINE PAYMENTS: THIS WEEK', value: earnings?.week_earnings, note: 'Old online payments settled this week' },
+    { label: 'OLD ONLINE PAYMENTS: THIS MONTH', value: earnings?.month_earnings, note: 'Old online payments settled this month' },
+    { label: 'OLD ONLINE PAYMENTS: PENDING', value: earnings?.pending_earnings, note: 'Old online payments awaiting release', tint: true },
   ];
 
   // Payout account lives on the vendor profile; payouts themselves are settled
@@ -204,10 +206,9 @@ export default function EarningsPage() {
             ))
           )}
 
-          <Kicker className="mt-5 mb-2">How payouts work</Kicker>
+          <Kicker className="mt-5 mb-2">How payments work</Kicker>
           <p className="text-[12.5px] text-[var(--color-muted)] leading-[1.7]">
-            Payouts are released by the Keplix team to this account after the customer confirms the
-            service. There is nothing to request from here.
+            Customers pay you directly (cash or your UPI) and you mark the bill as paid. Keplix does not collect or hold customer payments, so there is nothing to request from here.
           </p>
         </Card>
       </div>

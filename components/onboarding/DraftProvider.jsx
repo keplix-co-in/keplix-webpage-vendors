@@ -3,6 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { rules, validate } from '@/shared/utils/validation';
 import { toMinutes } from './TimeSelect';
+import { validatePricing } from '@/lib/servicePricing';
 
 const STORAGE_KEY = 'onboarding_progress';
 
@@ -179,10 +180,16 @@ export const stepCompletion = (draft, files, shopPhotos) => {
     services:
       draft.serviceDetails.length > 0 &&
       draft.serviceDetails.every((service) =>
-        passes(service, {
-          name: [rules.required('Service name')],
-          price: [rules.required('Price'), rules.positiveNumber('Price')],
-        })
+        // Pricing v2 services carry `pricing` and are checked by the same rules
+        // as the form (an inspection fee of 0 is valid, so `price` can be 0).
+        // Drafts saved before v2 only have `price` and keep the old check.
+        service.pricing
+          ? passes(service, { name: [rules.required('Service name')] }) &&
+            validatePricing(service.pricing).isValid
+          : passes(service, {
+              name: [rules.required('Service name')],
+              price: [rules.required('Price'), rules.positiveNumber('Price')],
+            })
       ),
   };
 };

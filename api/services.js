@@ -1,4 +1,5 @@
 import api, { uploadWithFetch } from '@/lib/api';
+import { pricingFormEntries } from '@/lib/servicePricing';
 
 // Shared by the create and update multipart paths so a service photo upload
 // sends exactly the same fields either way.
@@ -18,6 +19,10 @@ const buildServiceForm = (serviceData, imageFile) => {
     form.append('segment_prices', JSON.stringify(serviceData.segment_prices));
   }
   if (serviceData.vehicle_note) form.append('vehicle_note', serviceData.vehicle_note);
+
+  // Pricing v2 fields (pricing_type, price_lines, ...), only when the form sent
+  // them. The legacy price/segment_prices above stay so an old backend still works.
+  for (const [key, value] of pricingFormEntries(serviceData)) form.append(key, value);
 
   if (imageFile) form.append('image', imageFile);
   else if (serviceData.image_url) form.append('image_url', serviceData.image_url);

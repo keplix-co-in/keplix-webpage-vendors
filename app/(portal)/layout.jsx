@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import PortalNav from '@/components/shell/PortalNav';
 import PortalHeader from '@/components/shell/PortalHeader';
+import SubscriptionBanner from '@/components/subscription/SubscriptionBanner';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/components/ui/Toast';
 import { vendorAPI } from '@/api/vendor';
@@ -153,6 +154,7 @@ export default function PortalLayout({ children }) {
             onOpenMenu={openNav}
             menuOpen={navOpen}
           />
+          <SubscriptionBanner />
           <main className="px-4 sm:px-7 pt-5 sm:pt-[26px] pb-[60px] min-w-0">{children}</main>
         </div>
       </div>

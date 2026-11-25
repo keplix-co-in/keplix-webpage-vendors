@@ -10,6 +10,7 @@ import {
   UserPlus,
   Wrench,
   IndianRupee,
+  CreditCard,
   Star,
   MessageSquare,
   Bell,
@@ -57,6 +58,7 @@ const NAV_GROUPS = [
     items: [
       { href: '/profile', label: 'Business profile', Icon: Store },
       { href: '/documents', label: 'My documents', Icon: Folder },
+      { href: '/subscription', label: 'Subscription', Icon: CreditCard },
       { href: '/support', label: 'Support & FAQs', Icon: HelpCircle },
     ],
   },
