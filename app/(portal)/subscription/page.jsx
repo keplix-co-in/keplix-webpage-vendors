@@ -40,7 +40,7 @@ export default function SubscriptionPage() {
               className="text-[12.5px] font-bold text-white rounded-[var(--radius-pill)] px-4 py-2"
               style={{ background: 'var(--color-primary)' }}
             >
-              {sub?.status === 'active' ? 'Change or renew' : 'Choose a plan'}
+              {sub?.status === 'active' ? 'Renew' : 'Subscribe'}
             </Link>
           }
         />
